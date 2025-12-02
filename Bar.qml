@@ -1,0 +1,68 @@
+// Bar.qml
+
+import Quickshell
+import QtQuick 2.0
+
+Scope {
+
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            id: mainBar
+            required property var modelData
+            screen: modelData
+            color: "transparent"
+            anchors {
+                bottom: true
+                left: true
+                right: true
+            }
+
+            implicitHeight: 40
+
+            HyprWS {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: parent.bottom
+                    bottomMargin: 10
+                }
+            }
+
+            NotificationCenter {
+                id: notification1
+                anchor {
+                    window: mainBar
+                    rect.x: 10
+                    rect.y: -10
+                }
+            }
+
+            ClockWidget {
+                id: clock
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    bottom: parent.bottom
+                    bottomMargin: 10
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        notification1.visible = !notification1.visible;
+                    }
+                }
+            }
+
+            ActiveWindow {
+                anchors {
+                    left: clock.right
+                    leftMargin: 10
+                    bottom: parent.bottom
+                    bottomMargin: 10
+                }
+            }
+        }
+    }
+}
