@@ -30,7 +30,7 @@ Scope {
             }
 
             NotificationCenter {
-                id: notification1
+                id: notificationPanel
                 anchor {
                     window: mainBar
                     rect.x: 10
@@ -50,7 +50,7 @@ Scope {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        notification1.visible = !notification1.visible;
+                        notificationPanel.visible = !notificationPanel.visible;
                     }
                 }
             }
