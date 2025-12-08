@@ -14,6 +14,8 @@ Singleton {
         Qt.formatDateTime(clock.date, " dddd, dd MMMM ");
     }
 
+    readonly property date rawtime: clock.date
+
     SystemClock {
         id: clock
         precision: SystemClock.Seconds

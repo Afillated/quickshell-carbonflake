@@ -50,5 +50,32 @@ PopupWindow {
                 pixelSize: 20
             }
         }
+        // just for testing
+        // Rectangle {
+        //     id: test
+        //     color: "black"
+        //     radius: 10
+        //     border {
+        //         width: 1.5
+        //         color: "#960000"
+        //     }
+        //     anchors {
+        //         top: notificationRec.top
+        //         topMargin: 20
+        //         right: notificationRec.right
+        //         rightMargin: 20
+        //         left: notificationRec.left
+        //         leftMargin: 20
+        //     }
+
+        //     implicitHeight: 100
+        //     Text {
+        //         text: "test"
+        //         anchors.verticalCenter: test.verticalCenter 
+        //         anchors.horizontalCenter: test.horizontalCenter
+        //         color: "#AA0000"
+        //     }
+        // }
     }
+    
 }
