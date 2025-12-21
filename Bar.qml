@@ -52,6 +52,8 @@ Scope {
                     onClicked: {
                         notificationPanel.visible = !notificationPanel.visible;
                     }
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
                 }
             }
 

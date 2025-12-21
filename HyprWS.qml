@@ -42,6 +42,11 @@ Rectangle {
                         easing.type: Easing.OutQuad
                     }
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: parent.click()
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ Rectangle {
     }
 
     implicitHeight: 30
-    implicitWidth: activeWindow.width + 20
+    implicitWidth: activeWindow.width 
 
     property bool showDesktop: Hyprland.focusedWorkspace?.toplevels.values.length == 0 || ToplevelManager.activeToplevel == null
     property bool showIcon: !activeWindowRec.showDesktop && (DesktopEntries.byId(ToplevelManager.activeToplevel?.appId) || DesktopEntries.byId(ToplevelManager.activeToplevel?.title))
@@ -40,32 +40,23 @@ Rectangle {
     
     RowLayout {
         id: activeWindow
-        spacing: 10
+        spacing: 8
         Layout.alignment: Qt.AlignCenter
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
         
         Loader {
             active: activeWindowRec.showIcon
             Layout.leftMargin: 10
             sourceComponent: Image {
                 anchors.centerIn: parent
-                sourceSize: Qt.size(22, 22)
+                sourceSize: Qt.size(20, 20)
                 source: activeWindowRec.getIcon()
             }
-        }
-
-        Rectangle{
-            id: hi
-            implicitHeight: 18
-            implicitWidth: 2
-            color: "#960000"
         }
 
         Text {
             id: appId
             Layout.alignment: Qt.AlignCenter
-            Layout.leftMargin: 4
+            Layout.rightMargin: 12
             text: ToplevelManager?.activeToplevel == null || Hyprland.focusedWorkspace?.toplevels.values.length == 0 ? "desktop" : ToplevelManager.activeToplevel.appId
             color: "#C10000"
             font {

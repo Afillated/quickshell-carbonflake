@@ -1,10 +1,12 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Hyprland
 import qs.services
-
+import qs.components
 
 PopupWindow {
     id: notificationcenter
@@ -14,9 +16,9 @@ PopupWindow {
 
     HyprlandFocusGrab {
         active: notificationcenter.visible
-        windows : [ notificationcenter ]
+        windows: [notificationcenter]
         onCleared: {
-            notificationcenter.visible = false
+            notificationcenter.visible = false;
         }
     }
 
@@ -50,32 +52,113 @@ PopupWindow {
                 pixelSize: 20
             }
         }
-        // just for testing
-        // Rectangle {
-        //     id: test
-        //     color: "black"
-        //     radius: 10
-        //     border {
-        //         width: 1.5
-        //         color: "#960000"
-        //     }
-        //     anchors {
-        //         top: notificationRec.top
-        //         topMargin: 20
-        //         right: notificationRec.right
-        //         rightMargin: 20
-        //         left: notificationRec.left
-        //         leftMargin: 20
-        //     }
 
-        //     implicitHeight: 100
-        //     Text {
-        //         text: "test"
-        //         anchors.verticalCenter: test.verticalCenter 
-        //         anchors.horizontalCenter: test.horizontalCenter
-        //         color: "#AA0000"
-        //     }
-        // }
+        Rectangle {
+            id: clearButton
+            color: "transparent"
+            border {
+                width: 1.5
+                color: "#960000"
+            }
+            implicitHeight: 25
+            implicitWidth: 60
+            radius: 15
+            anchors {
+                right: parent.right
+                rightMargin: 16
+                bottom: parent.bottom
+                bottomMargin: 10
+            }
+
+            MouseArea {
+                id: clearall
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: NotiServer.clearNotifications();
+            }
+        }
+
+        ListView {
+            id: notiList
+            spacing: 50
+            model: NotiServer.items
+            orientation: ListView.Vertical
+            clip: true
+            anchors {
+                bottom: clearButton.top
+                bottomMargin: 10
+                top: notificationRec.top
+                topMargin: 10
+                right: notificationRec.right
+                left: notificationRec.left
+                rightMargin: 10
+                leftMargin: 10
+            }
+
+            delegate: NotiCard {
+                required property var modelData
+                required property int index
+                width: notiList.width
+
+                noti: modelData
+            }
+
+            add: Transition {
+                ParallelAnimation {
+                    NumberAnimation {
+                        property: "height"
+                        from: 0
+                        duration: 250
+                        easing.type: Easing.OutBack
+                    }
+                    NumberAnimation {
+                        property: "opacity"
+                        from: 0
+                        to: 1
+                        duration: 200
+                        easing.type: Easing.OutCubic
+                    }
+                    NumberAnimation {
+                        property: "scale"
+                        from: 0.8
+                        to: 1
+                        duration: 250
+                        easing.type: Easing.OutBack
+                    }
+                }
+            }
+
+            remove: Transition {
+                ParallelAnimation {
+                    NumberAnimation {
+                        property: "height"
+                        to: 0
+                        duration: 200
+                        easing.type: Easing.InCubic
+                    }
+                    NumberAnimation {
+                        property: "opacity"
+                        to: 0
+                        duration: 150
+                        easing.type: Easing.InCubic
+                    }
+                    NumberAnimation {
+                        property: "scale"
+                        to: 0.8
+                        duration: 200
+                        easing.type: Easing.InCubic
+                    }
+                }
+            }
+
+            displaced: Transition {
+                NumberAnimation {
+                    properties: "x,y"
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+        }
     }
-    
 }
