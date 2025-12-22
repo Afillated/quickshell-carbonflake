@@ -32,6 +32,7 @@ PopupWindow {
         anchors.fill: parent
         color: "#E6000000"
         radius: 15
+        clip: true
         border {
             width: 1.5
             color: "#960000"
@@ -61,11 +62,11 @@ PopupWindow {
                 color: "#960000"
             }
             implicitHeight: 25
-            implicitWidth: 60
+            implicitWidth: clearAllText.width + 20
             radius: 15
             anchors {
                 right: parent.right
-                rightMargin: 16
+                rightMargin: 10
                 bottom: parent.bottom
                 bottomMargin: 10
             }
@@ -75,13 +76,33 @@ PopupWindow {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onClicked: NotiServer.clearNotifications();
+                onClicked: NotiServer.clearNotifications()
+            }
+            Text {
+                id: clearAllText
+                text: "  Clear All (" + NotiServer.items.count + ")"
+                color: "#967373"
+                anchors.centerIn: parent
+                font.family: "Firacode Mono Nerd Font"
+            }
+        }
+        ColumnLayout {
+            anchors.centerIn: parent
+            visible: NotiServer.items.count === 0
+            Text {
+                Layout.alignment: Qt.AlignHCenter
+                text: "No notifications"
+                color: "#967373"
+                font {
+                    pixelSize: 20
+                    family: "Firacode Mono Nerd Font"
+                }
             }
         }
 
         ListView {
             id: notiList
-            spacing: 50
+            spacing: 10
             model: NotiServer.items
             orientation: ListView.Vertical
             clip: true

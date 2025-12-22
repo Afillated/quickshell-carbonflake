@@ -17,6 +17,7 @@ Singleton {
         readonly property string body: noti.body
         readonly property string appIcon: noti.appIcon
         readonly property string appName: noti.appName
+        readonly property string summary: noti.summary
         readonly property string image: noti.image
         readonly property int urgency: noti.urgency
         readonly property real timeout: {
