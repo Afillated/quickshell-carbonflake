@@ -82,12 +82,16 @@ Rectangle {
                     color: "#967373"
                     font.weight: Font.Bold
                     font.family: "Firacode Mono Nerd Font"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
                 }
                 Text {
                     id: body
                     text: notiCard.noti?.body
                     color: "#967373"
                     font.family: "Firacode Mono Nerd Font"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
                 }
             }
         }
