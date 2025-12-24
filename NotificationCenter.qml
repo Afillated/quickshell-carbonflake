@@ -26,16 +26,44 @@ PopupWindow {
         edges: Edges.Left | Edges.Bottom
         gravity: Edges.Top | Edges.Right
     }
+    Behavior on width {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+
+    Behavior on height {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
 
     Rectangle {
         id: notificationRec
         anchors.fill: parent
         color: "#E6000000"
-        radius: 15
+        radius: 20
         clip: true
         border {
             width: 1.5
             color: "#960000"
+        }
+        opacity: notificationcenter.visible ? 1 : 0
+        scale: notificationcenter.visible ? 1 : 0.9
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
+        }
+        Behavior on scale {
+            NumberAnimation {
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
         }
 
         Text {
@@ -63,7 +91,7 @@ PopupWindow {
             }
             implicitHeight: 25
             implicitWidth: clearAllText.width + 20
-            radius: 15
+            radius: 10
             anchors {
                 right: parent.right
                 rightMargin: 10
@@ -84,6 +112,7 @@ PopupWindow {
                 color: "#967373"
                 anchors.centerIn: parent
                 font.family: "Firacode Mono Nerd Font"
+                font.pixelSize: 12
             }
         }
         ColumnLayout {

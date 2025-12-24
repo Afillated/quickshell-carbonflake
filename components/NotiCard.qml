@@ -21,7 +21,7 @@ Rectangle {
 
     implicitHeight: cardContent.height + 20
     implicitWidth: 400
-    radius: 15
+    radius: 10
     
     ColumnLayout {
         id: cardContent
