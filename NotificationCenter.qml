@@ -44,7 +44,7 @@ PopupWindow {
         id: notificationRec
         anchors.fill: parent
         color: "#E6000000"
-        radius: 20
+        radius: 15
         clip: true
         border {
             width: 1.5

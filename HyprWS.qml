@@ -30,7 +30,7 @@ Rectangle {
                 implicitWidth: modelData?.focused ? 60 : 40
                 background: Rectangle {
                     anchors.fill: parent
-                    color: wsButton.modelData?.active ? "#e6400000" : "#992A0808"
+                    color: wsButton.modelData?.active ? "#400000" : "#AA2A0808"
                     radius: 15
                 }
                 action: Action {
