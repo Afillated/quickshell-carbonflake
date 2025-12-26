@@ -2,6 +2,9 @@
 
 import Quickshell
 import QtQuick 2.0
+// import qs
+import qs.components
+import qs.panels
 
 Scope {
 
