@@ -2,7 +2,6 @@
 
 import Quickshell
 import QtQuick 2.0
-// import qs
 import qs.components
 import qs.panels
 
@@ -77,6 +76,24 @@ Scope {
                     bottom: parent.bottom
                     bottomMargin: 10
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        quickPanel1.visible = !quickPanel1.visible;
+                    }
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+
+            }
+            QuickPanel {
+                id: quickPanel1
+                anchor {
+                    window: mainBar
+                    rect.x: 1910
+                    rect.y: -10
+                }
+
             }
         }
     }

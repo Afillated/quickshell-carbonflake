@@ -26,20 +26,6 @@ PopupWindow {
         edges: Edges.Left | Edges.Bottom
         gravity: Edges.Top | Edges.Right
     }
-    Behavior on width {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutQuad
-        }
-    }
-
-    Behavior on height {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutQuad
-        }
-    }
-
     Rectangle {
         id: notificationRec
         anchors.fill: parent
