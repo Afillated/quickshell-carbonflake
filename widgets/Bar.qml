@@ -62,8 +62,18 @@ Scope {
 
             ActiveWindow {
                 anchors {
-                    left: clock.right
-                    leftMargin: 10
+                    right: sysStats.left
+                    rightMargin: 10
+                    bottom: parent.bottom
+                    bottomMargin: 10
+                }
+            }
+
+            SysStatus {
+                id: sysStats
+                anchors {
+                    right: parent.right
+                    rightMargin: 10
                     bottom: parent.bottom
                     bottomMargin: 10
                 }
