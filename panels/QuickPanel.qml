@@ -26,13 +26,6 @@ PopupWindow {
         gravity: Edges.Top | Edges.Left
     }
 
-    // Process {
-    //     running: true
-    //     command: ["sh", "-c", "~/.config/quickshell/services/scripts/get_fullname.sh $(whoami)"]
-    //     stdout: StdioCollector {
-    //         onStreamFinished: console.log(`line read: ${this.text}`)
-    //     }
-    // }
     Rectangle {
         id: quickRec
         anchors.fill: parent
@@ -56,6 +49,145 @@ PopupWindow {
             NumberAnimation {
                 duration: 100
                 easing.type: Easing.OutQuad
+            }
+        }
+
+        Text {
+            id: fullName
+            text: Username.user
+            color: "#967373"
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 10
+                left: parent.left
+                leftMargin: 16
+            }
+            font {
+                family: "Firacode Mono Nerd Font"
+                pixelSize: 20
+            }
+        }
+        RowLayout {
+            id: sessionBar
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 10
+                right: parent.right
+                rightMargin: 16
+            }
+            spacing: 10
+
+            Button {
+                id: lockButton
+                implicitWidth: 24
+                implicitHeight: 24
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+                Text {
+                    text: ""
+                    color: lockArea.containsMouse ? "#960000" : "#967373"
+                    anchors.centerIn: parent
+                    font.pixelSize: 18
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
+                }
+                MouseArea {
+                    id: lockArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Quickshell.execDetached(["hyprlock"]);
+                }
+            }
+            Button {
+                id: shutdownButton
+                implicitWidth: 24
+                implicitHeight: 24
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+                Text {
+                    text: "󰐥"
+                    color: shutdownArea.containsMouse ? "#960000" : "#967373"
+                    anchors.centerIn: parent
+                    font.pixelSize: 20
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
+                }
+                MouseArea {
+                    id: shutdownArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Quickshell.execDetached(["systemctl", "poweroff"]);
+                }
+            }
+
+
+            Button {
+                id: rebootButton
+                implicitWidth: 24
+                implicitHeight: 24
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+                Text {
+                    id: reboot
+                    text: "󰜉"
+                    color: rebootArea.containsMouse ? "#960000" : "#967373"
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
+                    anchors.centerIn: parent
+                    font.pixelSize: 20
+                }
+                MouseArea {
+                    id: rebootArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Quickshell.execDetached(["systemctl", "reboot"]);
+                }
+            }
+
+            Button {
+                id: logoutButton
+                implicitWidth: 24
+                implicitHeight: 24
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+                Text {
+                    text: "󰍃"
+                    color: logoutArea.containsMouse ? "#960000" : "#967373"
+                    anchors.centerIn: parent
+                    font.pixelSize: 20
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
+                }
+                MouseArea {
+                    id: logoutArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Quickshell.execDetached(["uwsm", "stop"]);
+                }
             }
         }
     }

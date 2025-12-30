@@ -32,6 +32,11 @@ Rectangle {
                     anchors.fill: parent
                     color: wsButton.modelData?.active ? "#400000" : "#AA2A0808"
                     radius: 15
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
                 }
                 action: Action {
                     onTriggered: wsButton.modelData.activate()
@@ -42,6 +47,7 @@ Rectangle {
                         easing.type: Easing.OutQuad
                     }
                 }
+
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor

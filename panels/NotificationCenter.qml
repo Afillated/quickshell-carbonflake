@@ -71,10 +71,6 @@ PopupWindow {
         Rectangle {
             id: clearButton
             color: "transparent"
-            border {
-                width: 1.5
-                color: "#960000"
-            }
             implicitHeight: 25
             implicitWidth: clearAllText.width + 20
             radius: 10
@@ -82,7 +78,7 @@ PopupWindow {
                 right: parent.right
                 rightMargin: 10
                 bottom: parent.bottom
-                bottomMargin: 10
+                bottomMargin: 12
             }
 
             MouseArea {
@@ -95,10 +91,15 @@ PopupWindow {
             Text {
                 id: clearAllText
                 text: "  Clear All (" + NotiServer.items.count + ")"
-                color: "#967373"
+                color: clearall.containsMouse ? "#960000": "#967373"
                 anchors.centerIn: parent
                 font.family: "Firacode Mono Nerd Font"
-                font.pixelSize: 12
+                font.pixelSize: 14
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 250
+                    }
+                }
             }
         }
         ColumnLayout {

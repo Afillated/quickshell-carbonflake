@@ -1,4 +1,5 @@
 pragma Singleton
+pragma ComponentBehavior: Bound
 
 import Quickshell
 import Quickshell.Io
@@ -6,11 +7,13 @@ import QtQuick
 
 Singleton {
     id: username
+    property string user
     Process {
         running: true
-        command: ["sh", "-c", "~/.comfig/quickshell/services/get_fullname.sh $(whoami)"]
+        command: ["sh", "-c", "~/.config/quickshell/services/scripts/get_fullname.sh $(whoami)"]
         stdout: StdioCollector {
-            onStreamFinished: console.log(`line read: ${this.text}`)
+            // onStreamFinished: console.log(`line read: ${this.text}`)
+            onStreamFinished: username.user = this.text
         }
     }
 }
