@@ -12,7 +12,6 @@ Singleton {
         running: true
         command: ["sh", "-c", "~/.config/quickshell/services/scripts/get_fullname.sh $(whoami)"]
         stdout: StdioCollector {
-            // onStreamFinished: console.log(`line read: ${this.text}`)
             onStreamFinished: username.user = this.text
         }
     }
