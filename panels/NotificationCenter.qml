@@ -28,7 +28,7 @@ PopupWindow {
     }
     Rectangle {
         id: notificationRec
-        anchors.fill: parent
+        anchors.bottom: parent.bottom
         color: "#E6000000"
         radius: 15
         clip: true
@@ -36,21 +36,15 @@ PopupWindow {
             width: 1.5
             color: "#960000"
         }
-        opacity: notificationcenter.visible ? 1 : 0
-        scale: notificationcenter.visible ? 1 : 0.9
-
-        Behavior on opacity {
+        implicitHeight: notificationcenter.visible ? parent.height : 0
+        implicitWidth: parent.width
+        Behavior on implicitHeight{
             NumberAnimation {
-                duration: 100
+                duration: 250
                 easing.type: Easing.OutQuad
             }
         }
-        Behavior on scale {
-            NumberAnimation {
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
-        }
+        
 
         Text {
             id: notidate

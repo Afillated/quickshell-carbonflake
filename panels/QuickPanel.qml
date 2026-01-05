@@ -28,26 +28,20 @@ PopupWindow {
 
     Rectangle {
         id: quickRec
-        anchors.fill: parent
+        anchors.bottom: parent.bottom
         color: "#E6000000"
         radius: 15
         border {
             width: 1.5
             color: "#960000"
         }
+        
+        implicitHeight: quickPanel.visible ? parent.height : 0
+        implicitWidth: parent.width
 
-        opacity: quickPanel.visible ? 1 : 0
-        scale: quickPanel.visible ? 1 : 0.9
-
-        Behavior on opacity {
+        Behavior on implicitHeight {
             NumberAnimation {
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on scale {
-            NumberAnimation {
-                duration: 100
+                duration: 250
                 easing.type: Easing.OutQuad
             }
         }
