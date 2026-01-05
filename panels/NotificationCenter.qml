@@ -18,7 +18,23 @@ PopupWindow {
         active: notificationcenter.visible
         windows: [notificationcenter]
         onCleared: {
-            notificationcenter.visible = false;
+            // notificationcenter.visible = false;
+            closeAnim.start()
+        }
+    }
+    SequentialAnimation {
+        id: closeAnim
+        NumberAnimation {
+            target: notificationRec
+            property: "implicitHeight"
+            to: 0
+            duration: 250
+            easing.type: Easing.OutQuad
+        }
+        ScriptAction {
+            script: {
+                notificationcenter.visible = false;
+            }
         }
     }
 

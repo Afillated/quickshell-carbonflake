@@ -17,13 +17,29 @@ PopupWindow {
         active: quickPanel.visible
         windows: [quickPanel]
         onCleared: {
-            quickPanel.visible = false;
+            closeAnim.start();
         }
     }
 
     anchor {
         edges: Edges.Right | Edges.Bottom
         gravity: Edges.Top | Edges.Left
+    }
+
+    SequentialAnimation {
+        id: closeAnim
+        NumberAnimation {
+            target: quickRec
+            property: "implicitHeight"
+            to: 0
+            duration: 250
+            easing.type: Easing.OutQuad
+        }
+        ScriptAction {
+            script: {
+                quickPanel.visible = false;
+            }
+        }
     }
 
     Rectangle {
@@ -35,7 +51,7 @@ PopupWindow {
             width: 1.5
             color: "#960000"
         }
-        
+
         implicitHeight: quickPanel.visible ? parent.height : 0
         implicitWidth: parent.width
 
@@ -61,7 +77,7 @@ PopupWindow {
                 pixelSize: 20
             }
         }
-       SessionBar {
+        SessionBar {
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 10
