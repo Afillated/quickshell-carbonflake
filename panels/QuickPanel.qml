@@ -28,12 +28,30 @@ PopupWindow {
 
     SequentialAnimation {
         id: closeAnim
-        NumberAnimation {
-            target: quickRec
-            property: "implicitHeight"
-            to: 0
-            duration: 250
-            easing.type: Easing.OutQuad
+        ParallelAnimation {
+            NumberAnimation {
+                target: quickRec
+                property: "implicitHeight"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+
+            NumberAnimation {
+                target: fullName
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: sessionBar
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            
         }
         ScriptAction {
             script: {
@@ -66,6 +84,7 @@ PopupWindow {
             id: fullName
             text: Username.user
             color: "#967373"
+            opacity: quickPanel.visible ? 1: 0
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 10
@@ -78,6 +97,8 @@ PopupWindow {
             }
         }
         SessionBar {
+            id: sessionBar
+            opacity: quickPanel.visible ? 1: 0
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 10

@@ -18,18 +18,48 @@ PopupWindow {
         active: notificationcenter.visible
         windows: [notificationcenter]
         onCleared: {
-            // notificationcenter.visible = false;
-            closeAnim.start()
+            closeAnim.start();
         }
     }
     SequentialAnimation {
         id: closeAnim
-        NumberAnimation {
-            target: notificationRec
-            property: "implicitHeight"
-            to: 0
-            duration: 250
-            easing.type: Easing.OutQuad
+        ParallelAnimation {
+            NumberAnimation {
+                target: notificationRec
+                property: "implicitHeight"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: notidate
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: clearButton
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: noNoti
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: notiList
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            
         }
         ScriptAction {
             script: {
@@ -54,18 +84,18 @@ PopupWindow {
         }
         implicitHeight: notificationcenter.visible ? parent.height : 0
         implicitWidth: parent.width
-        Behavior on implicitHeight{
+        Behavior on implicitHeight {
             NumberAnimation {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
         }
-        
 
         Text {
             id: notidate
             text: Time.date
             color: "#967373"
+            opacity: notificationcenter.visible ? 1 : 0
             anchors {
                 left: notificationRec.left
                 leftMargin: 10
@@ -84,6 +114,7 @@ PopupWindow {
             implicitHeight: 25
             implicitWidth: clearAllText.width + 20
             radius: 10
+            opacity: notificationcenter.visible ? 1 : 0
             anchors {
                 right: parent.right
                 rightMargin: 10
@@ -101,7 +132,7 @@ PopupWindow {
             Text {
                 id: clearAllText
                 text: "  Clear All (" + NotiServer.items.count + ")"
-                color: clearall.containsMouse ? "#960000": "#967373"
+                color: clearall.containsMouse ? "#960000" : "#967373"
                 anchors.centerIn: parent
                 font.family: "Firacode Mono Nerd Font"
                 font.pixelSize: 14
@@ -113,6 +144,8 @@ PopupWindow {
             }
         }
         ColumnLayout {
+            id: noNoti
+            opacity: notificationcenter.visible ? 1 : 0
             anchors.centerIn: parent
             visible: NotiServer.items.count === 0
             Text {
@@ -132,6 +165,8 @@ PopupWindow {
             model: NotiServer.items
             orientation: ListView.Vertical
             clip: true
+            opacity: notificationcenter.visible ? 1 : 0
+            // scale: notificationcenter.visible ? 1: 0.8
             anchors {
                 bottom: clearButton.top
                 bottomMargin: 10
