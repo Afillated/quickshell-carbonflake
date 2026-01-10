@@ -166,7 +166,6 @@ PopupWindow {
             orientation: ListView.Vertical
             clip: true
             opacity: notificationcenter.visible ? 1 : 0
-            // scale: notificationcenter.visible ? 1: 0.8
             anchors {
                 bottom: clearButton.top
                 bottomMargin: 10
