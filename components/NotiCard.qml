@@ -22,7 +22,20 @@ Rectangle {
     implicitHeight: cardContent.height + 20
     implicitWidth: 400
     radius: 10
-    
+
+    MouseArea {
+        id: closeMouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: {
+            if (notiCard.noti && notiCard.noti.noti && notiCard.noti.noti.dismiss) {
+                notiCard.noti.noti.dismiss();
+            }
+
+            NotiServer.items.remove(index);
+        }
+    }
     ColumnLayout {
         id: cardContent
         anchors {
@@ -32,7 +45,6 @@ Rectangle {
             margins: 10
         }
         spacing: 4
-               
 
         RowLayout {
             id: appDetails

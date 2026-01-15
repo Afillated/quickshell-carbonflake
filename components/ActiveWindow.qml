@@ -63,6 +63,24 @@ Rectangle {
                 family: "Firacode Mono Nerd Font"
                 pixelSize: 20
             }
+            Behavior on text {
+                SequentialAnimation{
+                    NumberAnimation{
+                        property: "opacity"
+                        target: appId
+                        to: 0
+                        easing.type: Easing.OutQuad
+                        duration: 1
+                    }
+                    NumberAnimation{
+                        property: "opacity"
+                        target: appId
+                        to: 1
+                        easing.type: Easing.OutQuad
+                        duration: 1
+                    }
+                }
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-pragma singleton
+pragma Singleton
 
 import Quickshell
 import Quickshell.Services.Pipewire
@@ -12,6 +12,8 @@ Singleton {
     property PwNode defaultInput: Pipewire.defaultAudioSource
     property list<PwNode> outputList: Pipewire.nodes.values.filter(n => n.isSink)
     property list<PwNode> inputList: Pipewire.nodes.values.filter(n => !n.isSink)
+
+    // TODO: add channel list for applications (volume mixer)
 
     function changeOutputVolume(volume: real) {
         if (defaultOutput?.ready && defaultOutput?.audio) {
