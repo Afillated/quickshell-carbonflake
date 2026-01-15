@@ -79,6 +79,16 @@ PopupWindow {
             }
         }
 
+        // VolumeMenu {
+        //     anchors {
+        //         right: parent.right
+        //         left: parent.left
+        //         bottom: fullName.top
+        //         margins: 10
+        //     }
+            
+        // }
+
         Text {
             id: fullName
             text: Username.user

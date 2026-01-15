@@ -11,9 +11,9 @@ Rectangle {
     color: "#E6000000"
     radius: 15
 
-    property string outIcon: Audio.defaultOutput?.audio.muted ? "󰝟" : "󰕾"
+    property string outIcon: Audio.defaultOutput?.audio.muted || Audio.defaultOutput.audio.volume === 0 ? "󰝟" : "󰕾"
 
-    property string inIcon: Audio.defaultInput?.audio.muted ? "󰍭" : "󰍬"
+    property string inIcon: Audio.defaultInput?.audio.muted || Audio.defaultInput.audio.volume === 0 ? "󰍭" : "󰍬"
 
     border {
         color: "#960000"
