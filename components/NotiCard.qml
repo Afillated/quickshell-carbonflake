@@ -16,7 +16,7 @@ Rectangle {
 
     border {
         width: 1.5
-        color: "#960000"
+        color: "#CC960000"
     }
 
     implicitHeight: cardContent.height + 20

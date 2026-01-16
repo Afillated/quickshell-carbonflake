@@ -16,7 +16,7 @@ Rectangle {
     property string inIcon: Audio.defaultInput?.audio.muted || Audio.defaultInput.audio.volume === 0 ? "󰍭" : "󰍬"
 
     border {
-        color: "#960000"
+        color: "#CC960000"
         width: 1.5
     }
     Text {

@@ -12,7 +12,7 @@ Rectangle {
     color: "#E6000000"
     radius: 15
     border {
-        color: "#960000"
+        color: "#CC960000"
         width: 1.5
     }
 
@@ -57,7 +57,7 @@ Rectangle {
             id: appId
             Layout.alignment: Qt.AlignCenter
             Layout.rightMargin: 12
-            text: ToplevelManager?.activeToplevel == null || Hyprland.focusedWorkspace?.toplevels.values.length == 0 ? "desktop" : ToplevelManager.activeToplevel.appId
+            text: activeWindowRec.showDesktop ? "desktop" : ToplevelManager.activeToplevel.appId
             color: "#C10000"
             font {
                 family: "Firacode Mono Nerd Font"
@@ -70,14 +70,14 @@ Rectangle {
                         target: appId
                         to: 0
                         easing.type: Easing.OutQuad
-                        duration: 1
+                        duration: 10
                     }
                     NumberAnimation{
                         property: "opacity"
                         target: appId
                         to: 1
                         easing.type: Easing.OutQuad
-                        duration: 1
+                        duration: 10
                     }
                 }
             }

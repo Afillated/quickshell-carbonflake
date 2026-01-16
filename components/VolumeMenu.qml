@@ -9,7 +9,7 @@ Rectangle {
     id: volumeRec
     color: "transparent"
     border {
-        color: "#668F8F8F"
+        color: "#CC960000" //"#668F8F8F"
         width: 1.5
     }
     radius: 20
@@ -51,6 +51,16 @@ Rectangle {
                         color: "#AA0000"
                     }
                 }
+                Text {
+                    visible:  micSlider.pressed
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: 30
+                    }
+                    color: "black"
+                    text: Math.trunc(Audio.defaultInput.audio.volume*100)
+                }
             }
         }
 
@@ -60,10 +70,6 @@ Rectangle {
             width: 20
             radius: 20
             color: "transparent"
-            PointHandler {
-                cursorShape:micSlider.pressed ?  Qt.ClosedHandCursor : Qt.SizeHorCursor
-            }
-            
         }
         onValueChanged: {
             Audio.defaultInput.audio.volume = value;
@@ -106,6 +112,17 @@ Rectangle {
                         color: "#AA0000"
                     }
                 }
+
+                Text {
+                    visible:  volumeSlider.pressed
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: 30
+                    }
+                    color:  "black"
+                    text: Math.trunc(Audio.defaultOutput.audio.volume*100) 
+                }
             }
         }
 
@@ -115,9 +132,6 @@ Rectangle {
             width: 20
             radius: 10
             color: "transparent"
-            PointHandler {
-                cursorShape:volumeSlider.pressed ?  Qt.ClosedHandCursor : Qt.SizeHorCursor
-            }
             
         }
         onValueChanged: {

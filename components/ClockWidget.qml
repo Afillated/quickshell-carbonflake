@@ -13,7 +13,7 @@ Rectangle {
     radius: 15
 
     border {
-        color: "#960000"
+        color: "#CC960000"
         width: 1.5
     }
 

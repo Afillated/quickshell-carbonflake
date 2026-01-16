@@ -59,7 +59,6 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
-            
         }
         ScriptAction {
             script: {
@@ -80,7 +79,7 @@ PopupWindow {
         clip: true
         border {
             width: 1.5
-            color: "#960000"
+            color: "#CC960000"
         }
         implicitHeight: notificationcenter.visible ? parent.height : 0
         implicitWidth: parent.width
@@ -105,6 +104,12 @@ PopupWindow {
             font {
                 family: "Firacode Mono Nerd Font"
                 pixelSize: 20
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
             }
         }
 
@@ -142,6 +147,13 @@ PopupWindow {
                     }
                 }
             }
+
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
         }
         ColumnLayout {
             id: noNoti
@@ -155,6 +167,12 @@ PopupWindow {
                 font {
                     pixelSize: 20
                     family: "Firacode Mono Nerd Font"
+                }
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
                 }
             }
         }
@@ -240,6 +258,7 @@ PopupWindow {
                     easing.type: Easing.OutCubic
                 }
             }
+            
         }
     }
 }
