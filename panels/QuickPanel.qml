@@ -51,6 +51,13 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: volumeRockers
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
         }
         ScriptAction {
             script: {
@@ -66,7 +73,7 @@ PopupWindow {
         radius: 15
         border {
             width: 1.5
-            color: "#960000"
+            color: "#CC960000"
         }
 
         implicitHeight: quickPanel.visible ? parent.height : 0
@@ -79,15 +86,22 @@ PopupWindow {
             }
         }
 
-        // VolumeMenu {
-        //     anchors {
-        //         right: parent.right
-        //         left: parent.left
-        //         bottom: fullName.top
-        //         margins: 10
-        //     }
-            
-        // }
+        VolumeMenu {
+            id: volumeRockers
+            opacity: quickPanel.visible ? 1 : 0
+            anchors {
+                right: parent.right
+                left: parent.left
+                bottom: fullName.top
+                margins: 10
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+        }
 
         Text {
             id: fullName
@@ -104,6 +118,12 @@ PopupWindow {
                 family: "Firacode Mono Nerd Font"
                 pixelSize: 20
             }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
         }
         SessionBar {
             id: sessionBar
@@ -113,6 +133,12 @@ PopupWindow {
                 bottomMargin: 10
                 right: parent.right
                 rightMargin: 16
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
             }
         }
     }

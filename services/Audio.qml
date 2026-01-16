@@ -10,6 +10,8 @@ Singleton {
 
     property PwNode defaultOutput: Pipewire.defaultAudioSink
     property PwNode defaultInput: Pipewire.defaultAudioSource
+    property real defaultOutVolume: 0.3
+    property real defaultInVolume: 1
     property list<PwNode> outputList: Pipewire.nodes.values.filter(n => n.isSink)
     property list<PwNode> inputList: Pipewire.nodes.values.filter(n => !n.isSink)
 
