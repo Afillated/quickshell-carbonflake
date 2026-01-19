@@ -30,7 +30,7 @@ Rectangle {
                 implicitWidth: modelData?.focused ? 60 : 40
                 background: Rectangle {
                     anchors.fill: parent
-                    color: wsButton.modelData?.active ? "#400000" : "#AA2A0808"
+                    color: wsButton.modelData?.active || butto.containsMouse  ? "#400000" : "#AA2A0808"
                     radius: 15
                     Behavior on color {
                         ColorAnimation {
@@ -49,6 +49,8 @@ Rectangle {
                 }
 
                 MouseArea {
+                    id: butto
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: parent.click()
