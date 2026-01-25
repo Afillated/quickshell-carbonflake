@@ -59,6 +59,16 @@ Scope {
                 }
             }
 
+            NowPlaying {
+                id: nowBar
+                anchors {
+                    left: clock.right
+                    leftMargin: 10
+                    bottom: parent.bottom
+                    bottomMargin: 10
+                }
+            }
+
             ActiveWindow {
                 anchors {
                     right: sysStats.left
