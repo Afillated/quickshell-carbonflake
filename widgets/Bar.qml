@@ -36,7 +36,7 @@ Scope {
                 anchor {
                     window: mainBar
                     rect.x: 10
-                    rect.y: -10
+                    rect.y: -11
                 }
             }
 
@@ -67,6 +67,24 @@ Scope {
                     bottom: parent.bottom
                     bottomMargin: 10
                 }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        playerPopup.visible = !playerPopup.visible;
+                    }
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                }
+            }
+
+            PlayerPanel {
+                id: playerPopup
+                anchor {
+                    window: mainBar
+                    rect.x: 10
+                    rect.y: -11
+                }
             }
 
             ActiveWindow {
@@ -94,16 +112,14 @@ Scope {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                 }
-
             }
             QuickPanel {
                 id: quickPanel1
                 anchor {
                     window: mainBar
                     rect.x: 1910
-                    rect.y: -10
+                    rect.y: -11
                 }
-
             }
         }
     }

@@ -59,6 +59,14 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: player2
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+
         }
         ScriptAction {
             script: {
@@ -176,6 +184,17 @@ PopupWindow {
                 }
             }
         }
+        Playing {
+            id: player2
+            anchors {
+                bottom: notidate.top
+                right: parent.right
+                left: parent.left
+                margins: 10
+            }
+            implicitHeight: 200
+            opacity: notificationcenter.visible ? 1: 0
+        }
 
         ListView {
             id: notiList
@@ -185,7 +204,7 @@ PopupWindow {
             clip: true
             opacity: notificationcenter.visible ? 1 : 0
             anchors {
-                bottom: clearButton.top
+                bottom: player2.top
                 bottomMargin: 10
                 top: notificationRec.top
                 topMargin: 10
