@@ -34,7 +34,7 @@ PopupWindow {
             NumberAnimation {
                 target: playRec
                 property: "appOpacity"
-                duration: 250
+                duration: 150
                 from: 1
                 to: 0
                 easing.type: Easing.OutQuad
@@ -42,7 +42,7 @@ PopupWindow {
             NumberAnimation {
                 target: playRec
                 property: "imageOpacity"
-                duration: 250
+                duration: 150
                 from: 1
                 to: 0
                 easing.type: Easing.OutQuad
@@ -50,7 +50,15 @@ PopupWindow {
             NumberAnimation {
                 target: playRec
                 property: "songDetailsOpacity"
-                duration: 250
+                duration: 150
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: playRec
+                property: "songControlsOpacity"
+                duration: 150
                 from: 1
                 to: 0
                 easing.type: Easing.OutQuad
@@ -77,6 +85,7 @@ PopupWindow {
         appOpacity: playerPanel.visible ? 1 : 0
         imageOpacity: playerPanel.visible ? 1 : 0
         songDetailsOpacity: playerPanel.visible ? 1 : 0
+        songControlsOpacity: playerPanel.visible ? 1 : 0
         Behavior on implicitWidth {
             NumberAnimation {
                 duration: 250
@@ -91,13 +100,19 @@ PopupWindow {
         }
         Behavior on imageOpacity {
             NumberAnimation {
-                duration: 250
+                duration: 350
                 easing.type: Easing.OutQuad
             }
         }
         Behavior on songDetailsOpacity {
             NumberAnimation {
-                duration: 250
+                duration: 350
+                easing.type: Easing.OutQuad
+            }
+        }
+        Behavior on songControlsOpacity {
+            NumberAnimation {
+                duration: 350
                 easing.type: Easing.OutQuad
             }
         }

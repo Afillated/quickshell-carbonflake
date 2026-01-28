@@ -66,7 +66,6 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
-
         }
         ScriptAction {
             script: {
@@ -193,7 +192,14 @@ PopupWindow {
                 margins: 10
             }
             implicitHeight: 200
-            opacity: notificationcenter.visible ? 1: 0
+            opacity: notificationcenter.visible && player2.visible ? 1 : 0
+            visible: MprisPlayers.activePlayer
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
         }
 
         ListView {
@@ -277,7 +283,6 @@ PopupWindow {
                     easing.type: Easing.OutCubic
                 }
             }
-            
         }
     }
 }

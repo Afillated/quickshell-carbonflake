@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 import Quickshell
 import Quickshell.Widgets
+import Quickshell.Services.Mpris
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -23,6 +24,7 @@ Rectangle {
     property alias appOpacity: appInfo.opacity
     property alias imageOpacity: imageRec.opacity
     property alias songDetailsOpacity: songDetails.opacity
+    property alias songControlsOpacity: songControls.opacity
 
     RowLayout {
         id: appInfo
@@ -114,7 +116,7 @@ Rectangle {
         }
         Text {
             id: trackArtist
-            text: MprisPlayers.activePlayer.trackArtist 
+            text: MprisPlayers.activePlayer.trackArtist
             color: "#967373"
             Layout.maximumWidth: 250
             font {
@@ -136,6 +138,105 @@ Rectangle {
                 weight: 500
             }
             elide: Text.ElideRight
+        }
+    }
+
+    RowLayout {
+        id: songControls
+        spacing: 14
+        anchors {
+            bottom: parent.bottom
+            left: imageRec.right
+            leftMargin: 110
+            bottomMargin: 10
+        }
+        Text {
+            id: rewindButton
+            text: ""
+            color: if (rewindArea.containsMouse && MprisPlayers.activePlayer.canGoPrevious) {
+                return "#960000";
+            } else if (!MprisPlayers.activePlayer.canGoPrevious) {
+                return "#262626";
+            } else {
+                return "#967373";
+            }
+
+            font {
+                family: "Firacode Mono Nerd Font"
+                pixelSize: 20
+            }
+
+            MouseArea {
+                id: rewindArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: MprisPlayers.activePlayer.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                onClicked: MprisPlayers.activePlayer.previous()
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 250
+                }
+            }
+        }
+
+        Text {
+            id: playPauseButton
+            text: MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Playing ? "" : ""
+            color: if (pauseArea.containsMouse && MprisPlayers.activePlayer.canTogglePlaying) {
+                return "#960000";
+            } else if (!MprisPlayers.activePlayer.canTogglePlaying) {
+                return "#262626";
+            } else {
+                return "#967373";
+            }
+
+            font {
+                family: "Firacode Mono Nerd Font"
+                pixelSize: 20
+            }
+
+            MouseArea {
+                id: pauseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: MprisPlayers.activePlayer.canTogglePlaying ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                onClicked: MprisPlayers.activePlayer.togglePlaying()
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 250
+                }
+            }
+        }
+        Text {
+            id: forwardButton
+            text: ""
+            color: if (forwardArea.containsMouse && MprisPlayers.activePlayer.canGoNext) {
+                return "#960000";
+            } else if (!MprisPlayers.activePlayer.canGoNext) {
+                return "#262626";
+            } else {
+                return "#967373";
+            }
+
+            font {
+                family: "Firacode Mono Nerd Font"
+                pixelSize: 20
+            }
+
+            MouseArea {
+                id: forwardArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: MprisPlayers.activePlayer.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                onClicked: MprisPlayers.activePlayer.next()
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 250
+                }
+            }
         }
     }
 }
