@@ -10,6 +10,7 @@ Slider {
     to: MprisPlayers.activePlayer?.length
     stepSize: 1
     value: MprisPlayers.activePlayer?.position
+    snapMode: Slider.NoSnap
     onMoved: {
         MprisPlayers.activePlayer.position = value;
     }

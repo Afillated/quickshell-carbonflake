@@ -20,8 +20,8 @@ Rectangle {
     implicitWidth: MprisPlayers.activePlayer ? nowPlaying.width : 0
 
     function getIcon() {
-        if (DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry))
-            return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry).icon);
+        if (DesktopEntries.byId(MprisPlayers.selectedPlayer.desktopEntry))
+            return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.selectedPlayer.desktopEntry).icon);
         return null;
     }
 
@@ -48,7 +48,6 @@ Rectangle {
             Layout.alignment: Qt.AlignCenter
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
-            
 
             color: "#C10000"
             font {

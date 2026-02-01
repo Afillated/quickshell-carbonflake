@@ -46,6 +46,7 @@ Rectangle {
     property alias progressBarOpacity: progressBar.opacity
     property alias progressOpacity: progress.opacity
     property alias lengthOpacity: songLength.opacity
+    property int playerCount: MprisPlayers.activeIndex
 
     RowLayout {
         id: appInfo
@@ -73,7 +74,7 @@ Rectangle {
                 text: MprisPlayers.playerName
                 Layout.alignment: Qt.AlignCenter
 
-                color: appButton.containsMouse ? "#960000" : "#967373"
+                color: appButton.containsMouse && MprisPlayers.playerList.length > 1 ? "#960000" : "#967373"
                 font {
                     family: "Firacode Mono Nerd Font"
                     pixelSize: 18
@@ -89,8 +90,16 @@ Rectangle {
                 id: appButton
                 hoverEnabled: true
                 anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: MprisPlayers.activePlayer.raise()
+                cursorShape: MprisPlayers.playerList.length > 1 ? Qt.SizeVerCursor : Qt.ArrowCursor
+                onWheel: {
+                    if (wheel.angleDelta.y > 0) {
+                        playingRec.playerCount++;
+                    } else if (wheel.angleDelta.y < 0) {
+                        playingRec.playerCount--;
+                    }
+                    MprisPlayers.selectPlayer(playingRec.playerCount);
+                    wheel.accepted = true;
+                }
             }
         }
     }
@@ -167,8 +176,7 @@ Rectangle {
         spacing: 14
         anchors {
             bottom: parent.bottom
-            left: imageRec.right
-            leftMargin: 110
+            horizontalCenter: progressBar.horizontalCenter
             bottomMargin: 10
         }
         Text {
@@ -289,7 +297,6 @@ Rectangle {
         anchors {
             top: progressBar.bottom
             right: progressBar.right
-            // leftMargin: 10
         }
         color: "#967373"
         font {
