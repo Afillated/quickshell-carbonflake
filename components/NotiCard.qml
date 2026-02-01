@@ -27,7 +27,7 @@ Rectangle {
         id: closeMouseArea
         anchors.fill: parent
         hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
+        cursorShape: Qt.CrossCursor
         onClicked: {
             if (notiCard.noti && notiCard.noti.noti && notiCard.noti.noti.dismiss) {
                 notiCard.noti.noti.dismiss();

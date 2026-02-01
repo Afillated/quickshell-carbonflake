@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Shapes
 import qs.services
 
 Rectangle {
@@ -21,10 +22,30 @@ Rectangle {
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry).icon);
         return null;
     }
+
+    function formatSeconds(secs) {
+        var minutes = Math.floor(secs / 60);
+        var seconds = secs % 60;
+        var hours = Math.floor(minutes / 60);
+        minutes %= 60;
+
+        var pad = function (num) {
+            return (num < 10 ? '0' : '') + num;
+        };
+
+        if (hours > 0) {
+            return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+        } else {
+            return pad(minutes) + ':' + pad(seconds);
+        }
+    }
     property alias appOpacity: appInfo.opacity
     property alias imageOpacity: imageRec.opacity
     property alias songDetailsOpacity: songDetails.opacity
     property alias songControlsOpacity: songControls.opacity
+    property alias progressBarOpacity: progressBar.opacity
+    property alias progressOpacity: progress.opacity
+    property alias lengthOpacity: songLength.opacity
 
     RowLayout {
         id: appInfo
@@ -182,7 +203,15 @@ Rectangle {
 
         Text {
             id: playPauseButton
-            text: MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Playing ? "" : ""
+            text: {
+                if (MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Playing) {
+                    return "";
+                } else if (MprisPlayers.activePlayer.position === MprisPlayers.activePlayer.length && !MprisPlayers.activePlayer.canGoNext) {
+                    return "";
+                } else {
+                    return "";
+                }
+            }
             color: if (pauseArea.containsMouse && MprisPlayers.activePlayer.canTogglePlaying) {
                 return "#960000";
             } else if (!MprisPlayers.activePlayer.canTogglePlaying) {
@@ -237,6 +266,46 @@ Rectangle {
                     duration: 250
                 }
             }
+        }
+    }
+
+    Text {
+        id: progress
+        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer.position))
+        anchors {
+            top: progressBar.bottom
+            left: progressBar.left
+        }
+        color: "#967373"
+        font {
+            family: "Firacode Mono Nerd Font"
+            pixelSize: 14
+            weight: 500
+        }
+    }
+    Text {
+        id: songLength
+        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer.length))
+        anchors {
+            top: progressBar.bottom
+            right: progressBar.right
+            // leftMargin: 10
+        }
+        color: "#967373"
+        font {
+            family: "Firacode Mono Nerd Font"
+            pixelSize: 14
+            weight: 500
+        }
+    }
+
+    PlayerProgress {
+        id: progressBar
+        anchors {
+            bottom: songControls.top
+            left: imageRec.right
+            right: parent.right
+            margins: 10
         }
     }
 }
