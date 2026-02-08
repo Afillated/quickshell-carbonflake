@@ -20,7 +20,7 @@ Rectangle {
     implicitWidth: MprisPlayers.activePlayer ? nowPlaying.width : 0
 
     function getIcon() {
-        if (DesktopEntries.byId(MprisPlayers.selectedPlayer.desktopEntry))
+        if (DesktopEntries.byId(MprisPlayers.selectedPlayer?.desktopEntry))
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.selectedPlayer.desktopEntry).icon);
         return null;
     }
@@ -44,7 +44,7 @@ Rectangle {
         }
         Text {
             id: title
-            text: MprisPlayers.activePlayer.trackTitle
+            text: MprisPlayers.activePlayer?.trackTitle
             Layout.alignment: Qt.AlignCenter
             Layout.rightMargin: 12
             Layout.maximumWidth: 200

@@ -18,7 +18,7 @@ Rectangle {
 
     Slider {
         id: micSlider
-        value: Audio.defaultInput.audio.volume
+        value: Audio.defaultInput?.audio.volume
         from: 0
         to: 1
         stepSize: 0.01
@@ -60,7 +60,7 @@ Rectangle {
                         leftMargin: 30
                     }
                     color: "black"
-                    text: Math.trunc(Audio.defaultInput.audio.volume*100)
+                    text: Math.trunc(Audio.defaultInput?.audio.volume*100)
                 }
             }
         }
@@ -79,7 +79,7 @@ Rectangle {
 
     Slider {
         id: volumeSlider
-        value: Audio.defaultOutput.audio.volume
+        value: Audio.defaultOutput?.audio.volume
         from: 0
         to: 1
         stepSize: 0.01
@@ -122,7 +122,7 @@ Rectangle {
                         leftMargin: 30
                     }
                     color:  "black"
-                    text: Math.trunc(Audio.defaultOutput.audio.volume*100) 
+                    text: Math.trunc(Audio.defaultOutput?.audio.volume*100) 
                 }
             }
         }
@@ -154,13 +154,13 @@ Rectangle {
             topMargin:20
         }
 
-        color: Audio.defaultOutput.audio.volume === 0 || Audio.defaultOutput.audio.muted ? "#55967373" : "#AA0000"
+        color: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "#55967373" : "#AA0000"
 
         Text {
             anchors.centerIn: parent
-            text: Audio.defaultOutput.audio.volume === 0 || Audio.defaultOutput.audio.muted ? "󰝟" : "󰕾"
+            text: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "󰝟" : "󰕾"
             font.pixelSize: 24
-            color: Audio.defaultOutput.audio.volume === 0 || Audio.defaultOutput.audio.muted ? "#967373" : "#000000"
+            color: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "#967373" : "#000000"
         }
 
         MouseArea {
@@ -186,13 +186,13 @@ Rectangle {
             bottomMargin:20
         }
 
-        color: Audio.defaultInput.audio.volume === 0 || Audio.defaultInput.audio.muted ? "#55967373" : "#AA0000"
+        color: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "#55967373" : "#AA0000"
 
         Text {
             anchors.centerIn: parent
-            text: Audio.defaultInput.audio.volume === 0 || Audio.defaultInput.audio.muted ? "󰍭" : "󰍬"
+            text: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "󰍭" : "󰍬"
             font.pixelSize: 24
-            color: Audio.defaultInput.audio.volume === 0 || Audio.defaultInput.audio.muted ? "#967373" : "#000000"
+            color: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "#967373" : "#000000"
         }
 
         MouseArea {
