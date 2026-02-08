@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Services.Pipewire
 import qs.services
 
@@ -9,7 +10,7 @@ Rectangle {
     id: volumeRec
     color: "transparent"
     border {
-        color: "#CC960000" //"#668F8F8F"
+        color: "#CC960000" 
         width: 1.5
     }
     radius: 20
@@ -17,9 +18,9 @@ Rectangle {
 
     Slider {
         id: micSlider
-        value: Audio.defaultInVolume
+        value: Audio.defaultInput.audio.volume
         from: 0
-        to: 1.53
+        to: 1
         stepSize: 0.01
         live: true
         anchors {
@@ -30,7 +31,7 @@ Rectangle {
             right: parent.right
             rightMargin: 70
         }
-        background: Rectangle {
+        background: ClippingRectangle {
             implicitHeight: 30
             radius: 30
             color: "#55967373"
@@ -71,14 +72,14 @@ Rectangle {
             radius: 20
             color: "transparent"
         }
-        onValueChanged: {
+        onMoved: {
             Audio.defaultInput.audio.volume = value;
         }
     }
 
     Slider {
         id: volumeSlider
-        value: Audio.defaultOutVolume
+        value: Audio.defaultOutput.audio.volume
         from: 0
         to: 1
         stepSize: 0.01
@@ -91,7 +92,7 @@ Rectangle {
             right: parent.right
             rightMargin: 70
         }
-        background: Rectangle {
+        background: ClippingRectangle {
             implicitHeight: 30
             radius: 30
             color: "#55967373"
@@ -134,7 +135,7 @@ Rectangle {
             color: "transparent"
             
         }
-        onValueChanged: {
+        onMoved: {
             Audio.defaultOutput.audio.volume = value;
         }
     }

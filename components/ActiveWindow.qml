@@ -17,7 +17,7 @@ Rectangle {
     }
 
     implicitHeight: 30
-    implicitWidth: activeWindow.width 
+    implicitWidth: activeWindow.width
 
     property bool showDesktop: Hyprland.focusedWorkspace?.toplevels.values.length == 0 || ToplevelManager.activeToplevel == null
     property bool showIcon: !activeWindowRec.showDesktop && (DesktopEntries.byId(ToplevelManager.activeToplevel?.appId) || DesktopEntries.byId(ToplevelManager.activeToplevel?.title))
@@ -37,12 +37,11 @@ Rectangle {
         return null;
     }
 
-    
     RowLayout {
         id: activeWindow
         spacing: 8
         Layout.alignment: Qt.AlignCenter
-        
+
         Loader {
             active: activeWindowRec.showIcon
             Layout.leftMargin: 10
@@ -57,22 +56,24 @@ Rectangle {
             id: appId
             Layout.alignment: Qt.AlignCenter
             Layout.rightMargin: 12
-            text: activeWindowRec.showDesktop ? "desktop" : ToplevelManager.activeToplevel.appId
+            Layout.maximumWidth: 200
+            elide: Text.ElideRight
+            text: activeWindowRec.showDesktop ? "desktop" : ToplevelManager.activeToplevel?.appId
             color: "#C10000"
             font {
                 family: "Firacode Mono Nerd Font"
                 pixelSize: 20
             }
             Behavior on text {
-                SequentialAnimation{
-                    NumberAnimation{
+                SequentialAnimation {
+                    NumberAnimation {
                         property: "opacity"
                         target: appId
                         to: 0
                         easing.type: Easing.OutQuad
                         duration: 10
                     }
-                    NumberAnimation{
+                    NumberAnimation {
                         property: "opacity"
                         target: appId
                         to: 1

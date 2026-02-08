@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick
 import Quickshell.Io
+import qs.services
 
 RowLayout {
     id: sessionBar
@@ -32,7 +33,8 @@ RowLayout {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onClicked: Quickshell.execDetached(["hyprlock"])
+            // onClicked: Quickshell.execDetached(["hyprlock"])
+            onClicked: LockContext.locked = true
         }
     }
     Button {

@@ -191,13 +191,19 @@ PopupWindow {
                 left: parent.left
                 margins: 10
             }
-            implicitHeight: 200
+            implicitHeight: player2.visible ? 200 : 0
             opacity: notificationcenter.visible && player2.visible ? 1 : 0
             visible: MprisPlayers.activePlayer
             Behavior on opacity {
                 NumberAnimation {
                     easing.type: Easing.OutQuad
                     duration: 250
+                }
+            }
+            Behavior on implicitHeight {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutQuad
                 }
             }
         }

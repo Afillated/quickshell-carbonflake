@@ -1,8 +1,7 @@
 import Quickshell
 import qs.widgets
 
-
-Scope{
+ShellRoot {
     Bar {}
-
+    LockRoot{}
 }

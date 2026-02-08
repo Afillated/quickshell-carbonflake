@@ -18,7 +18,7 @@ Rectangle {
         color: "#CC960000"
     }
     function getIcon() {
-        if (DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry))
+        if (DesktopEntries.byId(MprisPlayers.activePlayer?.desktopEntry))
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry).icon);
         return null;
     }
@@ -66,6 +66,7 @@ Rectangle {
             }
         }
         Rectangle {
+            id: appNameRec
             color: "transparent"
             implicitWidth: appName.width
             implicitHeight: appName.height
@@ -117,7 +118,7 @@ Rectangle {
         }
         Image {
             id: trackArt
-            source: qsTr(MprisPlayers.activePlayer.trackArtUrl || "")
+            source: qsTr(MprisPlayers.activePlayer?.trackArtUrl || "")
             fillMode: Image.PreserveAspectCrop
             anchors.fill: parent
         }
@@ -134,7 +135,7 @@ Rectangle {
         }
         Text {
             id: trackTitle
-            text: MprisPlayers.activePlayer.trackTitle
+            text: MprisPlayers.activePlayer?.trackTitle
             color: "#967373"
             Layout.maximumWidth: 250
             font {
@@ -146,7 +147,7 @@ Rectangle {
         }
         Text {
             id: trackArtist
-            text: MprisPlayers.activePlayer.trackArtist
+            text: MprisPlayers.activePlayer?.trackArtist
             color: "#967373"
             Layout.maximumWidth: 250
             font {
@@ -159,7 +160,7 @@ Rectangle {
 
         Text {
             id: trackAlbum
-            text: MprisPlayers.activePlayer.trackAlbum
+            text: MprisPlayers.activePlayer?.trackAlbum
             color: "#967373"
             Layout.maximumWidth: 250
             font {
@@ -182,9 +183,9 @@ Rectangle {
         Text {
             id: rewindButton
             text: ""
-            color: if (rewindArea.containsMouse && MprisPlayers.activePlayer.canGoPrevious) {
+            color: if (rewindArea.containsMouse && MprisPlayers.activePlayer?.canGoPrevious) {
                 return "#960000";
-            } else if (!MprisPlayers.activePlayer.canGoPrevious) {
+            } else if (!MprisPlayers.activePlayer?.canGoPrevious) {
                 return "#262626";
             } else {
                 return "#967373";
@@ -199,7 +200,7 @@ Rectangle {
                 id: rewindArea
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: MprisPlayers.activePlayer.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                cursorShape: MprisPlayers.activePlayer?.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: MprisPlayers.activePlayer.previous()
             }
             Behavior on color {
@@ -212,17 +213,17 @@ Rectangle {
         Text {
             id: playPauseButton
             text: {
-                if (MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Playing) {
+                if (MprisPlayers.activePlayer?.playbackState === MprisPlaybackState.Playing) {
                     return "";
-                } else if (MprisPlayers.activePlayer.position === MprisPlayers.activePlayer.length && !MprisPlayers.activePlayer.canGoNext) {
+                } else if (MprisPlayers.activePlayer?.position === MprisPlayers.activePlayer?.length && !MprisPlayers.activePlayer?.canGoNext) {
                     return "";
                 } else {
                     return "";
                 }
             }
-            color: if (pauseArea.containsMouse && MprisPlayers.activePlayer.canTogglePlaying) {
+            color: if (pauseArea.containsMouse && MprisPlayers.activePlayer?.canTogglePlaying) {
                 return "#960000";
-            } else if (!MprisPlayers.activePlayer.canTogglePlaying) {
+            } else if (!MprisPlayers.activePlayer?.canTogglePlaying) {
                 return "#262626";
             } else {
                 return "#967373";
@@ -237,7 +238,7 @@ Rectangle {
                 id: pauseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: MprisPlayers.activePlayer.canTogglePlaying ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                cursorShape: MprisPlayers.activePlayer?.canTogglePlaying ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: MprisPlayers.activePlayer.togglePlaying()
             }
             Behavior on color {
@@ -249,9 +250,9 @@ Rectangle {
         Text {
             id: forwardButton
             text: ""
-            color: if (forwardArea.containsMouse && MprisPlayers.activePlayer.canGoNext) {
+            color: if (forwardArea.containsMouse && MprisPlayers.activePlayer?.canGoNext) {
                 return "#960000";
-            } else if (!MprisPlayers.activePlayer.canGoNext) {
+            } else if (!MprisPlayers.activePlayer?.canGoNext) {
                 return "#262626";
             } else {
                 return "#967373";
@@ -266,7 +267,7 @@ Rectangle {
                 id: forwardArea
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: MprisPlayers.activePlayer.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: MprisPlayers.activePlayer.next()
             }
             Behavior on color {
@@ -279,7 +280,7 @@ Rectangle {
 
     Text {
         id: progress
-        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer.position))
+        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer?.position))
         anchors {
             top: progressBar.bottom
             left: progressBar.left
@@ -293,7 +294,7 @@ Rectangle {
     }
     Text {
         id: songLength
-        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer.length))
+        text: playingRec.formatSeconds(Math.floor(MprisPlayers.activePlayer?.length))
         anchors {
             top: progressBar.bottom
             right: progressBar.right
