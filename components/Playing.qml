@@ -46,6 +46,7 @@ Rectangle {
     property alias progressBarOpacity: progressBar.opacity
     property alias progressOpacity: progress.opacity
     property alias lengthOpacity: songLength.opacity
+    property alias imageCircle: imageRec
     property int playerCount: MprisPlayers.activeIndex
 
     RowLayout {
@@ -127,6 +128,7 @@ Rectangle {
     ColumnLayout {
         id: songDetails
         spacing: 0
+        Layout.fillWidth: true
         anchors {
             left: imageRec.right
             leftMargin: 10
