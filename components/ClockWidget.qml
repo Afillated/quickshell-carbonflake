@@ -1,4 +1,3 @@
-// ClockWidget.qml
 import QtQuick
 import Quickshell
 import QtQuick.Controls

@@ -1,0 +1,143 @@
+pragma ComponentBehavior: Bound
+
+import Quickshell
+import qs.services
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+
+Rectangle {
+    id: notificationRec
+    color: "#33000000"
+    radius: 12
+    border {
+        width: 3
+        color: "#960000"
+    }
+    ColumnLayout {
+        id: noNoti
+        anchors.centerIn: parent
+        visible: NotiServer.items.count === 0
+        Text {
+            Layout.alignment: Qt.AlignHCenter
+            text: "No notifications"
+            color: "#967373"
+            font {
+                pixelSize: 20
+                family: "Firacode Mono Nerd Font"
+            }
+        }
+    }
+    Rectangle {
+        id: clearButton
+        color: "transparent"
+        implicitHeight: 25
+        implicitWidth: clearAllText.width + 20
+        radius: 10
+        anchors {
+            right: parent.right
+            rightMargin: 10
+            bottom: parent.bottom
+            bottomMargin: 12
+        }
+        MouseArea {
+            id: clearall
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: NotiServer.clearNotifications()
+        }
+        Text {
+            id: clearAllText
+            text: "  Clear All (" + NotiServer.items.count + ")"
+            color: clearall.containsMouse ? "#960000" : "#967373"
+            anchors.centerIn: parent
+            font.family: "Firacode Mono Nerd Font"
+            font.pixelSize: 14
+            Behavior on color {
+                ColorAnimation {
+                    duration: 250
+                }
+            }
+        }
+    }
+
+    ListView {
+        id: notiList
+        spacing: 10
+        model: NotiServer.items
+        orientation: ListView.Vertical
+        clip: true
+        anchors {
+            top: parent.top
+            right: parent.right
+            left: parent.left
+            bottom: clearButton.top
+            margins: 10
+        }
+
+        delegate: NotiCard {
+            required property var modelData
+            required property int index
+            width: notiList.width
+
+            noti: modelData
+        }
+
+        add: Transition {
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "height"
+                    from: 0
+                    duration: 250
+                    easing.type: Easing.OutBack
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.8
+                    to: 1
+                    duration: 250
+                    easing.type: Easing.OutBack
+                }
+            }
+        }
+
+        remove: Transition {
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "height"
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.InCubic
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    to: 0
+                    duration: 150
+                    easing.type: Easing.InCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    to: 0.8
+                    duration: 200
+                    easing.type: Easing.InCubic
+                }
+            }
+        }
+
+        displaced: Transition {
+            NumberAnimation {
+                properties: "x,y"
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
+    }
+}

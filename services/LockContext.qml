@@ -7,15 +7,21 @@ import Quickshell.Services.Pam
 
 Singleton {
     id: root
-    signal unlocked()
-    signal failed()
+    signal unlocked
+    signal failed
 
     property string currentText: ""
     property bool unlockInProgress: false
     property bool showFailure: false
+    property bool showSuccess: false
     property bool locked: false
 
     onCurrentTextChanged: showFailure = false
+    onLockedChanged: {
+        if (root.locked === true) {
+            root.showSuccess = false;
+        }
+    }
 
     function tryUnlock() {
         if (currentText === "")
@@ -35,13 +41,13 @@ Singleton {
         onCompleted: result => {
             if (result == PamResult.Success) {
                 root.unlocked();
-                root.locked = false;
-                root.currentText= "";
+                // root.locked = false;
+                root.showSuccess = true;
+                root.currentText = "";
             } else {
                 root.currentText = "";
                 root.showFailure = true;
             }
-
             root.unlockInProgress = false;
         }
     }

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
@@ -18,43 +20,151 @@ Rectangle {
         id: lockBG
         captureSource: Quickshell.screens[0]
         anchors.fill: parent
-    }
-    ShaderEffectSource {
-        id: bgTexture
-        sourceItem: lockBG
-        anchors.fill: parent
-    }
 
-    FastBlur {
-        id: bgBlur
-        anchors.fill: parent
-        source: bgTexture
-        radius: 0
-
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.1
+        property int blurSize
+        live: false
+        layer.enabled: true
+        layer.effect: FastBlur {
+            source: lockBG
+            radius: lockBG.blurSize
         }
     }
 
-    NumberAnimation {
-        target: bgBlur
-        property: "radius"
-        from: 0
-        to: 128
-        duration: 250
-        easing.type: Easing.InCirc
+    ParallelAnimation {
+        id: lockAnim
         running: LockContext.locked === true
+        NumberAnimation {
+            target: lockBG
+            property: "blurSize"
+            from: 0
+            to: 64
+            duration: 250
+            easing.type: Easing.InCirc
+        }
+        NumberAnimation {
+            target: date
+            property: "opacity"
+            from: 0
+            to: 1
+            duration: 400
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: time
+            property: "opacity"
+            duration: 400
+            from: 0
+            to: 1
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: username
+            property: "opacity"
+            duration: 400
+            from: 0
+            to: 1
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: passwordArea
+            property: "opacity"
+            duration: 400
+            from: 0
+            to: 1
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: nowBar
+            property: "opacity"
+            duration: 400
+            from: 0
+            to: 1
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: notiToggle
+            property: "opacity"
+            duration: 400
+            from: 0
+            to: 1
+            easing.type: Easing.OutQuad
+        }
     }
-    NumberAnimation {
-        target: lockBG
-        property: "opacity"
-        from: 0
-        to: 1
-        duration: 250
-        easing.type: Easing.InCirc
-        running: LockContext.locked === true
+
+    SequentialAnimation {
+        id: unlockAnim
+        running: LockContext.showSuccess === true
+        ParallelAnimation {
+            NumberAnimation {
+                target: date
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: time
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: username
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: passwordArea
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: nowBar
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: notiToggle
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: lockBG
+                property: "blurSize"
+                from: 64
+                to: 0
+                duration: 250
+                easing.type: Easing.InCirc
+            }
+            // NumberAnimation {
+            //     target: lockBG
+            //     property: "opacity"
+            //     from: 1
+            //     to: 0
+            //     duration: 250
+            //     easing.type: Easing.InCirc
+            // }
+        }
+        ScriptAction {
+            script: {
+                LockContext.locked = false;
+            }
+        }
     }
     Text {
         id: date
@@ -157,9 +267,9 @@ Rectangle {
             visible: LockContext.showFailure
             anchors.centerIn: parent
             color: "#967373"
-            opacity: LockContext.showFailure? 0.6: 0
-            Behavior on opacity{
-                NumberAnimation{
+            opacity: LockContext.showFailure ? 0.6 : 0
+            Behavior on opacity {
+                NumberAnimation {
                     duration: 200
                     easing.type: Easing.InCirc
                 }
@@ -171,7 +281,7 @@ Rectangle {
 
     Rectangle {
         id: nowBar // I said it lol
-        color: "transparent"
+        color: "#33000000"
         anchors {
             bottom: parent.bottom
             bottomMargin: 50
@@ -207,7 +317,7 @@ Rectangle {
                 MouseArea {
                     hoverEnabled: true
                     anchors.fill: parent
-                    onClicked: if (nowBar.opacity != 0) {
+                    onClicked: if (nowBar.visible === true) {
                         expandAnim.start();
                     }
                     cursorShape: nowBar.opacity != 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -351,7 +461,7 @@ Rectangle {
         id: player3
         opacity: 0
         visible: false
-        color: "transparent"
+        color: "#33000000"
         anchors {
             bottom: nowBar.bottom
             horizontalCenter: nowBar.horizontalCenter
@@ -378,7 +488,9 @@ Rectangle {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: minimiseAnim.start()
+                onClicked: if (nowBar.visible === false) {
+                    minimiseAnim.start();
+                }
             }
         }
     }
@@ -431,7 +543,7 @@ Rectangle {
                 property: "songDetailsOpacity"
                 from: 0
                 to: 1
-                duration: 400
+                duration: 600
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
@@ -471,24 +583,24 @@ Rectangle {
                 property: "opacity"
                 from: 1
                 to: 0
-                duration: 10
+                duration: 100
                 easing.type: Easing.OutQuad
             }
         }
 
         ScriptAction {
             script: {
-                nowBar.visible = 0;
+                nowBar.visible = false;
             }
         }
     }
 
     SequentialAnimation {
         id: minimiseAnim
-        ScriptAction{
-            script:{
-            nowBar.visible = true
-        }
+        ScriptAction {
+            script: {
+                nowBar.visible = true;
+            }
         }
         ParallelAnimation {
             NumberAnimation {
@@ -569,7 +681,7 @@ Rectangle {
                 property: "opacity"
                 to: 1
                 from: 0
-                duration: 500
+                duration: 400
                 easing.type: Easing.OutQuad
             }
         }
@@ -577,7 +689,50 @@ Rectangle {
         ScriptAction {
             script: {
                 player3.visible = false;
-                nowBar.border.color = "#960000"
+                nowBar.border.color = "#960000";
+            }
+        }
+    }
+
+    Rectangle {
+        id: notiToggle
+        radius: 8
+        implicitHeight: 100
+        implicitWidth: 20
+        color: area7.containsMouse ? "#E6000000" : "transparent"
+        border {
+            color: "#960000"
+            width: 2
+        }
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: 10
+        }
+        MouseArea {
+            id: area7
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            anchors.fill: parent
+            onClicked: {
+                if (notificationcenter.x < 0) {
+                    notificationcenter.x = notiToggle.x + notiToggle.width + 20;
+                } else if (notificationcenter.x > 0) {
+                    notificationcenter.x = -notificationcenter.width;
+                }
+            }
+        }
+    }
+    LockNoti {
+        id: notificationcenter
+        x: -notificationcenter.width
+        anchors.verticalCenter: parent.verticalCenter
+        implicitWidth: 500
+        implicitHeight: 900
+        Behavior on x {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.OutQuad
             }
         }
     }
