@@ -136,6 +136,14 @@ Rectangle {
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
+                target: player3
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
                 target: notiToggle
                 property: "opacity"
                 duration: 250
@@ -151,14 +159,6 @@ Rectangle {
                 duration: 250
                 easing.type: Easing.InCirc
             }
-            // NumberAnimation {
-            //     target: lockBG
-            //     property: "opacity"
-            //     from: 1
-            //     to: 0
-            //     duration: 250
-            //     easing.type: Easing.InCirc
-            // }
         }
         ScriptAction {
             script: {
@@ -697,8 +697,9 @@ Rectangle {
     Rectangle {
         id: notiToggle
         radius: 8
-        implicitHeight: 100
-        implicitWidth: 20
+        implicitHeight: 200
+        implicitWidth: 36
+        visible: NotiServer.items.count != 0 || notificationcenter.x === notiToggle.x + notiToggle.width + 20
         color: area7.containsMouse ? "#E6000000" : "transparent"
         border {
             color: "#960000"
@@ -709,11 +710,28 @@ Rectangle {
             left: parent.left
             leftMargin: 10
         }
+
+        ListView {
+            id: notiList
+            spacing: 4
+            model: NotiServer.items
+            orientation: ListView.Vertical
+            clip: true
+            anchors.fill: parent
+            anchors.margins: 3
+            delegate: NotiIcons {
+                required property var modelData
+                required property int index
+
+                noti: modelData
+            }
+        }
         MouseArea {
             id: area7
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
+            z: 2
             onClicked: {
                 if (notificationcenter.x < 0) {
                     notificationcenter.x = notiToggle.x + notiToggle.width + 20;
