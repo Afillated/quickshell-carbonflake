@@ -20,6 +20,7 @@ Rectangle {
         id: lockBG
         captureSource: Quickshell.screens[0]
         anchors.fill: parent
+        visible: LockContext.locked
 
         property int blurSize
         live: false
@@ -28,6 +29,7 @@ Rectangle {
             source: lockBG
             radius: lockBG.blurSize
         }
+        
     }
 
     ParallelAnimation {
@@ -36,8 +38,16 @@ Rectangle {
         NumberAnimation {
             target: lockBG
             property: "blurSize"
-            from: 0
+            from: 1
             to: 64
+            duration: 250
+            easing.type: Easing.InCirc
+        }
+        NumberAnimation {
+            target: lockBG
+            property: "opacity"
+            from: 0.5
+            to: 1
             duration: 250
             easing.type: Easing.InCirc
         }
