@@ -38,7 +38,7 @@ Rectangle {
         NumberAnimation {
             target: lockBG
             property: "blurSize"
-            from: 1
+            from: 0
             to: 64
             duration: 250
             easing.type: Easing.InCirc
@@ -46,7 +46,7 @@ Rectangle {
         NumberAnimation {
             target: lockBG
             property: "opacity"
-            from: 0.5
+            from: 0.8
             to: 1
             duration: 250
             easing.type: Easing.InCirc
