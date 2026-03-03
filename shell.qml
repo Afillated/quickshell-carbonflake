@@ -4,4 +4,5 @@ import qs.widgets
 ShellRoot {
     Bar {}
     LockRoot{}
+    SessionWindow {}
 }
