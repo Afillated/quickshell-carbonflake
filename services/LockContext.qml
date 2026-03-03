@@ -29,6 +29,13 @@ Singleton {
         root.unlockInProgress = true;
         pam.start();
     }
+    IpcHandler {
+        target: "lockscreen"
+
+        function lock(): void {
+            root.locked = true;
+        }
+    }
 
     PamContext {
         id: pam
@@ -41,7 +48,6 @@ Singleton {
         onCompleted: result => {
             if (result == PamResult.Success) {
                 root.unlocked();
-                // root.locked = false;
                 root.showSuccess = true;
                 root.currentText = "";
             } else {

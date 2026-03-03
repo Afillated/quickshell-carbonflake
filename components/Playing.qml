@@ -139,7 +139,7 @@ Rectangle {
             id: trackTitle
             text: MprisPlayers.activePlayer?.trackTitle
             color: "#967373"
-            Layout.maximumWidth: 250
+            Layout.maximumWidth: 200
             font {
                 family: "Firacode Mono Nerd Font"
                 pixelSize: 18

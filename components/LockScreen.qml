@@ -27,7 +27,7 @@ Rectangle {
         layer.enabled: true
         layer.effect: FastBlur {
             source: lockBG
-            radius: lockBG.blurSize
+            radius: LockContext.locked ? lockBG.blurSize : 0
         }
         
     }
@@ -46,8 +46,8 @@ Rectangle {
         NumberAnimation {
             target: lockBG
             property: "opacity"
-            from: 0.8
-            to: 1
+            from: 0.4
+            to: 0.6
             duration: 250
             easing.type: Easing.InCirc
         }
@@ -106,15 +106,23 @@ Rectangle {
         running: LockContext.showSuccess === true
         ParallelAnimation {
             NumberAnimation {
-                target: date
+                target: lockBG
                 property: "opacity"
-                from: 1
-                to: 0
+                from: 0.6
+                to: 0.4
                 duration: 250
-                easing.type: Easing.OutQuad
+                easing.type: Easing.InCirc
             }
             NumberAnimation {
                 target: time
+                property: "opacity"
+                duration: 250
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: date
                 property: "opacity"
                 duration: 250
                 from: 1

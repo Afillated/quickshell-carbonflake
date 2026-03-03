@@ -4,17 +4,18 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Widgets
 import qs.services
 import Quickshell.Services.Mpris
 
-Rectangle {
+ClippingRectangle{
     id: nowRec
     color: "#E6000000"
     radius: 15
     clip: true
     border {
         color: "#CC960000"
-        width: 1.5
+        width: 3/2
     }
     implicitHeight: 30
     implicitWidth: MprisPlayers.activePlayer ? nowPlaying.width : 0
