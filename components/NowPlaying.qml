@@ -8,14 +8,14 @@ import Quickshell.Widgets
 import qs.services
 import Quickshell.Services.Mpris
 
-ClippingRectangle{
+ClippingRectangle {
     id: nowRec
     color: "#E6000000"
     radius: 15
     clip: true
     border {
         color: "#CC960000"
-        width: 3/2
+        width: 3 / 2
     }
     implicitHeight: 30
     implicitWidth: MprisPlayers.activePlayer ? nowPlaying.width : 0
@@ -68,7 +68,7 @@ ClippingRectangle{
 
     ParallelAnimation {
         id: playAnim
-        running: MprisPlayers.activePlayer && MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Playing
+        running: MprisPlayers.activePlayer
         NumberAnimation {
             target: nowRec
             property: "implicitWidth"
@@ -86,8 +86,7 @@ ClippingRectangle{
 
     ParallelAnimation {
         id: pauseAnim
-        running: MprisPlayers.activePlayer && MprisPlayers.activePlayer.playbackState === MprisPlaybackState.Paused
-
+        running: !MprisPlayers.activePlayer
         NumberAnimation {
             target: nowRec
             property: "implicitWidth"

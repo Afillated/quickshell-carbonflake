@@ -22,6 +22,7 @@ PopupWindow {
     }
     SequentialAnimation {
         id: closeAnim
+        running: playRec.visible === false
         ParallelAnimation {
             NumberAnimation {
                 target: playRec

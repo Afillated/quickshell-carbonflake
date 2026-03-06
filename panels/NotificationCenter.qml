@@ -183,30 +183,6 @@ PopupWindow {
                 }
             }
         }
-        Playing {
-            id: player2
-            anchors {
-                bottom: notidate.top
-                right: parent.right
-                left: parent.left
-                margins: 10
-            }
-            implicitHeight: player2.visible ? 200 : 0
-            opacity: notificationcenter.visible && player2.visible ? 1 : 0
-            visible: MprisPlayers.activePlayer
-            Behavior on opacity {
-                NumberAnimation {
-                    easing.type: Easing.OutQuad
-                    duration: 250
-                }
-            }
-            Behavior on implicitHeight {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.OutQuad
-                }
-            }
-        }
 
         ListView {
             id: notiList
@@ -216,7 +192,7 @@ PopupWindow {
             clip: true
             opacity: notificationcenter.visible ? 1 : 0
             anchors {
-                bottom: player2.top
+                bottom: notidate.top
                 bottomMargin: 10
                 top: notificationRec.top
                 topMargin: 10

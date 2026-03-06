@@ -13,6 +13,7 @@ Rectangle {
     id: playingRec
     color: "#E6000000"
     radius: 15
+    visible: MprisPlayers.activePlayer
     border {
         width: 1.5
         color: "#CC960000"

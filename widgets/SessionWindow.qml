@@ -37,6 +37,7 @@ Scope {
                 sequence: "Escape"
                 onActivated: {
                     sessionPanel.visible = false;
+                    lockButton.focus = true;
                 }
             }
             ClippingRectangle {
@@ -49,7 +50,7 @@ Scope {
                     width: 2
                     color: "#CC960000"
                 }
-                color: "#AA000000"
+                color: "#BB000000"
                 Rectangle {
                     id: userDetails
                     anchors {
@@ -58,7 +59,7 @@ Scope {
                         left: parent.left
                     }
                     implicitHeight: parent.height / 6
-                    color: "#88000000"
+                    color: "transparent"
                     Text {
                         id: username
                         text: Username.user
@@ -275,7 +276,7 @@ Scope {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
                         KeyNavigation.left: restartButton
-                        Keys.onReturnPressed: Quickshell.execDetached(["uwsm","stop"])
+                        Keys.onReturnPressed: Quickshell.execDetached(["uwsm", "stop"])
                     }
                 }
             }

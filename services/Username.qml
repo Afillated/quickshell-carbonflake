@@ -8,7 +8,10 @@ import QtQuick
 Singleton {
     id: username
     property string user
-    property string uptime
+    property string uptime: {
+        let seconds = parseFloat(cat.text().split(" ")[0]);
+        return username.formatSeconds(Math.floor(seconds));
+    }
 
     Process {
         running: true
@@ -23,23 +26,24 @@ Singleton {
         var seconds = secs % 60;
         var hours = Math.floor(minutes / 60);
         minutes %= 60;
-
         var pad = function (num) {
             return (num < 10 ? '0' : '') + num;
         };
-
         if (hours > 0) {
             return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
         } else {
             return pad(minutes) + ':' + pad(seconds);
         }
     }
-    Process {
+
+    FileView {
+        id: cat
+        path: Qt.resolvedUrl("/proc/uptime")
+    }
+    Timer {
+        interval: 1000
         running: true
-        onRunningChanged: if (!running) running = true
-        command: ["sh", "-c", "cat /proc/uptime | cut -d ' ' -f1"]
-        stdout: StdioCollector {
-            onStreamFinished: username.uptime = username.formatSeconds(Math.floor(this.text.trim()));
-        }
+        repeat: true
+        onTriggered: cat.reload()
     }
 }
