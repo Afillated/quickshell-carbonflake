@@ -1,5 +1,3 @@
-// Bar.qml
-
 import Quickshell
 import QtQuick 2.0
 import qs.components
@@ -117,7 +115,7 @@ Scope {
                 id: quickPanel1
                 anchor {
                     window: mainBar
-                    rect.x: 1910
+                    rect.x: mainBar.modelData.width - 10
                     rect.y: -11
                 }
             }

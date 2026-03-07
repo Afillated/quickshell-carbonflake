@@ -70,7 +70,7 @@ Scope {
                             leftMargin: 8
                         }
                         font {
-                            family: "Firacode Mono Nerd Font"
+                            family: "Comfortaa"
                             pixelSize: 18
                             weight: 420
                         }
@@ -85,7 +85,7 @@ Scope {
                             rightMargin: 8
                         }
                         font {
-                            family: "Firacode Mono Nerd Font"
+                            family: "Comfortaa"
                             pixelSize: 18
                             weight: 420
                         }

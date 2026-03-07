@@ -9,12 +9,38 @@ import qs.services
 Rectangle {
     id: volumeRec
     color: "transparent"
+    signal open
     border {
         color: "#CC960000" 
         width: 1.5
     }
     radius: 20
     implicitHeight: 120
+    Rectangle {
+        id: openButton
+        color: area.containsMouse ? "#CC111111":"transparent"
+        radius: 15
+        implicitHeight: 30
+        implicitWidth: 30
+        anchors {
+            right: volumeSlider.right
+            verticalCenter: volumeSlider.verticalCenter
+        }
+        z: 1
+        MouseArea {
+            id: area
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            anchors.fill: parent
+            onClicked: volumeRec.open()
+        }
+        Text {
+            anchors.centerIn: parent
+            text: "󰇙"
+            font.pixelSize: 24
+            color: "#967373"
+        }
+    }
 
     Slider {
         id: micSlider

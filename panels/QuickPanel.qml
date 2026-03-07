@@ -58,10 +58,18 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: mixer
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
         }
         ScriptAction {
             script: {
                 quickPanel.visible = false;
+                mixer.state = "";
             }
         }
     }
@@ -85,6 +93,45 @@ PopupWindow {
                 easing.type: Easing.OutQuad
             }
         }
+        Mixer {
+            id: mixer
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.right
+                right: undefined
+                margins: 10
+            }
+            node: Audio.defaultOutput
+            width: parent.width - 20
+            opacity: state === "open" || quickPanel.visible ? 1 : 0
+            visible: opacity > 0
+            z: 1
+
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+            onClose: {
+                state = "";
+            }
+            states: State {
+                name: "open"
+                AnchorChanges {
+                    target: mixer
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                }
+            }
+            transitions: Transition {
+                AnchorAnimation {
+                    duration: 200
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
 
         VolumeMenu {
             id: volumeRockers
@@ -94,6 +141,9 @@ PopupWindow {
                 left: parent.left
                 bottom: fullName.top
                 margins: 10
+            }
+            onOpen: {
+                mixer.state = "open";
             }
             Behavior on opacity {
                 NumberAnimation {
@@ -115,7 +165,7 @@ PopupWindow {
                 leftMargin: 16
             }
             font {
-                family: "Firacode Mono Nerd Font"
+                family: "Comfortaa"
                 pixelSize: 20
             }
             Behavior on opacity {
