@@ -59,7 +59,14 @@ PopupWindow {
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
-                target: mixer
+                target: mixerSink
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: mixerSource
                 property: "opacity"
                 to: 0
                 duration: 250
@@ -69,7 +76,8 @@ PopupWindow {
         ScriptAction {
             script: {
                 quickPanel.visible = false;
-                mixer.state = "";
+                mixerSource.state = "";
+                mixerSink.state = "";
             }
         }
     }
@@ -94,7 +102,7 @@ PopupWindow {
             }
         }
         Mixer {
-            id: mixer
+            id: mixerSource
             anchors {
                 top: parent.top
                 bottom: parent.bottom
@@ -103,6 +111,7 @@ PopupWindow {
                 margins: 10
             }
             node: Audio.defaultOutput
+            title: "Playback"
             width: parent.width - 20
             opacity: state === "open" || quickPanel.visible ? 1 : 0
             visible: opacity > 0
@@ -117,10 +126,57 @@ PopupWindow {
             onClose: {
                 state = "";
             }
+            onChange: {
+                state = "";
+                mixerSink.state = "open";
+            }
             states: State {
                 name: "open"
                 AnchorChanges {
-                    target: mixer
+                    target: mixerSource
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                }
+            }
+            transitions: Transition {
+                AnchorAnimation {
+                    duration: 200
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+        Mixer {
+            id: mixerSink
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.right
+                right: undefined
+                margins: 10
+            }
+            node: Audio.defaultInput
+            title: "Recording"
+            width: parent.width - 20
+            opacity: state === "open" || quickPanel.visible ? 1 : 0
+            visible: opacity > 0
+            z: 1
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+            onClose: {
+                state = "";
+            }
+            onChange: {
+                state = "";
+                mixerSource.state = "open";
+            }
+            states: State {
+                name: "open"
+                AnchorChanges {
+                    target: mixerSink
                     anchors.right: parent.right
                     anchors.left: parent.left
                 }
@@ -143,7 +199,10 @@ PopupWindow {
                 margins: 10
             }
             onOpen: {
-                mixer.state = "open";
+                mixerSource.state = "open";
+            }
+            onOpen2: {
+                mixerSink.state = "open";
             }
             Behavior on opacity {
                 NumberAnimation {

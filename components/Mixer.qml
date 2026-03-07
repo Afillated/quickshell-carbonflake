@@ -13,51 +13,98 @@ ClippingRectangle {
     radius: 10
     color: "#010101"
     signal close
+    signal change
     required property PwNode node
+    property string title
 
     PwNodeLinkTracker {
         id: link
         node: mixerRec.node
     }
     Label {
-        id: title
-        text: "Playback"
-        color: "#967373"
+        id: titleL
+        text: mixerRec.title
+        color: labelA.containsMouse ? "#960000" : "#967373"
+        padding: 10
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
         font {
             family: "Comfortaa"
             weight: 500
             pixelSize: 40
+        }
+        background: ClippingRectangle {
+            radius: 20
+            color: labelA.containsMouse ? "#CC111111" : "transparent"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
         }
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
             topMargin: 30
         }
+        MouseArea {
+            id: labelA
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: mixerRec.change()
+        }
     }
     ClippingRectangle {
+        anchors {
+            bottom: closeButton.top
+            right: parent.right
+            left: parent.left
+            top: titleL.bottom
+            margins: 10
+            topMargin: 30
+        }
+        color: "transparent"
+        radius: 20
+        border {
+            width: 2
+            color: "#CC960000"
+        }
+        MixerEntry {
+            id: source
+            node: mixerRec.node
             anchors {
-                bottom: closeButton.top
+                top: parent.top
                 right: parent.right
                 left: parent.left
-                top: title.bottom
                 margins: 10
-                topMargin: 30
+            }
+        }
+
+        ClippingRectangle {
+            anchors {
+                bottom: parent.bottom
+                top: source.bottom
+                right: parent.right
+                left: parent.left
             }
             color: "transparent"
             radius: 20
-            border {
-                width: 2
-                color: "#CC960000"
-            }
-        ListView {
-            id: list
-            model: link.linkGroups
-            anchors.fill: parent
-            anchors.margins: 10
-            delegate: MixerEntry {
-                required property PwLinkGroup modelData
-                node: modelData.source
-                width: list.width
+            ListView {
+                id: list
+                model: link.linkGroups
+                anchors.fill: parent
+                anchors.margins: 10
+                anchors.topMargin: 0
+                delegate: MixerEntry {
+                    id: element
+                    required property PwLinkGroup modelData
+                    node: modelData.source === mixerRec.node ? modelData.target : modelData.source
+                    width: list.width
+                }
             }
         }
     }

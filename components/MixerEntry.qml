@@ -41,18 +41,22 @@ Rectangle {
             sourceSize: Qt.size(20, 20)
             source: entry.getIcon(entry.node.name)
         }
-        Text {
-            id: name
+        RowLayout {
             anchors {
                 left: entryImage.left
                 leftMargin: 30
                 verticalCenter: parent.verticalCenter
             }
-            text: entry.node.properties["application.name"]
-            color: "#967373"
-            font {
-                family: "Comfortaa"
-                pixelSize: 16
+            Text {
+                id: name
+                Layout.maximumWidth: 300
+                elide: Text.ElideRight
+                text: entry.node.properties["application.name"] ? entry.node.properties["application.name"] : entry.node.description
+                color: "#967373"
+                font {
+                    family: "Comfortaa"
+                    pixelSize: 16
+                }
             }
         }
     }

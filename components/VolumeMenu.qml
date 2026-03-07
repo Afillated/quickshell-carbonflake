@@ -10,21 +10,29 @@ Rectangle {
     id: volumeRec
     color: "transparent"
     signal open
+
+    signal open2
     border {
-        color: "#CC960000" 
+        color: "#CC960000"
         width: 1.5
     }
     radius: 20
     implicitHeight: 120
     Rectangle {
         id: openButton
-        color: area.containsMouse ? "#CC111111":"transparent"
+        color: area.containsMouse ? "#66967373" : "#55967373"
         radius: 15
         implicitHeight: 30
         implicitWidth: 30
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
         anchors {
-            right: volumeSlider.right
             verticalCenter: volumeSlider.verticalCenter
+            left: volumeSlider.right
+            leftMargin: 20
         }
         z: 1
         MouseArea {
@@ -38,7 +46,48 @@ Rectangle {
             anchors.centerIn: parent
             text: "󰇙"
             font.pixelSize: 24
-            color: "#967373"
+            color: area.containsMouse ? "#AA0000" : "#967373"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
+        }
+    }
+    Rectangle {
+        id: openButton2
+        color: area2.containsMouse ? "#66967373" : "#55967373"
+        radius: 15
+        implicitHeight: 30
+        implicitWidth: 30
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
+        anchors {
+            verticalCenter: micSlider.verticalCenter
+            left: micSlider.right
+            leftMargin: 20
+        }
+        z: 1
+        MouseArea {
+            id: area2
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            anchors.fill: parent
+            onClicked: volumeRec.open2()
+        }
+        Text {
+            anchors.centerIn: parent
+            text: "󰇙"
+            font.pixelSize: 24
+            color: area2.containsMouse ? "#AA0000" : "#967373"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
         }
     }
 
@@ -53,7 +102,7 @@ Rectangle {
             bottom: parent.bottom
             bottomMargin: 20
             left: parent.left
-            leftMargin: 20
+            leftMargin: 70
             right: parent.right
             rightMargin: 70
         }
@@ -79,14 +128,14 @@ Rectangle {
                     }
                 }
                 Text {
-                    visible:  micSlider.pressed
+                    visible: micSlider.pressed
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
                         leftMargin: 30
                     }
                     color: "black"
-                    text: Math.trunc(Audio.defaultInput?.audio.volume*100)
+                    text: Math.trunc(Audio.defaultInput?.audio.volume * 100)
                 }
             }
         }
@@ -114,7 +163,7 @@ Rectangle {
             top: parent.top
             topMargin: 20
             left: parent.left
-            leftMargin: 20
+            leftMargin: 70
             right: parent.right
             rightMargin: 70
         }
@@ -141,14 +190,14 @@ Rectangle {
                 }
 
                 Text {
-                    visible:  volumeSlider.pressed
+                    visible: volumeSlider.pressed
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
                         leftMargin: 30
                     }
-                    color:  "black"
-                    text: Math.trunc(Audio.defaultOutput?.audio.volume*100) 
+                    color: "black"
+                    text: Math.trunc(Audio.defaultOutput?.audio.volume * 100)
                 }
             }
         }
@@ -159,7 +208,6 @@ Rectangle {
             width: 20
             radius: 10
             color: "transparent"
-            
         }
         onMoved: {
             Audio.defaultOutput.audio.volume = value;
@@ -172,21 +220,31 @@ Rectangle {
         implicitWidth: 30
         radius: 30
         anchors {
-            left: volumeSlider.right
+            right: volumeSlider.left
             leftMargin: 20
-            right: parent.right
+            left: parent.left
             rightMargin: 20
             top: parent.top
-            topMargin:20
+            topMargin: 20
         }
 
-        color: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "#55967373" : "#AA0000"
+        color: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "#55967373" : "#770000"
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
 
         Text {
             anchors.centerIn: parent
             text: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "󰝟" : "󰕾"
             font.pixelSize: 24
             color: Audio.defaultOutput?.audio.volume === 0 || Audio.defaultOutput?.audio.muted ? "#967373" : "#000000"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
         }
 
         MouseArea {
@@ -194,7 +252,7 @@ Rectangle {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
-            onClicked: Audio.toggleOutputMute();
+            onClicked: Audio.toggleOutputMute()
         }
     }
 
@@ -204,21 +262,31 @@ Rectangle {
         implicitWidth: 30
         radius: 30
         anchors {
-            left: micSlider.right
+            right: micSlider.left
             leftMargin: 20
-            right: parent.right
+            left: parent.left
             rightMargin: 20
             bottom: parent.bottom
-            bottomMargin:20
+            bottomMargin: 20
+        }
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
         }
 
-        color: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "#55967373" : "#AA0000"
+        color: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "#55967373" : "#770000"
 
         Text {
             anchors.centerIn: parent
             text: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "󰍭" : "󰍬"
             font.pixelSize: 24
             color: Audio.defaultInput?.audio.volume === 0 || Audio.defaultInput?.audio.muted ? "#967373" : "#000000"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
         }
 
         MouseArea {
@@ -226,7 +294,7 @@ Rectangle {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
-            onClicked: Audio.toggleInputMute();
+            onClicked: Audio.toggleInputMute()
         }
     }
 }

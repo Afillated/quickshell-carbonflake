@@ -13,7 +13,6 @@ Scope {
             id: sessionPanel
             required property var modelData
             screen: modelData
-            property bool isOpen: false
             visible: false
             anchors {
                 top: true
