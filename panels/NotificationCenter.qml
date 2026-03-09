@@ -13,9 +13,17 @@ PopupWindow {
     implicitHeight: 800
     implicitWidth: 500
     color: "transparent"
+    property bool isOpen: false
+    onIsOpenChanged: {
+        if (isOpen === true) {
+            visible = true;
+        } else {
+            visible = false;
+        }
+    }
 
     HyprlandFocusGrab {
-        active: notificationcenter.visible
+        active: notificationcenter.isOpen
         windows: [notificationcenter]
         onCleared: {
             closeAnim.start();
@@ -70,6 +78,7 @@ PopupWindow {
         ScriptAction {
             script: {
                 notificationcenter.visible = false;
+                notificationcenter.isOpen = false;
             }
         }
     }

@@ -13,8 +13,17 @@ PopupWindow {
     implicitWidth: 500
 
     color: "transparent"
+    property bool isOpen: false
+    onIsOpenChanged: {
+        if (isOpen === true) {
+            visible = true;
+        } else {
+            visible = false;
+        }
+    }
     HyprlandFocusGrab {
-        active: quickPanel.visible
+        id: grab
+        active: quickPanel.isOpen
         windows: [quickPanel]
         onCleared: {
             closeAnim.start();
@@ -76,6 +85,7 @@ PopupWindow {
         ScriptAction {
             script: {
                 quickPanel.visible = false;
+                quickPanel.isOpen= false;
                 mixerSource.state = "";
                 mixerSink.state = "";
             }

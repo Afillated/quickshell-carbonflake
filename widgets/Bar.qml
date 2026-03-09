@@ -50,7 +50,7 @@ Scope {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        notificationPanel.visible = !notificationPanel.visible;
+                        notificationPanel.isOpen = !notificationPanel.isOpen;
                     }
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
@@ -69,7 +69,7 @@ Scope {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        playerPopup.visible = !playerPopup.visible;
+                        playerPopup.isOpen = !playerPopup.isOpen;
                     }
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
@@ -105,7 +105,7 @@ Scope {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        quickPanel1.visible = !quickPanel1.visible;
+                        quickPanel1.isOpen = !quickPanel1.isOpen;
                     }
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor

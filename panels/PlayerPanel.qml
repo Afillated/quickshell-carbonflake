@@ -13,8 +13,16 @@ PopupWindow {
             duration: 250
         }
     }
+    property bool isOpen: false
+    onIsOpenChanged: {
+        if (isOpen === true) {
+            visible = true;
+        } else {
+            visible = false;
+        }
+    }
     HyprlandFocusGrab {
-        active: playerPanel.visible
+        active: playerPanel.isOpen
         windows: [playerPanel]
         onCleared: {
             closeAnim.start();
@@ -70,14 +78,16 @@ PopupWindow {
                 from: 1
                 to: 0
                 easing.type: Easing.OutQuad
-            }NumberAnimation {
+            }
+            NumberAnimation {
                 target: playRec
                 property: "progressOpacity"
                 duration: 150
                 from: 1
                 to: 0
                 easing.type: Easing.OutQuad
-            }NumberAnimation {
+            }
+            NumberAnimation {
                 target: playRec
                 property: "lengthOpacity"
                 duration: 150
@@ -88,6 +98,7 @@ PopupWindow {
         }
         ScriptAction {
             script: {
+                playerPanel.isOpen = false;
                 playerPanel.visible = false;
             }
         }
