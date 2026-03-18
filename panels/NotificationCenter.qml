@@ -29,6 +29,11 @@ PopupWindow {
             closeAnim.start();
         }
     }
+    Shortcut {
+        sequence: "Escape"
+        enabled: notificationcenter.isOpen
+        onActivated: closeAnim.start()
+    }
     SequentialAnimation {
         id: closeAnim
         ParallelAnimation {
@@ -62,13 +67,6 @@ PopupWindow {
             }
             NumberAnimation {
                 target: notiList
-                property: "opacity"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: player2
                 property: "opacity"
                 to: 0
                 duration: 250

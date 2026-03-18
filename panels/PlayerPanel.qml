@@ -28,6 +28,11 @@ PopupWindow {
             closeAnim.start();
         }
     }
+    Shortcut {
+        sequence: "Escape"
+        enabled: playerPanel.isOpen
+        onActivated: closeAnim.start()
+    }
     SequentialAnimation {
         id: closeAnim
         ParallelAnimation {

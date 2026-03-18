@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Hyprland
+import Quickshell.Widgets
 import qs.services
 import qs.components
 import Quickshell.Io
@@ -81,11 +82,18 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: sessionBar
+                property: "opacity"
+                to: 0
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
         }
         ScriptAction {
             script: {
                 quickPanel.visible = false;
-                quickPanel.isOpen= false;
+                quickPanel.isOpen = false;
                 mixerSource.state = "";
                 mixerSink.state = "";
             }
@@ -126,6 +134,10 @@ PopupWindow {
             opacity: state === "open" || quickPanel.visible ? 1 : 0
             visible: opacity > 0
             z: 1
+            MouseArea {
+                anchors.fill: parent
+                z: -1
+            }
 
             Behavior on opacity {
                 NumberAnimation {
@@ -170,6 +182,10 @@ PopupWindow {
             opacity: state === "open" || quickPanel.visible ? 1 : 0
             visible: opacity > 0
             z: 1
+            MouseArea {
+                anchors.fill: parent
+                z: -1
+            }
             Behavior on opacity {
                 NumberAnimation {
                     easing.type: Easing.OutQuad
@@ -202,6 +218,8 @@ PopupWindow {
         VolumeMenu {
             id: volumeRockers
             opacity: quickPanel.visible ? 1 : 0
+            radius: 20
+            implicitHeight: 120
             anchors {
                 right: parent.right
                 left: parent.left
@@ -213,6 +231,38 @@ PopupWindow {
             }
             onOpen2: {
                 mixerSink.state = "open";
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+        }
+        Rectangle {
+            id: sessionBar
+            implicitHeight: 130
+            color: "transparent"
+            radius: 20
+            opacity: quickPanel.visible ? 1 : 0
+            border {
+                color: "#CC960000"
+                width: 1.5
+            }
+            anchors {
+                bottom: volumeRockers.top
+                left: parent.left
+                right: parent.right
+                margins: 10
+            }
+            SessionLayout {
+                anchors.fill: parent
+                anchors.margins: 10
+                fontSize: 28
+                butRadius: 16
+                Keys.onEscapePressed: {
+                    closeAnim.start();
+                }
             }
             Behavior on opacity {
                 NumberAnimation {
@@ -236,22 +286,6 @@ PopupWindow {
             font {
                 family: "Comfortaa"
                 pixelSize: 20
-            }
-            Behavior on opacity {
-                NumberAnimation {
-                    easing.type: Easing.OutQuad
-                    duration: 250
-                }
-            }
-        }
-        SessionBar {
-            id: sessionBar
-            opacity: quickPanel.visible ? 1 : 0
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: 10
-                right: parent.right
-                rightMargin: 16
             }
             Behavior on opacity {
                 NumberAnimation {

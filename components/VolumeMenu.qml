@@ -16,8 +16,6 @@ Rectangle {
         color: "#CC960000"
         width: 1.5
     }
-    radius: 20
-    implicitHeight: 120
     Rectangle {
         id: openButton
         color: area.containsMouse ? "#66967373" : "#55967373"
