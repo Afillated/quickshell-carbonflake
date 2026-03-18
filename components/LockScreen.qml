@@ -29,7 +29,6 @@ Rectangle {
             source: lockBG
             radius: LockContext.locked ? lockBG.blurSize : 0
         }
-        
     }
 
     ParallelAnimation {
@@ -281,19 +280,48 @@ Rectangle {
             }
         }
         Text {
+            id: incorrect
             text: "Incorrect Password"
-            visible: LockContext.showFailure
             anchors.centerIn: parent
             color: "#967373"
-            opacity: LockContext.showFailure ? 0.6 : 0
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 200
-                    easing.type: Easing.InCirc
-                }
-            }
+            opacity: 0
+            visible: opacity > 0
             font.pixelSize: 20
             font.family: "Comfortaa"
+
+            Connections {
+                target: LockContext
+                function onShowFailureChanged() {
+                    if (LockContext.showFailure) {
+                        failAnim.restart();
+                    }
+                }
+            }
+            SequentialAnimation {
+                id: failAnim
+                ScriptAction {
+                    script: {
+                        passwordInput.text = "";
+                    }
+                }
+                NumberAnimation {
+                    target: incorrect
+                    property: "opacity"
+                    duration: 250
+                    to: 0.8
+                    easing.type: Easing.InCirc
+                }
+                PauseAnimation {
+                    duration: 500
+                }
+                NumberAnimation {
+                    target: incorrect
+                    property: "opacity"
+                    duration: 250
+                    to: 0
+                    easing.type: Easing.OutCirc
+                }
+            }
         }
     }
 

@@ -148,7 +148,9 @@ PopupWindow {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onClicked: NotiServer.clearNotifications()
+                onClicked: {
+                    NotiServer.clearNotifications();
+                }
             }
             Text {
                 id: clearAllText

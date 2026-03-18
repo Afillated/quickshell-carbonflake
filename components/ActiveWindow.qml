@@ -40,7 +40,7 @@ Rectangle {
     RowLayout {
         id: activeWindow
         spacing: 8
-        Layout.alignment: Qt.AlignCenter
+        anchors.centerIn: parent
 
         Loader {
             active: activeWindowRec.showIcon
@@ -54,15 +54,15 @@ Rectangle {
 
         Text {
             id: appId
-            Layout.alignment: Qt.AlignCenter
+            Layout.alignment: Qt.AlignHCenter
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
             elide: Text.ElideRight
             text: activeWindowRec.showDesktop ? "desktop" : ToplevelManager.activeToplevel?.appId
             color: "#C10000"
             font {
-                family: "Firacode Mono Nerd Font"
-                pixelSize: 20
+                pixelSize: 18
+                weight: 400
             }
             Behavior on text {
                 SequentialAnimation {

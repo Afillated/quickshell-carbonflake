@@ -2,6 +2,7 @@ pragma Singleton
 pragma ComponentBehavior: Bound
 import Quickshell
 import Quickshell.Io
+import Quickshell.Networking
 import QtQuick
 import "types" as Types
 

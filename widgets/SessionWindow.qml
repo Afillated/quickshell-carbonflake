@@ -145,6 +145,7 @@ Scope {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
                         KeyNavigation.right: shutButton
+                        KeyNavigation.left: logButton
                         Keys.onReturnPressed: {
                             LockContext.locked = true;
                             sessionPanel.visible = false;
