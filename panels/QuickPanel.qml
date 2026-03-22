@@ -31,6 +31,11 @@ PopupWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Escape"
+        enabled: quickPanel.isOpen
+        onActivated: closeAnim.start()
+    }
     anchor {
         edges: Edges.Right | Edges.Bottom
         gravity: Edges.Top | Edges.Left

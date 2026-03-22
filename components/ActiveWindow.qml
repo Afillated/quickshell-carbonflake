@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Hyprland
 import Quickshell.Wayland
@@ -58,7 +57,7 @@ Rectangle {
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
             elide: Text.ElideRight
-            text: activeWindowRec.showDesktop ? "desktop" : ToplevelManager.activeToplevel?.appId
+            text: activeWindowRec.showDesktop ? "desktop" : String(ToplevelManager.activeToplevel?.appId)
             color: "#C10000"
             font {
                 pixelSize: 18
