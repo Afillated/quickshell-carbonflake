@@ -4,9 +4,6 @@ import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import QtQuick.Effects
-import QtQuick.Shapes
 import qs.services
 
 Rectangle {
@@ -95,13 +92,15 @@ Rectangle {
                 anchors.fill: parent
                 cursorShape: MprisPlayers.playerList.length > 1 ? Qt.SizeVerCursor : Qt.ArrowCursor
                 onWheel: {
-                    if (wheel.angleDelta.y > 0) {
-                        playingRec.playerCount++;
-                    } else if (wheel.angleDelta.y < 0) {
-                        playingRec.playerCount--;
+                    if (MprisPlayers.playerList.length > 1) {
+                        if (wheel.angleDelta.y > 0 && MprisPlayers.playerList.length > 1 && playingRec.playerCount <= MprisPlayers.playerList.length) {
+                            playingRec.playerCount++;
+                        } else if (wheel.angleDelta.y < 0 && MprisPlayers.playerList.length > 1 && playingRec.playerCount >= MprisPlayers.playerList.length) {
+                            playingRec.playerCount--;
+                        }
+                        MprisPlayers.selectPlayer(playingRec.playerCount);
+                        wheel.accepted = true;
                     }
-                    MprisPlayers.selectPlayer(playingRec.playerCount);
-                    wheel.accepted = true;
                 }
             }
         }
@@ -138,7 +137,7 @@ Rectangle {
         }
         Text {
             id: trackTitle
-            text: MprisPlayers.activePlayer?.trackTitle
+            text: MprisPlayers.activePlayer?.trackTitle ? MprisPlayers.activePlayer?.trackTitle : "No Title"
             color: "#967373"
             Layout.maximumWidth: 200
             font {
@@ -150,7 +149,7 @@ Rectangle {
         }
         Text {
             id: trackArtist
-            text: MprisPlayers.activePlayer?.trackArtist
+            text: MprisPlayers.activePlayer?.trackArtist ? MprisPlayers.activePlayer?.trackArtist : "No Artist"
             color: "#967373"
             Layout.maximumWidth: 250
             font {
@@ -270,7 +269,7 @@ Rectangle {
                 id: forwardArea
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                cursorShape: MprisPlayers.activePlayer?.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: MprisPlayers.activePlayer.next()
             }
             Behavior on color {
