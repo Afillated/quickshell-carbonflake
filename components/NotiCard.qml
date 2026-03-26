@@ -7,15 +7,17 @@ import Quickshell.Services.Notifications
 import qs.services
 import QtQuick.Layouts
 
-Rectangle {
+ClippingRectangle {
     id: notiCard
 
     required property var noti
 
+    signal clicked
+
     color: "transparent"
 
     border {
-        width: 1.5
+        width: 2
         color: "#CC960000"
     }
 
@@ -29,11 +31,7 @@ Rectangle {
         hoverEnabled: true
         cursorShape: Qt.CrossCursor
         onClicked: {
-            if (notiCard.noti && notiCard.noti.noti && notiCard.noti.noti.dismiss) {
-                notiCard.noti.noti.dismiss();
-            }
-
-            NotiServer.items.remove(index);
+            notiCard.clicked();
         }
     }
     ColumnLayout {

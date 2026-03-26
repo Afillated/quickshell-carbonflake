@@ -5,4 +5,5 @@ ShellRoot {
     Bar {}
     LockRoot{}
     SessionWindow {}
+    NotificationPopouts {}
 }

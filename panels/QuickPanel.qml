@@ -134,7 +134,7 @@ PopupWindow {
                 margins: 10
             }
             node: Audio.defaultOutput
-            title: "Playback"
+            title: "Playback "
             width: parent.width - 20
             opacity: state === "open" || quickPanel.visible ? 1 : 0
             visible: opacity > 0
@@ -182,7 +182,7 @@ PopupWindow {
                 margins: 10
             }
             node: Audio.defaultInput
-            title: "Recording"
+            title: "Recording "
             width: parent.width - 20
             opacity: state === "open" || quickPanel.visible ? 1 : 0
             visible: opacity > 0

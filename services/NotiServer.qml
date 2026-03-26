@@ -14,6 +14,7 @@ Singleton {
 
         property Notification noti: null
         property bool popout: false
+        property bool dismissed: false
         readonly property string body: noti.body
         readonly property string appIcon: noti.appIcon
         readonly property string appName: noti.appName
@@ -32,12 +33,10 @@ Singleton {
                 return notiServer.timeoutCritical;
             }
         }
-        readonly property Timer timer: Timer{
-            running: notiItem.timeout > 0;
-            interval: notiItem.timeout;
-            onTriggered: {
-                notiItem.popout = false;
-            }
+        readonly property Timer timer: Timer {
+            running: notiItem.timeout > 0 && !notiItem.dismissed
+            interval: notiItem.timeout
+            onTriggered: notiItem.dismissed = true
         }
     }
 
@@ -50,7 +49,7 @@ Singleton {
     property bool doNotDisturb: false
     property bool trackLowUrgency: true
     property real timeoutLow: 5000
-    property real timeoutNormal: 8000
+    property real timeoutNormal: 10000
     property real timeoutCritical: -1 // do not timeout
     property int maxPopups: 5
     property int maxCenterItems: 100
@@ -65,7 +64,7 @@ Singleton {
         bodySupported: true
         bodyMarkupSupported: true
         imageSupported: true
-        keepOnReload: true
+        keepOnReload: false
 
         onNotification: notification => {
             notification.tracked = true;
@@ -83,7 +82,7 @@ Singleton {
     }
 
     function toggleDND() {
-        notiServer.doNotDisturb = ! notiServer.doNotDisturb
+        notiServer.doNotDisturb = !notiServer.doNotDisturb;
     }
 
     function clearNotifications() {

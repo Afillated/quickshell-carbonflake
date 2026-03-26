@@ -45,7 +45,7 @@ ClippingRectangle {
         }
         Text {
             id: title
-            text: MprisPlayers.activePlayer?.trackTitle
+            text: MprisPlayers.activePlayer?.trackTitle ?  MprisPlayers.activePlayer?.trackTitle : "No Title" 
             Layout.alignment: Qt.AlignCenter
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
