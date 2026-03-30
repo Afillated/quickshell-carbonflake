@@ -86,6 +86,7 @@ ClippingRectangle {
                 id: notiContent
                 spacing: 0
                 Layout.margins: 10
+
                 Text {
                     id: summary
                     text: notiCard.noti?.summary
@@ -102,6 +103,9 @@ ClippingRectangle {
                     font.family: "Firacode Mono Nerd Font"
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                    Layout.maximumHeight: 200
+
+                    elide: Text.ElideRight
                 }
             }
         }

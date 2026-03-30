@@ -6,13 +6,13 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 
-Rectangle {
+ClippingRectangle {
     id: playingRec
     color: "#E6000000"
     radius: 15
     visible: MprisPlayers.activePlayer
     border {
-        width: 1.5
+        width: 2
         color: "#CC960000"
     }
     function getIcon() {

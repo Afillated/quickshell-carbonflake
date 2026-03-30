@@ -34,13 +34,19 @@ Scope {
             ListView {
                 id: notiView
                 model: NotiServer.items
-                width: height > 0 ? 400 : 0.1
+                width: height > 0 ? notiPopups.modelData.height/2: 0.1
                 height: contentHeight
                 clip: true
                 interactive: false
                 anchors {
                     bottom: parent.bottom
                     left: parent.left
+                }
+                Behavior on height {
+                    NumberAnimation {
+                        duration: 300
+                        easing.type: Easing.OutQuad
+                    }
                 }
                 verticalLayoutDirection: ListView.BottomToTop
 
@@ -58,6 +64,7 @@ Scope {
                         width: parent.width
                         height: inCard.implicitHeight
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.bottomMargin: 10
 
                         NotiCard {
                             id: inCard
