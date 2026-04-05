@@ -4,7 +4,6 @@ pragma Singleton
 import Quickshell
 import QtQuick
 import Quickshell.Services.Notifications
-import qs.services
 
 Singleton {
     id: notiServer
@@ -56,7 +55,7 @@ Singleton {
 
     NotificationServer {
         id: server
-        actionsSupported: false
+        actionsSupported: true
         actionIconsSupported: true
         persistenceSupported: true
         bodyHyperlinksSupported: true
@@ -70,7 +69,7 @@ Singleton {
             notification.tracked = true;
             if (notification) {
                 let notiItem = notiWrap.createObject(notiServer, {
-                    popup: true,
+                    popout: true,
                     noti: notification
                 });
 

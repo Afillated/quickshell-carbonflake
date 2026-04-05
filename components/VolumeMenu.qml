@@ -93,7 +93,7 @@ Rectangle {
         id: micSlider
         value: Audio.defaultInput?.audio.volume
         from: 0
-        to: 1
+        to: 1.53
         stepSize: 0.01
         live: true
         anchors {

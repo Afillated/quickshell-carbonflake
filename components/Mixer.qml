@@ -102,7 +102,7 @@ ClippingRectangle {
                 delegate: MixerEntry {
                     id: element
                     required property PwLinkGroup modelData
-                    node: modelData.source === mixerRec.node ? modelData.target : modelData.source
+                    node: modelData.source === mixerRec.node ? modelData?.target : modelData?.source
                     width: list.width
                 }
             }

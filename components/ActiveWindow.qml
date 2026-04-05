@@ -57,7 +57,16 @@ Rectangle {
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
             elide: Text.ElideRight
-            text: activeWindowRec.showDesktop ? "desktop" : String(ToplevelManager.activeToplevel?.appId)
+            // text: activeWindowRec.showDesktop ? "desktop" : String(ToplevelManager.activeToplevel?.appId)
+            text: {
+                if (activeWindowRec.showDesktop) {
+                    return "desktop";
+                } else if (String(ToplevelManager.activeToplevel?.appId) && String(ToplevelManager.activeToplevel?.appId).length < 13 && String(ToplevelManager.activeToplevel?.appId) != "electron" && !(String(ToplevelManager.activeToplevel?.appId).includes(".")) ) {
+                    return String(ToplevelManager.activeToplevel?.appId);
+                } else {
+                    return String(ToplevelManager.activeToplevel?.title);
+                }
+            }
             color: "#C10000"
             font {
                 pixelSize: 18

@@ -82,6 +82,9 @@ Rectangle {
             width: notiList.width
 
             noti: modelData
+            onClicked: {
+                NotiServer.items.remove(index);
+            }
         }
 
         add: Transition {

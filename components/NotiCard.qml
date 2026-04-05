@@ -95,6 +95,7 @@ ClippingRectangle {
                     font.family: "Firacode Mono Nerd Font"
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                    textFormat: Text.MarkdownText
                 }
                 Text {
                     id: body
@@ -104,7 +105,8 @@ ClippingRectangle {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumHeight: 200
-
+                    textFormat: Text.MarkdownText
+                    Layout.bottomMargin: 10
                     elide: Text.ElideRight
                 }
             }
