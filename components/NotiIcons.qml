@@ -10,20 +10,23 @@ Rectangle {
     id: notiIcon
     color: "transparent"
 
-    property int iconSize: 30
+    property int iconSize: 26
 
-    implicitWidth: iconSize
-    implicitHeight: iconSize
+    implicitWidth: 30
+    implicitHeight: 30
 
     required property var noti
 
     property string iconPath: noti?.appIcon ? Quickshell.iconPath(noti.appIcon, true) : ""
 
-    IconImage {
+    Image {
         id: appIconImage
         anchors.centerIn: parent
         source: notiIcon.iconPath
-        implicitSize: notiIcon.iconSize
+        sourceSize {
+            width: notiIcon.iconSize
+            height: notiIcon.iconSize
+        }
         visible: notiIcon.iconPath !== ""
     }
 

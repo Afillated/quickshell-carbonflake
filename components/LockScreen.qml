@@ -237,7 +237,15 @@ Rectangle {
         radius: 12
         color: "transparent"
         border {
-            color: LockContext.unlockInProgress ? "orange" : "#960000"
+            color: {
+                if (!passwordInput.focus || incorrect.visible) {
+                    return "#212121";
+                } else if (LockContext.unlockInProgress) {
+                    return "orange";
+                } else {
+                    return "#960000";
+                }
+            }
             width: 3
             Behavior on color {
                 ColorAnimation {
@@ -277,6 +285,9 @@ Rectangle {
             }
             cursorDelegate: Rectangle {
                 visible: false
+            }
+            HoverHandler {
+                cursorShape: Qt.IBeamCursor
             }
         }
         Text {
@@ -759,17 +770,26 @@ Rectangle {
 
         ListView {
             id: notiList
-            spacing: 4
+            spacing: 6
             model: NotiServer.items
             orientation: ListView.Vertical
             clip: true
             anchors.fill: parent
-            anchors.margins: 3
-            delegate: NotiIcons {
+            interactive: false
+            anchors.topMargin: 6
+            anchors.bottomMargin: 6
+            anchors.horizontalCenter: notiToggle.horizontalCenter
+            delegate: Rectangle {
                 required property var modelData
                 required property int index
-
-                noti: modelData
+                width: notiList.width
+                height: son.height
+                color: "transparent"
+                NotiIcons {
+                    id: son
+                    anchors.centerIn: parent
+                    noti: parent.modelData
+                }
             }
         }
         MouseArea {

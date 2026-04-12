@@ -52,9 +52,11 @@ ClippingRectangle {
                 id: appIcons
                 Layout.rightMargin: 10
                 active: notiCard.noti && notiCard.noti?.appIcon
-                sourceComponent: IconImage {
+                sourceComponent: Image {
                     source: Quickshell.iconPath(notiCard.noti.appIcon)
-                    implicitSize: 30
+                    sourceSize.height: 28
+                    sourceSize.width: 28
+                    
                 }
             }
 

@@ -92,7 +92,7 @@ PopupWindow {
         radius: 15
         clip: true
         border {
-            width: 1.5
+            width: 2
             color: "#CC960000"
         }
         implicitHeight: notificationcenter.visible ? parent.height : 0
