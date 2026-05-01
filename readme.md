@@ -9,4 +9,4 @@ Here is what you will find in this repository, still a work in progress
 
 A video of what my shell has become, and theres more to some
 
-![](assets/video_fixed.mp4)
+![](assets/video_readme.mp4)
