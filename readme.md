@@ -11,4 +11,4 @@ A video of what my shell has become, and theres more to some
 
 <video width="640" height="360" controls>
   <source src="https://github.com/Afillated/quickshell-carbonflake/raw/main/assets/video_fixed.mp4" type="video/mp4">
-video>
+<video>
