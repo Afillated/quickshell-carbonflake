@@ -10,3 +10,10 @@ Here is what you will find in this repository, still a work in progress
 A video of what my shell has become, and theres more to some
 
 https://github.com/user-attachments/assets/3c0fe147-330f-4323-be7b-2f56e6be5f0e
+
+## What I plan to add:
+- A way to handle connections like wifi and bluetooth
+
+- A clipboard and more buttons
+
+- Switch from Rofi for app launcher
