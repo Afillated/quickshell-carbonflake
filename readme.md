@@ -9,6 +9,4 @@ Here is what you will find in this repository, still a work in progress
 
 A video of what my shell has become, and theres more to some
 
-<video controls width="100%">
-  <source src="https://github.com/user-attachments/assets/861305c1-1081-4ab4-9e15-0efd9a55b9c1" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/861305c1-1081-4ab4-9e15-0efd9a55b9c1
