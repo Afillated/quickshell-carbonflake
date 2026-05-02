@@ -9,4 +9,4 @@ Here is what you will find in this repository, still a work in progress
 
 A video of what my shell has become, and theres more to some
 
-https://github.com/user-attachments/assets/861305c1-1081-4ab4-9e15-0efd9a55b9c1
+https://github.com/user-attachments/assets/3c0fe147-330f-4323-be7b-2f56e6be5f0e
