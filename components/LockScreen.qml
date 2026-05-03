@@ -15,10 +15,11 @@ import qs.components
 Rectangle {
     id: lockRoot
     color: "#000000"
+    required property ShellScreen screen
 
     ScreencopyView {
         id: lockBG
-        captureSource: Quickshell.screens[0]
+        captureSource: lockRoot.screen
         anchors.fill: parent
         visible: LockContext.locked
 

@@ -10,7 +10,9 @@ WlSessionLock {
     locked: LockContext.locked
 
     WlSessionLockSurface {
+        id: lockSurface
         LockScreen {
+            screen: lockSurface.screen
             anchors.fill: parent
         }
     }
