@@ -58,14 +58,23 @@ ClippingRectangle {
             onClicked: mixerRec.change()
         }
     }
+    MixerEntry {
+        id: source
+        node: mixerRec.node
+        anchors {
+            top: titleL.bottom
+            right: parent.right
+            left: parent.left
+            margins: 10
+        }
+    }
     ClippingRectangle {
         anchors {
             bottom: closeButton.top
             right: parent.right
             left: parent.left
-            top: titleL.bottom
+            top: source.bottom
             margins: 10
-            topMargin: 30
         }
         color: "transparent"
         radius: 20
@@ -73,41 +82,38 @@ ClippingRectangle {
             width: 2
             color: "#CC960000"
         }
-        MixerEntry {
-            id: source
-            node: mixerRec.node
-            anchors {
-                top: parent.top
-                right: parent.right
-                left: parent.left
-                margins: 10
+        ListView {
+            id: list
+            model: link.linkGroups
+            anchors.fill: parent
+            anchors.margins: 10
+            delegate: MixerEntry {
+                id: element
+                required property PwLinkGroup modelData
+                node: modelData.source === mixerRec.node ? modelData?.target : modelData?.source
+                width: list.width
             }
         }
-
-        ClippingRectangle {
-            anchors {
-                bottom: parent.bottom
-                top: source.bottom
-                right: parent.right
-                left: parent.left
-            }
-            color: "transparent"
-            radius: 20
-            ListView {
-                id: list
-                model: link.linkGroups
-                anchors.fill: parent
-                anchors.margins: 10
-                anchors.topMargin: 0
-                delegate: MixerEntry {
-                    id: element
-                    required property PwLinkGroup modelData
-                    node: modelData.source === mixerRec.node ? modelData?.target : modelData?.source
-                    width: list.width
+        Text {
+            id: nono
+            anchors.centerIn: parent
+            opacity: link.linkGroups.length == 0
+            // visible: opacity > 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutQuad
                 }
+            }
+            text: "No applications"
+            color: "#967373"
+            font{
+                family: "Comfortaa"
+                pixelSize: 20
             }
         }
     }
+
     Rectangle {
         id: closeButton
         color: close.containsMouse ? "#CC111111" : "transparent"

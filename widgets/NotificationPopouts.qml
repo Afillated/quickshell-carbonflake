@@ -15,7 +15,6 @@ Scope {
             required property var modelData
             screen: modelData
             WlrLayershell.layer: WlrLayer.Overlay
-            // visible: false
             anchors {
                 bottom: true
                 left: true
@@ -34,7 +33,7 @@ Scope {
             ListView {
                 id: notiView
                 model: NotiServer.items
-                width: height > 0 ? notiPopups.modelData.height/2: 0.1
+                width: height > 0 ? notiPopups.modelData.height / 2 : 0.1
                 height: contentHeight
                 clip: true
                 interactive: false
@@ -57,6 +56,7 @@ Scope {
                     clip: true
 
                     required property var model
+                    required property int index
                     readonly property bool isDismissed: model.notiItem ? model.notiItem.dismissed : false
 
                     Item {
@@ -73,6 +73,9 @@ Scope {
                             onClicked: {
                                 delegateRoot.state = "dismissed";
                             }
+                            onRClicked: {
+                                delegateRoot.state = "removed";
+                            }
                         }
                     }
 
@@ -80,6 +83,14 @@ Scope {
                         State {
                             name: "dismissed"
                             when: delegateRoot.isDismissed
+                            PropertyChanges {
+                                delegateRoot.visible: false
+                                delegateRoot.enabled: false
+                                delegateRoot.height: 0
+                            }
+                        },
+                        State {
+                            name: "removed"
                             PropertyChanges {
                                 delegateRoot.visible: false
                                 delegateRoot.enabled: false
@@ -122,6 +133,46 @@ Scope {
                                     value: false
                                 }
                             }
+                        },
+                        Transition {
+                            to: "removed"
+                            SequentialAnimation {
+                                ParallelAnimation {
+                                    NumberAnimation {
+                                        target: contentWrapper
+                                        property: "x"
+                                        to: -delegateRoot.width
+                                        duration: 300
+                                        easing.type: Easing.OutCubic
+                                    }
+                                    NumberAnimation {
+                                        target: contentWrapper
+                                        property: "opacity"
+                                        to: 0
+                                        duration: 300
+                                    }
+                                }
+
+                                NumberAnimation {
+                                    target: delegateRoot
+                                    property: "height"
+                                    to: 0
+                                    duration: 250
+                                    easing.type: Easing.InOutQuad
+                                }
+
+                                PropertyAction {
+                                    target: delegateRoot
+                                    property: "visible"
+                                    value: false
+                                }
+
+                                ScriptAction {
+                                    script: {
+                                        NotiServer.items.remove(index);
+                                    }
+                                }
+                            }
                         }
                     ]
                 }
@@ -137,6 +188,20 @@ Scope {
                         properties: "opacity"
                         from: 0
                         to: 1
+                        duration: 300
+                    }
+                }
+                remove: Transition {
+                    NumberAnimation {
+                        properties: "x"
+                        to: -400
+                        duration: 300
+                        easing.type: Easing.OutQuad
+                    }
+                    NumberAnimation {
+                        properties: "opacity"
+                        from: 1
+                        to: 0
                         duration: 300
                     }
                 }

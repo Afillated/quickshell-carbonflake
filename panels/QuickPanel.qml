@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick
 import QtQuick.Controls
@@ -94,6 +96,13 @@ PopupWindow {
                 duration: 250
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: connectBar
+                property: "opacity"
+                to: 0
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
         }
         ScriptAction {
             script: {
@@ -101,6 +110,7 @@ PopupWindow {
                 quickPanel.isOpen = false;
                 mixerSource.state = "";
                 mixerSink.state = "";
+                blue1.state = "";
             }
         }
     }
@@ -220,6 +230,69 @@ PopupWindow {
             }
         }
 
+        BluetoothMenu {
+            id: blue1
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.right
+                right: undefined
+                margins: 10
+            }
+            opacity: state === "open" || quickPanel.visible ? 1 : 0
+            visible: opacity > 0
+            width: parent.width - 20
+            z: 1
+            onClose: {
+                state = "";
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                z: -1
+            }
+            states: State {
+                name: "open"
+                AnchorChanges {
+                    target: blue1
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                }
+            }
+            transitions: Transition {
+                AnchorAnimation {
+                    duration: 200
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+
+        // ListView {
+        //     id: deviceList
+        //     anchors {
+        //         top: parent.top
+        //         right: parent.right
+        //         left: parent.left
+        //         bottom: sessionBar.top
+        //         margins: 10
+        //     }
+
+        //     clip: true
+        //     model: Bluetooth.pairedDevices
+        //     spacing: 5
+
+        //     delegate: BlueCard {
+        //         required property var modelData
+        //         width: deviceList.width
+        //         implicitHeight: 50
+        //         device: modelData
+        //     }
+        // }
         VolumeMenu {
             id: volumeRockers
             opacity: quickPanel.visible ? 1 : 0
@@ -242,6 +315,33 @@ PopupWindow {
                     easing.type: Easing.OutQuad
                     duration: 250
                 }
+            }
+        }
+        ConnectionBar {
+            id: connectBar
+            implicitHeight: 120
+            color: "transparent"
+            radius: 20
+            opacity: quickPanel.visible ? 1 : 0
+            border {
+                color: "#CC960000"
+                width: 1.5
+            }
+            anchors {
+                left: parent.left
+                top: parent.top
+                right: parent.right
+                margins: 10
+                topMargin: 40
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 250
+                }
+            }
+            onOpenBlue: {
+                blue1.state = "open";
             }
         }
         Rectangle {

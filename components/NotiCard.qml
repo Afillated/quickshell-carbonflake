@@ -13,6 +13,7 @@ ClippingRectangle {
     required property var noti
 
     signal clicked
+    signal rClicked
 
     color: "transparent"
 
@@ -30,8 +31,14 @@ ClippingRectangle {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.CrossCursor
-        onClicked: {
-            notiCard.clicked();
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton) {
+                notiCard.rClicked();
+            } else if (mouse.button === Qt.LeftButton) {
+                notiCard.clicked();
+            }
         }
     }
     ColumnLayout {
@@ -56,7 +63,6 @@ ClippingRectangle {
                     source: Quickshell.iconPath(notiCard.noti.appIcon)
                     sourceSize.height: 28
                     sourceSize.width: 28
-                    
                 }
             }
 
