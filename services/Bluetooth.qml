@@ -18,6 +18,7 @@ Singleton {
         const available = all.filter(d => !d.paired);
         return [...paired, ...available];
     }
+    readonly property bool scanning: Bluetooth.defaultAdapter.discovering
     readonly property string status: {
         if (!enabled)
             return indicators.powerOff;
@@ -28,6 +29,11 @@ Singleton {
     function toggleDefault() {
         if (Bluetooth.defaultAdapter) {
             Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+        }
+    }
+    function toggleScaning() {
+        if (Bluetooth.defaultAdapter) {
+            Bluetooth.defaultAdapter.discovering = !Bluetooth.defaultAdapter.discovering;
         }
     }
 }

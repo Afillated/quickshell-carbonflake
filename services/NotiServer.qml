@@ -49,7 +49,7 @@ Singleton {
     property bool trackLowUrgency: true
     property real timeoutLow: 5000
     property real timeoutNormal: 10000
-    property real timeoutCritical: -1 
+    property real timeoutCritical: -1
     property int maxPopups: 5
     property int maxCenterItems: 100
 

@@ -7,9 +7,9 @@ import QtQuick.Shapes
 Slider {
     id: progressBar
     from: 0
-    to: MprisPlayers.activePlayer?.length
+    to: parseInt(MprisPlayers.activePlayer?.length || "0", 10)
     stepSize: 1
-    value: MprisPlayers.activePlayer?.position
+    value: parseInt(MprisPlayers.activePlayer?.position || "0", 10)
     snapMode: Slider.NoSnap
     onMoved: {
         MprisPlayers.activePlayer.position = value;

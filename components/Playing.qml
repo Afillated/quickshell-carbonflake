@@ -162,7 +162,7 @@ ClippingRectangle {
 
         Text {
             id: trackAlbum
-            text: MprisPlayers.activePlayer?.trackAlbum
+            text: MprisPlayers.activePlayer?.trackAlbum ? MprisPlayers.activePlayer?.trackAlbum : " "
             color: "#967373"
             Layout.maximumWidth: 250
             font {

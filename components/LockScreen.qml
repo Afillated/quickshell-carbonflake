@@ -396,7 +396,7 @@ Rectangle {
 
             Text {
                 id: titleArtist
-                text: MprisPlayers.activePlayer?.trackTitle
+                text: MprisPlayers.activePlayer?.trackTitle || "No Title"
                 Layout.alignment: Qt.AlignHCenter
                 color: "#967373"
                 Layout.maximumWidth: 180

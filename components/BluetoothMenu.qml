@@ -16,13 +16,8 @@ ClippingRectangle {
     Label {
         id: titleL
         text: "Bluetooth"
-        color: labelA.containsMouse ? "#960000" : "#967373"
+        color: "#967373"
         padding: 10
-        Behavior on color {
-            ColorAnimation {
-                duration: 100
-            }
-        }
         font {
             family: "Comfortaa"
             weight: 500
@@ -30,23 +25,152 @@ ClippingRectangle {
         }
         background: ClippingRectangle {
             radius: 20
-            color: labelA.containsMouse ? "#CC111111" : "transparent"
-            Behavior on color {
-                ColorAnimation {
-                    duration: 100
-                }
-            }
+            color: "transparent"
         }
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
             topMargin: 30
         }
-        MouseArea {
-            id: labelA
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+    }
+    Rectangle {
+        id: actionBar
+        anchors {
+            top: titleL.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10
+        }
+        implicitHeight: 50
+        color: "transparent"
+        radius: 20
+        border {
+            width: 2
+            color: "#CC960000"
+        }
+
+        Rectangle {
+            id: scanButton
+            anchors {
+                right: parent.right
+                rightMargin: 12
+                verticalCenter: parent.verticalCenter
+            }
+            width: 100
+            height: 30
+            radius: 8
+            visible: opacity > 0
+            opacity: Bluetooth.enabled ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.InCirc
+                }
+            }
+            color: scan.containsMouse ? "#CC111111" : "transparent"
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
+            border {
+                color: scan.containsMouse ? "#CC960000" : "#111111"
+                width: 2
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+            }
+            Text {
+                id: scanText
+                anchors.centerIn: parent
+                color: scan.containsMouse ? "#960000" : "#967373"
+                font {
+                    family: "Comfortaa"
+                    pixelSize: 16
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+                text: {
+                    if (Bluetooth.scanning) {
+                        return "Stop";
+                    } else {
+                        return "Scan";
+                    }
+                }
+            }
+            MouseArea {
+                id: scan
+                cursorShape: Qt.PointingHandCursor
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
+                    Bluetooth.toggleScaning();
+                }
+            }
+        }
+        Switch {
+            id: toggle
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: 20
+            }
+            checked: Bluetooth.enabled
+            onClicked: Bluetooth.toggleDefault()
+            indicator: Rectangle {
+                implicitHeight: 24
+                implicitWidth: 45
+                x: toggle.leftPadding
+                y: parent.height / 2 - height / 2
+                radius: 13
+                color: toggle.checked ? "#960000" : "#55967373"
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+
+                Rectangle {
+                    x: toggle.checked ? parent.width - width : 0
+                    Behavior on x {
+                        NumberAnimation {
+                            duration: 200
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+                    width: 24
+                    height: 24
+                    radius: height / 2
+                    color: "#967373"
+                }
+            }
+        }
+        Text {
+            id: state
+            text: {
+                if (Bluetooth.enabled) {
+                    return "On";
+                } else {
+                    return "Off";
+                }
+            }
+            font {
+                pixelSize: 16
+                family: "Comfortaa"
+                weight: 600
+            }
+            anchors {
+                left: toggle.right
+                top: parent.top
+                topMargin: 18
+                leftMargin: -2
+            }
+            color: "#967373"
         }
     }
 
@@ -94,11 +218,12 @@ ClippingRectangle {
         }
     }
     ClippingRectangle {
+        id: body
         anchors {
             bottom: closeButton.top
             right: parent.right
             left: parent.left
-            top: titleL.bottom
+            top: actionBar.bottom
             margins: 10
         }
         color: "transparent"
@@ -120,15 +245,15 @@ ClippingRectangle {
             opacity: Bluetooth.enabled ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 200
-                    easing.type: Easing.InOutQuad
+                    duration: 250
+                    easing.type: Easing.InCirc
                 }
             }
 
             delegate: BlueCard {
                 required property var modelData
                 width: deviceList.width
-                implicitHeight: 50
+                implicitHeight: 60
                 device: modelData
             }
             section.property: "paired"
@@ -191,7 +316,14 @@ ClippingRectangle {
             Text {
                 anchors.centerIn: parent
                 text: "No devices found"
-                visible: deviceList.count === 0 && Bluetooth.enabled
+                visible: opacity > 0
+                opacity: deviceList.count === 0 && Bluetooth.enabled ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 250
+                        easing.type: Easing.InCirc
+                    }
+                }
                 color: "#967373"
                 font {
                     pixelSize: 18
@@ -204,7 +336,14 @@ ClippingRectangle {
         Text {
             anchors.centerIn: parent
             text: "Turn on bluetooth to see devices"
-            visible: !Bluetooth.enabled
+            visible: opacity > 0
+            opacity: !Bluetooth.enabled ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.InCirc
+                }
+            }
             color: "#967373"
             font {
                 pixelSize: 18
