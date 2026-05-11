@@ -58,14 +58,12 @@ ClippingRectangle {
         Text {
             id: status
             text: blueRec.getStateText(blueRec.device?.state)
-            // text: blueRec.device.icon
             color: "#967373"
         }
     }
     Rectangle {
         id: pairButton
         color: pairArea.containsMouse ? "#11CCCCCC" : "transparent"
-        // radius: 10
         z: 1
         visible: !blueRec.device?.paired || blueRec.device?.pairing
         anchors.fill: parent
@@ -83,49 +81,52 @@ ClippingRectangle {
             }
         }
     }
+    Rectangle {
+        id: connectButton
+        color: connectArea.containsMouse ? "#11CCCCCC" : "transparent"
+        anchors.fill: parent
+        MouseArea {
+            id: connectArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                if (blueRec.device?.connected) {
+                    blueRec.device?.disconnect();
+                } else {
+                    blueRec.device?.connect();
+                }
+            }
+        }
+    }
+    Text {
+        id: discont
+        text: ""
+        color: "#967373"
+        opacity: connectArea.containsMouse && blueRec.device?.connected ? 1 : 0
+        visible: opacity > 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 100
+            }
+        }
+        font.pixelSize: 20
+        anchors {
+            verticalCenter: parent.verticalCenter
+            right: pairRow.left
+            rightMargin: 10
+        }
+    }
     RowLayout {
         id: pairRow
         visible: blueRec.device?.paired
         spacing: 5
         height: 40
-        width: 100
+        width: 50
         anchors {
             right: parent.right
             rightMargin: 10
             verticalCenter: parent.verticalCenter
-        }
-        Rectangle {
-            id: connectButton
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            color: connectArea.containsMouse ? "#11CCCCCC" : "transparent"
-            radius: 10
-            MouseArea {
-                id: connectArea
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    if (blueRec.device?.connected) {
-                        blueRec.device?.disconnect();
-                    } else {
-                        blueRec.device?.connect();
-                    }
-                }
-            }
-            Text {
-                id: dicon
-                text: {
-                    if (blueRec.device?.connected) {
-                        return "";
-                    } else {
-                        return "󰂱";
-                    }
-                }
-                color: connectArea.containsMouse ? "#960000" : "#967373"
-                anchors.centerIn: parent
-                font.pixelSize: 24
-            }
         }
         Rectangle {
             id: forButton
@@ -143,7 +144,7 @@ ClippingRectangle {
             Text {
                 id: forgor
                 color: forArea.containsMouse ? "#960000" : "#967373"
-                text: "󰂲"
+                text: ""
                 anchors.centerIn: parent
                 font.pixelSize: 24
             }

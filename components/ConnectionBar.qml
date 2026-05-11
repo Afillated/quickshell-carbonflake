@@ -68,12 +68,12 @@ Rectangle {
                 Text {
                     id: blueState
                     text: {
-                        if (Bluetooth.devices?.values.filter(device => device.connected).length === 1) {
+                        if (Bluetooth.isConnected) {
                             return "Connected";
                         } else if (!Bluetooth.enabled) {
                             return "Off";
                         } else {
-                            return "No devices connected";
+                            return "On";
                         }
                     }
                     Layout.maximumWidth: 140
@@ -81,7 +81,7 @@ Rectangle {
                     color: "#967373"
                     font {
                         family: "Comfortaa"
-                        pixelSize: 12
+                        pixelSize: 14
                         weight: 400
                     }
                 }

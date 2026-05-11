@@ -9,6 +9,7 @@ Singleton {
     id: root
     readonly property bool enabled: Bluetooth.defaultAdapter.enabled
     readonly property Types.Bluetooth indicators: Types.Bluetooth {}
+    readonly property bool isConnected: devices.some(device => device.connected)
     readonly property var devices: {
         const devModel = Bluetooth.devices;
         if (!devModel)
