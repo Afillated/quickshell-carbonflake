@@ -15,6 +15,7 @@ Scope {
             required property var modelData
             screen: modelData
             WlrLayershell.layer: WlrLayer.Overlay
+            WlrLayershell.namespace: "notifications"
             anchors {
                 bottom: true
                 left: true

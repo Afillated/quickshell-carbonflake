@@ -21,7 +21,7 @@ Scope {
                 left: true
             }
             exclusionMode: ExclusionMode.Ignore
-            color: "transparent"
+            color: "#33000000"
             IpcHandler {
                 target: "sessionPanel"
                 function open(): void {

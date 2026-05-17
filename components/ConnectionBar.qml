@@ -58,7 +58,12 @@ Rectangle {
                 Text {
                     id: blueLabel
                     text: "Bluetooth"
-                    color: "#967373"
+                    color: openArea.containsMouse ? "#960000" : "#967373"
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 250
+                        }
+                    }
                     font {
                         family: "Comfortaa"
                         pixelSize: 18

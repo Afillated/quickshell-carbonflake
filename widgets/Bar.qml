@@ -12,15 +12,15 @@ Scope {
             id: mainBar
             required property var modelData
             screen: modelData
-            color: "transparent"
+            color: "#33000000"
             anchors {
                 bottom: true
                 left: true
                 right: true
             }
 
-            implicitHeight: 40
-
+            implicitHeight: 50
+            exclusiveZone: implicitHeight - 10
             HyprWS {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
@@ -34,7 +34,7 @@ Scope {
                 anchor {
                     window: mainBar
                     rect.x: 10
-                    rect.y: -11
+                    rect.y: -1
                 }
             }
 
@@ -81,7 +81,7 @@ Scope {
                 anchor {
                     window: mainBar
                     rect.x: 10
-                    rect.y: -11
+                    rect.y: -1
                 }
             }
 
@@ -116,7 +116,7 @@ Scope {
                 anchor {
                     window: mainBar
                     rect.x: mainBar.modelData.width - 10
-                    rect.y: -11
+                    rect.y: -1
                 }
             }
         }

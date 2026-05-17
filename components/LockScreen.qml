@@ -436,7 +436,7 @@ Rectangle {
                     id: rewindArea
                     anchors.fill: parent
                     hoverEnabled: true
-                    cursorShape: MprisPlayers.activePlayer?.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                    cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                     onClicked: MprisPlayers.activePlayer.previous()
                 }
                 Behavior on color {
@@ -503,7 +503,7 @@ Rectangle {
                     id: forwardArea
                     anchors.fill: parent
                     hoverEnabled: true
-                    cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                    cursorShape: MprisPlayers.activePlayer?.canGoNext ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                     onClicked: MprisPlayers.activePlayer.next()
                 }
                 Behavior on color {

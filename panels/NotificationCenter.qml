@@ -21,6 +21,12 @@ PopupWindow {
             visible = false;
         }
     }
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 250
+            easing.type: Easing.OutQuad
+        }
+    }
 
     HyprlandFocusGrab {
         active: notificationcenter.isOpen
