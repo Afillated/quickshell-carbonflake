@@ -7,7 +7,7 @@ import "types" as Types
 
 Singleton {
     id: root
-    readonly property bool enabled: Bluetooth.defaultAdapter.enabled
+    readonly property bool enabled: Bluetooth.defaultAdapter?.enabled
     readonly property Types.Bluetooth indicators: Types.Bluetooth {}
     readonly property bool isConnected: devices.some(device => device.connected)
     readonly property var devices: {
@@ -19,7 +19,7 @@ Singleton {
         const available = all.filter(d => !d.paired);
         return [...paired, ...available];
     }
-    readonly property bool scanning: Bluetooth.defaultAdapter.discovering
+    readonly property bool scanning: Bluetooth.defaultAdapter?.discovering
     readonly property string status: {
         if (!enabled)
             return indicators.powerOff;

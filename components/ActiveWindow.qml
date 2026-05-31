@@ -57,7 +57,6 @@ Rectangle {
             Layout.rightMargin: 12
             Layout.maximumWidth: 200
             elide: Text.ElideRight
-            // text: activeWindowRec.showDesktop ? "desktop" : String(ToplevelManager.activeToplevel?.appId)
             text: {
                 if (activeWindowRec.showDesktop) {
                     return "desktop";

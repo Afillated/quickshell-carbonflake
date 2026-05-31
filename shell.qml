@@ -6,4 +6,5 @@ ShellRoot {
     LockRoot{}
     SessionWindow {}
     NotificationPopouts {}
+    PolkitWindow {}
 }
