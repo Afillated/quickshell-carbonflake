@@ -22,7 +22,7 @@ ClippingRectangle {
 
     function getIcon() {
         if (DesktopEntries.byId(MprisPlayers.selectedPlayer?.desktopEntry))
-            return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.selectedPlayer.desktopEntry).icon);
+            return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.selectedPlayer?.desktopEntry).icon);
         return null;
     }
 

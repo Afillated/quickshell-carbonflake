@@ -39,7 +39,7 @@ Rectangle {
                 verticalCenter: parent.verticalCenter
             }
             sourceSize: Qt.size(20, 20)
-            source: entry.getIcon(entry.node.name)
+            source: entry.getIcon(entry.node?.name)
         }
         RowLayout {
             anchors {
@@ -51,7 +51,7 @@ Rectangle {
                 id: name
                 Layout.maximumWidth: 300
                 elide: Text.ElideRight
-                text: entry.node.properties["application.name"] ? entry.node.properties["application.name"] : entry.node.description
+                text: entry.node?.properties["application.name"] ? entry.node?.properties["application.name"] : entry.node?.description
                 color: "#967373"
                 font {
                     family: "Comfortaa"

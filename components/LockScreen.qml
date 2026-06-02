@@ -264,7 +264,7 @@ Rectangle {
             id: passwordInput
             anchors.fill: parent
             anchors.margins: 10
-            enabled: !LockContext.unlockInProgress
+            enabled: !LockContext.unlockInProgress && !failAnim.running
             echoMode: TextInput.Password
             inputMethodHints: Qt.ImhSensitiveData
             text: LockContext.currentText

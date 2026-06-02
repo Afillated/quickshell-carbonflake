@@ -9,13 +9,22 @@ import qs.services
 FloatingWindow {
     id: polWindow
     title: "Polkit"
-    // placeholder values, depends on how you set you set it on your compositer, it is advised to window rules to prevent unwanted tiling
     implicitWidth: 300
     implicitHeight: 200
     visible: PolkitService.active && PolkitService.registered
     color: "transparent"
+    onVisibleChanged: {
+        passwordInput.text = "";
+    }
     Shortcut {
         sequence: "Escape"
+        enabled: polWindow.visible
+        onActivated: {
+            passwordInput.text = "";
+        }
+    }
+    Shortcut {
+        sequence: "Shift + Escape"
         enabled: polWindow.visible
         onActivated: {
             PolkitService.authFlow?.cancelAuthenticationRequest();
@@ -49,14 +58,28 @@ FloatingWindow {
             Text {
                 id: supMessage
                 text: String(PolkitService.authFlow?.supplementoryMessage)
-                visible: PolkitService.active ? Boolean(PolkitService.authFlow?.suppplementoryMessage) : false
+                opacity: PolkitService.active ? Boolean(PolkitService.authFlow?.suppplementoryMessage) : false
+                visible: opacity > 0
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Easing.OutQuad
+                    }
+                }
                 color: "#967373"
                 font.family: "Firacode Mono Nerd Font"
             }
             Text {
                 id: prompt
-                text: PolkitService.authFlow?.failed > 0 && passwordInput.text == "" ? "Incorrect Password" : String(PolkitService.authFlow?.inputPrompt)
-                visible: PolkitService.active ? Boolean(PolkitService.authFlow?.inputPrompt) : false
+                text: String(PolkitService.authFlow?.inputPrompt)
+                opacity: PolkitService.active ? Boolean(PolkitService.authFlow?.inputPrompt) : false
+                visible: opacity > 0
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Easing.OutQuad
+                    }
+                }
                 color: "#967373"
                 Layout.bottomMargin: -20
                 font.family: "Firacode Mono Nerd Font"
@@ -70,7 +93,6 @@ FloatingWindow {
                 Layout.alignment: Qt.AlignHCenter
                 color: "transparent"
                 border {
-
                     color: "#960000"
                     width: 2
                     Behavior on color {
@@ -84,11 +106,13 @@ FloatingWindow {
                     id: passwordInput
                     anchors.fill: parent
                     anchors.margins: 10
+                    enabled: !failAnim.running
                     echoMode: PolkitService.authFlow?.responseVisible ? TextInput.Normal : TextInput.Password
                     inputMethodHints: Qt.ImhSensitiveData
                     onAccepted: {
                         PolkitService.authFlow.submit(passwordInput.text);
                         passwordInput.text = "";
+                        failAnim.start();
                     }
                     focus: true
                     color: "#967373"
@@ -104,6 +128,38 @@ FloatingWindow {
                     }
                     HoverHandler {
                         cursorShape: Qt.IBeamCursor
+                    }
+                }
+
+                Text {
+                    id: faile
+                    text: "Incorrect Password"
+                    anchors.centerIn: parent
+                    color: "#967373"
+                    font.family: "Firacode Mono Nerd Font"
+                    opacity: 0
+                    SequentialAnimation {
+                        id: failAnim
+                        PauseAnimation {
+                            duration: 500
+                        }
+                        NumberAnimation {
+                            target: faile
+                            property: "opacity"
+                            duration: 250
+                            to: 0.8
+                            easing.type: Easing.InCirc
+                        }
+                        PauseAnimation {
+                            duration: 1000
+                        }
+                        NumberAnimation {
+                            target: faile
+                            property: "opacity"
+                            duration: 250
+                            to: 0
+                            easing.type: Easing.OutCirc
+                        }
                     }
                 }
             }
