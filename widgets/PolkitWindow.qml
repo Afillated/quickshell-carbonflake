@@ -15,6 +15,8 @@ FloatingWindow {
     color: "transparent"
     onVisibleChanged: {
         passwordInput.text = "";
+        if (!visible)
+            PolkitService.authFlow?.cancelAuthenticationRequest();
     }
     Shortcut {
         sequence: "Escape"
