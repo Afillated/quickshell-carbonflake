@@ -22,7 +22,6 @@ Rectangle {
         text: Time.time
         color: "#C10000"
         font {
-            family: "Firacode Mono Nerd Font"
             pixelSize: 20
         }
     }

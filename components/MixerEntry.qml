@@ -16,8 +16,8 @@ Rectangle {
     }
 
     function getIcon() {
-        if (DesktopEntries.byId(entry.node.name))
-            return Quickshell.iconPath(DesktopEntries.byId(entry.node.name).icon);
+        if (DesktopEntries.byId(entry.node?.name))
+            return Quickshell.iconPath(DesktopEntries.byId(entry.node?.name).icon);
         return 'image://icon/audio-volume-high-symbolic';
     }
 
@@ -62,7 +62,7 @@ Rectangle {
     }
     Slider {
         id: slider
-        value: entry.node.audio.volume
+        value: entry.node?.audio.volume
         from: 0
         to: 1
         stepSize: 0.01

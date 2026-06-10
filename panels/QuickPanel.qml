@@ -272,27 +272,6 @@ PopupWindow {
             }
         }
 
-        // ListView {
-        //     id: deviceList
-        //     anchors {
-        //         top: parent.top
-        //         right: parent.right
-        //         left: parent.left
-        //         bottom: sessionBar.top
-        //         margins: 10
-        //     }
-
-        //     clip: true
-        //     model: Bluetooth.pairedDevices
-        //     spacing: 5
-
-        //     delegate: BlueCard {
-        //         required property var modelData
-        //         width: deviceList.width
-        //         implicitHeight: 50
-        //         device: modelData
-        //     }
-        // }
         VolumeMenu {
             id: volumeRockers
             opacity: quickPanel.visible ? 1 : 0

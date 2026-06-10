@@ -6,7 +6,6 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import qs.services
-import Quickshell.Services.Mpris
 
 ClippingRectangle {
     id: nowRec
@@ -23,7 +22,7 @@ ClippingRectangle {
     function getIcon() {
         if (DesktopEntries.byId(MprisPlayers.selectedPlayer?.desktopEntry))
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.selectedPlayer?.desktopEntry).icon);
-        return null;
+        return 'image://icon/audio-volume-high-symbolic';
     }
 
     RowLayout {

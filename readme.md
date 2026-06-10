@@ -17,3 +17,5 @@ https://github.com/user-attachments/assets/3c0fe147-330f-4323-be7b-2f56e6be5f0e
 - A clipboard and more buttons
 
 - Switch from Rofi for app launcher
+
+- Currently rewriting this shell to better suit multiple displays, have wallust support and more
