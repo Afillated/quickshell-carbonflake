@@ -116,6 +116,7 @@ Scope {
                     barRecWidth: parent.width
                     barHeight: mainBar.height
                     barWidth: mainBar.width
+                    window: mainBar
                     anchors {
                         right: parent.right
                         rightMargin: mainBar.height / 5
@@ -125,7 +126,7 @@ Scope {
                 state: {
                     if (mainBar.isPinned)
                         return "Pinned";
-                    if (hoverArea.containsMouse || recHover.hovered || leftRow.stayOpen)
+                    if (hoverArea.containsMouse || recHover.hovered || leftRow.stayOpen || rightRow.stayOpen)
                         return "Peek";
                     return "Hidden";
                 }

@@ -80,4 +80,10 @@ ClippingRectangle {
             easing.type: Easing.OutQuad
         }
     }
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 250
+            easing.type: Easing.OutQuad
+        }
+    }
 }

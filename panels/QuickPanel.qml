@@ -3,10 +3,10 @@ import Quickshell.Widgets
 import Quickshell.Hyprland
 import QtQuick
 
-import qs.components.playerComponents
+import qs.theme
 
 PopupWindow {
-    id: playerPanel
+    id: quickPanel
     color: "transparent"
     property bool isOpen: false
     property real fontSize
@@ -17,9 +17,13 @@ PopupWindow {
             visible = false;
         }
     }
+    anchor {
+        edges: Edges.Right | Edges.Bottom
+        gravity: Edges.Top | Edges.Left
+    }
     HyprlandFocusGrab {
-        active: playerPanel.isOpen
-        windows: [playerPanel]
+        active: quickPanel.isOpen
+        windows: [quickPanel]
         onCleared: {
             closeAnim.start();
         }
@@ -27,39 +31,38 @@ PopupWindow {
     SequentialAnimation {
         id: closeAnim
         NumberAnimation {
-            target: player
-            property: "x"
-            to: -player.width
+            target: quickRec
+            property: "y"
+            to: quickRec.height
             duration: 200
             easing.type: Easing.OutQuad
         }
         ScriptAction {
             script: {
-                playerPanel.isOpen = false;
+                quickPanel.isOpen = false;
             }
         }
-    }
-
-    anchor {
-        edges: Edges.Left | Edges.Bottom
-        gravity: Edges.Top | Edges.Right
     }
     ClippingRectangle {
         id: radRec
         color: "transparent"
-        radius: player.radius
+        radius: quickRec.radius
         anchors.fill: parent
-        Player {
-            id: player
-            anchors.verticalCenter: parent.verticalCenter
+        ClippingRectangle {
+            id: quickRec
+            anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: parent.height
             implicitWidth: parent.width
             radius: 10
-            fontSize: playerPanel.fontSize
-            x: playerPanel.isOpen ? 0 : -width
-            Behavior on x {
+            color: Colors.transground3
+            border {
+                width: 2
+                color: Colors.color3
+            }
+            y: quickPanel.isOpen ? 0 : height
+            Behavior on y {
                 NumberAnimation {
-                    duration: 200
+                    duration: 250
                     easing.type: Easing.OutQuad
                 }
             }

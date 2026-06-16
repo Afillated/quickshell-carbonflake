@@ -48,8 +48,9 @@ RowLayout {
     }
     PlayerPanel {
         id: player
-        implicitHeight: leftRow.barHeight * 3.8
-        implicitWidth: leftRow.barWidth / 4
+        implicitHeight: leftRow.barHeight * 4.5
+        implicitWidth: leftRow.barWidth / 3.5
+        fontSize: leftRow.fontSize
         anchor {
             window: leftRow.window
             rect.x: 10

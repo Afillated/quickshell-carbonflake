@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 import qs.components
 import qs.theme
+import qs.panels
 
 RowLayout {
     id: rightRow
@@ -15,10 +16,15 @@ RowLayout {
     property real barRecWidth
     property real barHeight
     property real barWidth
+    property var window
+    property bool stayOpen: quickPanel.isOpen
     SysStatus {
         id: status
         fontSize: rightRow.fontSize
         implicitHeight: parent.barRecHeight * 0.6
+        onClick: {
+            quickPanel.isOpen = !quickPanel.isOpen;
+        }
     }
     Seperator {
         id: sep1
@@ -29,5 +35,15 @@ RowLayout {
         implicitHeight: parent.barRecHeight * 0.6
         fontSize: rightRow.fontSize
         maxWidth: rightRow.barWidth / 8
+    }
+    QuickPanel {
+        id: quickPanel
+        implicitHeight: rightRow.barHeight * 14
+        implicitWidth: rightRow.barWidth / 3.5
+        anchor {
+            window: rightRow.window
+            rect.x: rightRow.barWidth - 10
+            rect.y: 0
+        }
     }
 }

@@ -104,8 +104,9 @@ ClippingRectangle {
                     text: notiCard.noti?.summary
                     color: Colors.color15
                     font.weight: Font.Bold
-                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
                     Layout.fillWidth: true
+                    Layout.maximumWidth: notiCard.width / 1.2
                     textFormat: Text.MarkdownText
                 }
                 Text {
@@ -114,8 +115,8 @@ ClippingRectangle {
                     color: Colors.color15
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
-                    Layout.maximumWidth: notiCard.width * 0.4
-                    Layout.maximumHeight: notiCard.width * 0.4
+                    Layout.maximumWidth: image.active ? notiCard.width / 1.5 : notiCard.width / 1.2
+                    Layout.maximumHeight: notiCard.width / 2
                     textFormat: Text.MarkdownText
                     Layout.bottomMargin: 10
                     elide: Text.ElideRight
