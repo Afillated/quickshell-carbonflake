@@ -5,4 +5,5 @@ ShellRoot {
     Bar {}
     PolkitWindow {}
     // NotificationPopouts {} TODO: gotta fix these
+    LockRoot {}
 }

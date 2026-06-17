@@ -18,6 +18,7 @@ ClippingRectangle {
     }
     property real fontSize
     property int playerCount: MprisPlayers.activeIndex
+    property var imageCircle: imageRec
     function getIcon() {
         if (DesktopEntries.byId(MprisPlayers.activePlayer?.desktopEntry))
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry).icon);
@@ -122,6 +123,11 @@ ClippingRectangle {
             fillMode: Image.PreserveAspectCrop
             anchors.fill: parent
         }
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {}
+        }
     }
     ColumnLayout {
         id: songDetails
@@ -213,6 +219,7 @@ ClippingRectangle {
 
     PlayerControls {
         id: controls
+        fontSize: playRec.fontSize*1.25
         anchors {
             horizontalCenter: progressBar.horizontalCenter
             bottom: parent.bottom

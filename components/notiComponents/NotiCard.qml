@@ -104,10 +104,10 @@ ClippingRectangle {
                     text: notiCard.noti?.summary
                     color: Colors.color15
                     font.weight: Font.Bold
-                    elide: Text.ElideRight
                     Layout.fillWidth: true
                     Layout.maximumWidth: notiCard.width / 1.2
                     textFormat: Text.MarkdownText
+                    wrapMode: Text.WordWrap
                 }
                 Text {
                     id: body

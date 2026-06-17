@@ -11,7 +11,7 @@ import qs.theme
 RowLayout {
     id: controls
     property real fontSize
-    spacing: fontSize
+    spacing: fontSize / 8
 
     Label {
         id: rewind
@@ -43,9 +43,12 @@ RowLayout {
                 id: rewindArea
                 anchors.fill: parent
                 hoverEnabled: true
-                enabled: MprisPlayers.activePlayer?.canGoPrevious
-                cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ForbiddenCursor
-                onClicked: MprisPlayers.activePlayer.previous()
+                enabled: Boolean(MprisPlayers.activePlayer?.canGoPrevious)
+                cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ArrowCursor
+                onClicked: {
+                    MprisPlayers.activePlayer.previous();
+                    console.log(rewind.font.pixelSize);
+                }
             }
         }
     }
@@ -87,8 +90,8 @@ RowLayout {
                 id: playArea
                 anchors.fill: parent
                 hoverEnabled: true
-                enabled: MprisPlayers.activePlayer?.canTogglePlaying
-                cursorShape: MprisPlayers.activePlayer?.canTogglePlaying ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                enabled: Boolean(MprisPlayers.activePlayer?.canTogglePlaying)
+                cursorShape: MprisPlayers.activePlayer?.canTogglePlaying ? Qt.PointingHandCursor : Qt.ArrowCursor
                 onClicked: MprisPlayers.activePlayer.togglePlaying()
             }
         }
@@ -123,7 +126,7 @@ RowLayout {
                 id: forwardArea
                 anchors.fill: parent
                 hoverEnabled: true
-                enabled: MprisPlayers.activePlayer?.canGoNext
+                enabled: Boolean(MprisPlayers.activePlayer?.canGoNext)
                 cursorShape: MprisPlayers.activePlayer?.canGoNext ? Qt.PointingHandCursor : Qt.ArrowCursor
                 onClicked: MprisPlayers.activePlayer.next()
             }
