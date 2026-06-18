@@ -223,7 +223,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: lockRoot.screen?.height / 4
+            bottomMargin: lockRoot.screen?.height / 3.5
         }
         TextInput {
             id: passwordInput
@@ -385,10 +385,15 @@ Rectangle {
     }
     NowBar {
         id: nowbar
+        fontSize: lockRoot.fontSize
+        collapsedHeight: passwordArea.height * 1.5
+        collapsedWidth: passwordArea.width * 3 / 4
+        expandedWidth: passwordArea.width * 5 / 4
+        expandedHeight: clock.height * 1.8
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: lockRoot.screen?.height / 10
+            bottomMargin: lockRoot.screen?.height / 80
         }
     }
 }

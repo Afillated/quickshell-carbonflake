@@ -16,9 +16,9 @@ ClippingRectangle {
         width: 2
         color: Colors.color3
     }
+    signal imageClick
     property real fontSize
     property int playerCount: MprisPlayers.activeIndex
-    property var imageCircle: imageRec
     function getIcon() {
         if (DesktopEntries.byId(MprisPlayers.activePlayer?.desktopEntry))
             return Quickshell.iconPath(DesktopEntries.byId(MprisPlayers.activePlayer.desktopEntry).icon);
@@ -126,7 +126,11 @@ ClippingRectangle {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: {}
+            cursorShape: LockContext.locked ? Qt.PointingHandCursor : Qt.ArrowCursor
+            enabled: LockContext.locked
+            onClicked: {
+                playRec.imageClick();
+            }
         }
     }
     ColumnLayout {
@@ -156,7 +160,6 @@ ClippingRectangle {
             color: Colors.color10
             Layout.maximumWidth: playRec.width / 2
             font {
-                family: "Firacode Mono Nerd Font"
                 pixelSize: playRec.fontSize
                 weight: 500
             }
@@ -169,7 +172,6 @@ ClippingRectangle {
             color: Colors.color10
             Layout.maximumWidth: playRec.width / 2
             font {
-                family: "Firacode Mono Nerd Font"
                 pixelSize: playRec.fontSize
                 weight: 500
             }
@@ -184,7 +186,7 @@ ClippingRectangle {
             top: songDetails.bottom
             right: parent.right
             margins: 10
-            topMargin: 25
+            topMargin: playRec.fontSize * 1.5
         }
         implicitHeight: playRec.fontSize / 3
     }
@@ -219,7 +221,7 @@ ClippingRectangle {
 
     PlayerControls {
         id: controls
-        fontSize: playRec.fontSize*1.25
+        fontSize: playRec.fontSize * 1.25
         anchors {
             horizontalCenter: progressBar.horizontalCenter
             bottom: parent.bottom

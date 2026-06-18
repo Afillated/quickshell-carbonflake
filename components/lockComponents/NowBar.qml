@@ -11,14 +11,15 @@ ClippingRectangle {
     id: mediaRec
     color: "transparent"
 
-    property int collapsedWidth: 250
-    property int collapsedHeight: 60
-    property int expandedWidth: 460
-    property int expandedHeight: 200
-    property int fontSize: 18
+    property int collapsedWidth
+    property int collapsedHeight
+    property int expandedWidth
+    property int expandedHeight
+    property int fontSize
     implicitWidth: collapsedWidth
     implicitHeight: collapsedHeight
     opacity: MprisPlayers.activePlayer ? 1 : 0
+    visible: MprisPlayers.playerList.length > 0
     scale: MprisPlayers.activePlayer ? 1 : 0.8
     Behavior on opacity {
         NumberAnimation {
@@ -31,9 +32,10 @@ ClippingRectangle {
             easing.type: Easing.OutQuad
         }
     }
-    // state: "collapsed"
+    property bool collapsed: state === "collapsed"
+    state: "collapsed"
     ClippingRectangle {
-        id: colapseRec
+        id: collapsedRec
         anchors.fill: parent
         color: Colors.transground2
         radius: height / 3
@@ -43,7 +45,7 @@ ClippingRectangle {
         }
         RowLayout {
             anchors.fill: parent
-            anchors.margins: 5
+            anchors.margins: parent.height * 0.1
             ClippingRectangle {
                 id: imageRec
                 implicitHeight: parent.height
@@ -54,30 +56,85 @@ ClippingRectangle {
                     source: qsTr(MprisPlayers.activePlayer?.trackArtUrl || "")
                     fillMode: Image.PreserveAspectCrop
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    enabled: mediaRec.state == "collapsed"
+                    onClicked: mediaRec.state = "expanded"
+                }
             }
             ColumnLayout {
                 spacing: mediaRec.fontSize / 2
                 Layout.fillWidth: true
                 Text {
                     text: MprisPlayers.activePlayer?.trackTitle || "No Title"
-                    color: "#967373"
+                    color: Colors.color10
                     Layout.fillWidth: true
                     elide: Text.ElideRight
                     Layout.alignment: Qt.AlignHCenter
                     horizontalAlignment: Text.AlignHCenter
                     font {
                         family: "Comfortaa"
-                        pixelSize: 15
+                        pixelSize: mediaRec.fontSize
                         weight: 700
                     }
                 }
                 PlayerControls {
                     id: songControl
-                    fontSize: 15
+                    fontSize: mediaRec.fontSize
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
                 }
             }
         }
     }
+
+    Player {
+        id: expandedRec
+        anchors.fill: parent
+        opacity: 0
+        visible: opacity > 0
+        onImageClick: {
+            mediaRec.state = "collapsed";
+        }
+        fontSize: mediaRec.fontSize
+        radius: height / 10
+    }
+    states: [
+        State {
+            name: "collapsed"
+            PropertyChanges {
+                mediaRec.implicitWidth: mediaRec.collapsedWidth
+                mediaRec.implicitHeight: mediaRec.collapsedHeight
+                collapsedRec.opacity: 1
+                expandedRec.opacity: 0
+            }
+        },
+        State {
+            name: "expanded"
+            PropertyChanges {
+                mediaRec.implicitWidth: mediaRec.expandedWidth
+                mediaRec.implicitHeight: mediaRec.expandedHeight
+                collapsedRec.opacity: 0
+                expandedRec.opacity: 1
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            from: "*"
+            to: "*"
+            ParallelAnimation {
+                NumberAnimation {
+                    properties: "implicitWidth,implicitHeight,opacity"
+                    duration: 300
+                    easing.type: Easing.OutQuad
+                }
+                ColorAnimation {
+                    duration: 300
+                }
+            }
+        }
+    ]
 }
