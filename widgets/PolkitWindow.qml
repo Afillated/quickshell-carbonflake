@@ -10,8 +10,8 @@ import qs.theme
 FloatingWindow {
     id: polWindow
     title: "Polkit"
-    implicitWidth: 300
-    implicitHeight: 200
+    // implicitWidth: 300
+    // implicitHeight: 200
     visible: PolkitService.active && PolkitService.registered
     color: "transparent"
     onVisibleChanged: {

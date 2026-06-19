@@ -6,4 +6,5 @@ ShellRoot {
     PolkitWindow {}
     // NotificationPopouts {} TODO: gotta fix these
     LockRoot {}
+    SessionWidget {}
 }

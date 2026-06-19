@@ -47,7 +47,6 @@ RowLayout {
                 cursorShape: MprisPlayers.activePlayer?.canGoPrevious ? Qt.PointingHandCursor : Qt.ArrowCursor
                 onClicked: {
                     MprisPlayers.activePlayer.previous();
-                    console.log(rewind.font.pixelSize);
                 }
             }
         }

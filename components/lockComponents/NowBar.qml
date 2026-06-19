@@ -39,6 +39,7 @@ ClippingRectangle {
         anchors.fill: parent
         color: Colors.transground2
         radius: height / 3
+        visible: opacity > 0
         border {
             color: Colors.color3
             width: 2
@@ -51,6 +52,7 @@ ClippingRectangle {
                 implicitHeight: parent.height
                 implicitWidth: height
                 radius: height / 3
+                color: Colors.transground3
                 Image {
                     anchors.fill: parent
                     source: qsTr(MprisPlayers.activePlayer?.trackArtUrl || "")
