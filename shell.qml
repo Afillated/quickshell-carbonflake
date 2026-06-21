@@ -4,7 +4,7 @@ import qs.widgets
 ShellRoot {
     Bar {}
     PolkitWindow {}
-    // NotificationPopouts {} TODO: gotta fix these
+    NotificationPopouts {} 
     LockRoot {}
     SessionWidget {}
 }
