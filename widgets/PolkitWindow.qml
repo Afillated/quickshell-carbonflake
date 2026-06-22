@@ -10,8 +10,6 @@ import qs.theme
 FloatingWindow {
     id: polWindow
     title: "Polkit"
-    // implicitWidth: 300
-    // implicitHeight: 200
     visible: PolkitService.active && PolkitService.registered
     color: "transparent"
     onVisibleChanged: {
@@ -37,7 +35,7 @@ FloatingWindow {
     Rectangle {
         id: polRec
         anchors.fill: parent
-        color: Colors.transground
+        color: Colors.transground3
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 20

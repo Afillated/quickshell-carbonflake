@@ -30,6 +30,19 @@ Singleton {
             return "󰚦";
         }
     }
+    property string profileName: {
+        switch (activeProfile) {
+        case PowerProfile.PowerSaver:
+            return "Power Saver";
+        case PowerProfile.Balanced:
+            return "Balanced";
+        case PowerProfile.Performance:
+            return "Performance";
+        default:
+            print(activeProfile == PowerProfile.Performance);
+            return "󰚦";
+        }
+    }
 
     function formatETA(seconds) {
         if ((seconds <= 0 || !isFinite(seconds)) && isFullyCharged)

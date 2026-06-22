@@ -40,6 +40,7 @@ RowLayout {
         id: quickPanel
         implicitHeight: rightRow.barHeight * 14
         implicitWidth: rightRow.barWidth / 3.5
+        fontSize: rightRow.fontSize
         anchor {
             window: rightRow.window
             rect.x: rightRow.barWidth - 10

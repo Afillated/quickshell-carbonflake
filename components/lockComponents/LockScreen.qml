@@ -220,6 +220,9 @@ Rectangle {
                 }
             }
         }
+        HoverHandler {
+            cursorShape: Qt.IBeamCursor
+        }
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -245,9 +248,6 @@ Rectangle {
             }
             cursorDelegate: Rectangle {
                 visible: false
-            }
-            HoverHandler {
-                cursorShape: Qt.IBeamCursor
             }
             onTextChanged: {
                 if (text.length === 0) {
