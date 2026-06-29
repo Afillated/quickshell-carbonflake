@@ -31,9 +31,9 @@ ClippingRectangle {
             RowLayout {
                 Text {
                     id: percentage
-                    text: Battery.percentage * 100 + "%"
+                    text: Math.floor(Battery.percentage * 100) + "%"
                     color: Colors.foreground
-                    font.pixelSize: powerRec.fontSize 
+                    font.pixelSize: powerRec.fontSize
                     font.weight: 600
                 }
                 Seperator {
@@ -53,6 +53,7 @@ ClippingRectangle {
                     color: Colors.foreground
                     font.pixelSize: powerRec.fontSize
                     font.weight: 600
+                    elide: Text.ElideRight
                 }
             }
             Text {

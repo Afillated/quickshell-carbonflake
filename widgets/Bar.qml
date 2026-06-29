@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Widgets
+import Quickshell.Io
 import QtQuick
 
 import qs.theme
@@ -19,8 +20,14 @@ Scope {
                 right: true
                 left: true
             }
+            IpcHandler {
+                target: "mainBar"
+                function toggle(): void {
+                    mainBar.isPinned = !mainBar.isPinned;
+                }
+            }
             property bool isPinned: true
-            exclusiveZone: isPinned ? barRec.height + height / 10 : height / 4
+            exclusiveZone: isPinned ? barRec.height : height / 8
             Rectangle {
                 id: hoverRec
                 visible: !mainBar.isPinned
@@ -30,7 +37,7 @@ Scope {
                     left: barRec.left
                     right: barRec.right
                 }
-                implicitHeight: mainBar.exclusiveZone
+                implicitHeight: mainBar.exclusiveZone * 2
                 MouseArea {
                     id: hoverArea
                     anchors.fill: parent
@@ -54,7 +61,7 @@ Scope {
                 implicitHeight: Math.floor(parent.height * 0.8)
                 implicitWidth: Math.floor(parent.width * 0.98)
                 radius: Math.floor(height / 3)
-                color: Colors.transground
+                color: Colors.transground2
                 border {
                     color: Colors.color3
                     width: 2
@@ -76,38 +83,16 @@ Scope {
                         verticalCenter: parent.verticalCenter
                     }
                 }
-                Rectangle {
+                CenterRow {
+                    id: centerRow
+                    fontSize: Math.floor(parent.height * 0.48)
+                    barRecHeight: parent.height
+                    barRecWidth: parent.width
+                    barHeight: mainBar.height
+                    barWidth: mainBar.width
+                    barPinned: mainBar.isPinned
                     anchors.centerIn: parent
-                    height: parent.height * 0.6
-                    width: name.width + height / 2
-                    radius: height / 3
-                    MouseArea {
-                        id: pinArea
-                        anchors.fill: parent
-                        onClicked: {
-                            mainBar.isPinned = !mainBar.isPinned;
-                        }
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                    }
-                    color: pinArea.containsMouse ? "#33AAAAAA" : "transparent"
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 200
-                        }
-                    }
-                    Text {
-                        id: name
-                        anchors.centerIn: parent
-                        text: mainBar.isPinned ? "Unpin" : "Pin"
-                        font.pixelSize: Math.floor(barRec.height * 0.48)
-                        color: pinArea.containsMouse ? Colors.color12 : Colors.color15
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 200
-                            }
-                        }
-                    }
+                    onClicked: mainBar.isPinned = !mainBar.isPinned
                 }
                 RightRow {
                     id: rightRow
