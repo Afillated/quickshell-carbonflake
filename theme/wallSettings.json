@@ -1,0 +1,8 @@
+{
+"path": "~/Pictures/Wallpapers",
+"intervalMinutes": 30,
+"transition": "wipe",
+"transitionDuration": 0.3,
+"transitionFps": 60,
+"transitionAngle": 29.3577
+}

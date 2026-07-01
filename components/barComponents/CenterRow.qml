@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import qs.components
+import qs.services
 
 RowLayout {
     id: centerRow

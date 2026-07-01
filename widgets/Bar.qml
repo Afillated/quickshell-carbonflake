@@ -61,10 +61,20 @@ Scope {
                 implicitHeight: Math.floor(parent.height * 0.8)
                 implicitWidth: Math.floor(parent.width * 0.98)
                 radius: Math.floor(height / 3)
-                color: Colors.transground2
+                color: Colors.transground4
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 450
+                    }
+                }
                 border {
                     color: Colors.color3
                     width: 2
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                        }
+                    }
                 }
                 HoverHandler {
                     id: recHover
