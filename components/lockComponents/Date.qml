@@ -7,6 +7,11 @@ Text {
     id: date
     text: Time.date
     color: Colors.color10
+    Behavior on color {
+        ColorAnimation {
+            duration: 200
+        }
+    }
     property int size
     font {
         family: "Comfortaa"
@@ -15,4 +20,3 @@ Text {
     }
     renderType: Text.NativeRendering
 }
-

@@ -11,10 +11,20 @@ import qs.theme
 ClippingRectangle {
     id: playRec
     color: Colors.transground3
+    Behavior on color {
+        ColorAnimation {
+            duration: 200
+        }
+    }
     visible: MprisPlayers.activePlayer
     border {
         width: 2
         color: Colors.color3
+        Behavior on color {
+            ColorAnimation {
+                duration: 200
+            }
+        }
     }
     signal imageClick
     property real fontSize
@@ -106,7 +116,7 @@ ClippingRectangle {
 
     ClippingRectangle {
         id: imageRec
-        color: "transparent"
+        color: Colors.transground3
         radius: 10
         implicitWidth: height
         anchors {
@@ -198,7 +208,7 @@ ClippingRectangle {
             topMargin: playRec.fontSize / 5
             left: progressBar.left
         }
-        color: "#967373"
+        color: Colors.color10
         font {
             pixelSize: playRec.fontSize
             weight: 500
@@ -212,7 +222,7 @@ ClippingRectangle {
             topMargin: playRec.fontSize / 5
             right: progressBar.right
         }
-        color: "#967373"
+        color: Colors.color10
         font {
             pixelSize: playRec.fontSize
             weight: 500

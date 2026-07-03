@@ -17,11 +17,11 @@ RowLayout {
         id: rewind
         text: "  "
         color: if (rewindArea.containsMouse && MprisPlayers.activePlayer?.canGoPrevious) {
-            return Colors.color3;
+            return Colors.color15;
         } else if (!MprisPlayers.activePlayer?.canGoPrevious) {
             return "#262626";
         } else {
-            return "#967373";
+            return Colors.color3;
         }
         Behavior on color {
             ColorAnimation {
@@ -63,11 +63,11 @@ RowLayout {
             }
         }
         color: if (playArea.containsMouse && MprisPlayers.activePlayer?.canTogglePlaying) {
-            return Colors.color3;
+            return Colors.color15;
         } else if (!MprisPlayers.activePlayer?.canTogglePlaying) {
             return "#262626";
         } else {
-            return "#967373";
+            return Colors.color3;
         }
         Behavior on color {
             ColorAnimation {
@@ -99,11 +99,11 @@ RowLayout {
         id: forward
         text: "  "
         color: if (forwardArea.containsMouse && MprisPlayers.activePlayer?.canGoNext) {
-            return Colors.color3;
+            return Colors.color15;
         } else if (!MprisPlayers.activePlayer?.canGoNext) {
             return "#262626";
         } else {
-            return "#967373";
+            return Colors.color3;
         }
         Behavior on color {
             ColorAnimation {

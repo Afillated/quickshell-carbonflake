@@ -27,7 +27,7 @@ Scope {
                 }
             }
             property bool isPinned: true
-            exclusiveZone: isPinned ? barRec.height : height / 8
+            exclusiveZone: isPinned ? barRec.height : height / 10
             Rectangle {
                 id: hoverRec
                 visible: !mainBar.isPinned
@@ -64,7 +64,7 @@ Scope {
                 color: Colors.transground4
                 Behavior on color {
                     ColorAnimation {
-                        duration: 450
+                        duration: 1000
                     }
                 }
                 border {
@@ -72,7 +72,7 @@ Scope {
                     width: 2
                     Behavior on color {
                         ColorAnimation {
-                            duration: 150
+                            duration: 1000
                         }
                     }
                 }

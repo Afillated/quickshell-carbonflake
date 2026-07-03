@@ -57,7 +57,7 @@ PopupWindow {
             implicitHeight: parent.height
             implicitWidth: parent.width
             radius: 10
-            color: Colors.transground3
+            color: Colors.transground4
             border {
                 width: 2
                 color: Colors.color3
@@ -86,7 +86,7 @@ PopupWindow {
                     right: parent.right
                     left: parent.left
                 }
-                color: Colors.transground2
+                color: "transparent"
                 implicitHeight: notiCenter.fontSize * 2
                 radius: height / 3
                 Text {

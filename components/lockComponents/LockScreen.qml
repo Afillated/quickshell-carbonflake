@@ -202,6 +202,11 @@ Rectangle {
         implicitHeight: lockRoot.screen?.height / 20
         radius: height / 3
         color: Colors.transground2
+        Behavior on color {
+            ColorAnimation {
+                duration: 200
+            }
+        }
         border {
             color: {
                 if (!passwordInput.focus || incorrect.visible) {
@@ -296,6 +301,11 @@ Rectangle {
                     height: width
                     radius: width / 2
                     color: Colors.foreground
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
                 }
             }
             add: Transition {

@@ -13,5 +13,10 @@ Text {
         weight: 500
     }
     color: Colors.color10
+    Behavior on color {
+        ColorAnimation {
+            duration: 200
+        }
+    }
     renderType: Text.NativeRendering
 }

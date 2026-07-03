@@ -6,7 +6,7 @@ import qs.theme
 
 Rectangle {
     id: userDetails
-    color: Colors.transground2
+    color: "transparent"
     radius: height / 3
     property real fontSize
     Text {
