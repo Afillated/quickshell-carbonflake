@@ -82,7 +82,7 @@ Scope {
                     Text {
                         id: username
                         text: SessionInfo.user
-                        color: "#967373"
+                        color: Colors.foreground
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
@@ -97,7 +97,7 @@ Scope {
                     Text {
                         id: uptime
                         text: "Uptime: " + SessionInfo.uptime
-                        color: "#967373"
+                        color: Colors.foreground
                         anchors {
                             verticalCenter: parent.verticalCenter
                             right: parent.right

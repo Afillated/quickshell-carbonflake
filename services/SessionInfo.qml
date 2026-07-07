@@ -47,4 +47,3 @@ Singleton {
         onTriggered: cat.reload()
     }
 }
-

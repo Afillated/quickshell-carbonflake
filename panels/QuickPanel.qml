@@ -81,12 +81,19 @@ PopupWindow {
             ColumnLayout {
                 id: panelLayout
                 Layout.maximumHeight: quickRec.height - (infoRec.height + anchors.margins)
+                spacing: quickPanel.fontSize / 2
                 anchors {
                     bottom: infoRec.top
                     left: parent.left
                     right: parent.right
                     margins: 10
                     bottomMargin: anchors.margins / 2
+                }
+                BrightnessSlider {
+                    implicitHeight: quickRec.height / 8
+                    implicitWidth: parent.width
+                    radius: quickRec.radius
+                    fontSize: quickPanel.fontSize
                 }
                 PowerWidget {
                     id: powerRec

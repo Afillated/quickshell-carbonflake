@@ -49,8 +49,9 @@ ClippingRectangle {
             anchors.margins: parent.height * 0.1
             ClippingRectangle {
                 id: imageRec
-                implicitHeight: parent.height
-                implicitWidth: height
+                Layout.fillHeight: true
+                Layout.alignment: Qt.AlignVCenter
+                Layout.preferredWidth: height
                 radius: height / 3
                 color: Colors.transground3
                 Image {
@@ -69,6 +70,8 @@ ClippingRectangle {
             ColumnLayout {
                 spacing: mediaRec.fontSize / 2
                 Layout.fillWidth: true
+                Layout.fillHeight: false
+                Layout.alignment: Qt.AlignVCenter
                 Text {
                     text: MprisPlayers.activePlayer?.trackTitle || "No Title"
                     color: Colors.color10
