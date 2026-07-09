@@ -44,8 +44,8 @@ ClippingRectangle {
                     text: {
                         if (Battery.isCharging) {
                             return "Charging";
-                        } else if (Battery.isFullyCharged) {
-                            return "Passthrough";
+                        } else if (Battery.isFullyCharged && Battery.estimatedTime == 0) {
+                            return "Plugged In";
                         } else {
                             return "Draining";
                         }

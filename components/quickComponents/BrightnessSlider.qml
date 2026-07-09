@@ -27,6 +27,7 @@ ClippingRectangle {
                 Layout.alignment: Qt.AlignVCenter
                 color: Colors.foreground
                 font.pixelSize: brightRec.fontSize
+                font.weight: 600
             }
             Seperator {
                 implicitHeight: brightRec.fontSize
@@ -38,6 +39,7 @@ ClippingRectangle {
                 Layout.alignment: Qt.AlignVCenter
                 color: Colors.foreground
                 font.pixelSize: brightRec.fontSize
+                font.weight: 600
             }
         }
         Slider {

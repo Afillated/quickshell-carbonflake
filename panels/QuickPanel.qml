@@ -103,6 +103,14 @@ PopupWindow {
                     fontSize: quickPanel.fontSize
                     butRadius: radius / 2
                 }
+                SessionRec {
+                    id: sessionRec
+                    implicitWidth: parent.width
+                    implicitHeight: quickRec.height / 6
+                    radius: quickRec.radius
+                    fontSize: quickPanel.fontSize * 2
+                    butRadius: radius / 2
+                }
             }
         }
     }
