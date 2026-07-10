@@ -1,6 +1,6 @@
 {
 "path": "~/Pictures/Wallpapers",
-"intervalMinutes": 30,
+"intervalMinutes": 60,
 "transition": "wipe",
 "transitionDuration": 0.3,
 "transitionFps": 60,

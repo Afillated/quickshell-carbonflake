@@ -86,14 +86,21 @@ PopupWindow {
                     bottom: infoRec.top
                     left: parent.left
                     right: parent.right
+                    top: parent.top
                     margins: 10
-                    bottomMargin: anchors.margins / 2
+                    bottomMargin: anchors.margins / 4
                 }
-                BrightnessSlider {
-                    implicitHeight: quickRec.height / 8
-                    implicitWidth: parent.width
+                ClippingRectangle {
+                    id: placeholder
+                    color: Colors.transground2
+                    border {
+                        width: 2
+                        color: Colors.color3
+                    }
+                    opacity: 0
                     radius: quickRec.radius
-                    fontSize: quickPanel.fontSize
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
                 }
                 PowerWidget {
                     id: powerRec
@@ -110,6 +117,20 @@ PopupWindow {
                     radius: quickRec.radius
                     fontSize: quickPanel.fontSize * 2
                     butRadius: radius / 2
+                }
+                BrightnessSlider {
+                    id: displayRec
+                    implicitHeight: quickRec.height / 8
+                    implicitWidth: parent.width
+                    radius: quickRec.radius
+                    fontSize: quickPanel.fontSize
+                }
+                AudioRec {
+                    id: audioRec
+                    implicitHeight: quickRec.height / 4
+                    implicitWidth: parent.width
+                    radius: quickRec.radius
+                    fontSize: quickPanel.fontSize
                 }
             }
         }

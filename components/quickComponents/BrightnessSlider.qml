@@ -43,7 +43,7 @@ ClippingRectangle {
             }
         }
         Slider {
-            id: micSlider
+            id: brightSlider
             value: Brightness.brightness
             from: 0
             to: 100
@@ -56,7 +56,7 @@ ClippingRectangle {
                 color: "#55967373"
                 clip: true
                 Rectangle {
-                    width: micSlider.visualPosition * parent.width
+                    width: brightSlider.visualPosition * parent.width
                     height: parent.height
                     radius: height / 3
                     gradient: Gradient {
@@ -86,7 +86,7 @@ ClippingRectangle {
                 }
             }
             handle: Rectangle {
-                x: micSlider.visualPosition * (micSlider.availableWidth - width)
+                x: brightSlider.visualPosition * (brightSlider.availableWidth - width)
                 height: parent.height
                 width: height
                 radius: height / 3
