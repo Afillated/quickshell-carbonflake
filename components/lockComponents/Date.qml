@@ -6,7 +6,7 @@ import qs.theme
 Text {
     id: date
     text: Time.date
-    color: Colors.color10
+    color: Colors.foreground
     Behavior on color {
         ColorAnimation {
             duration: 200

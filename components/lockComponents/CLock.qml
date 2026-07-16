@@ -12,7 +12,7 @@ Text {
         pixelSize: size
         weight: 500
     }
-    color: Colors.color10
+    color: Colors.foreground
     Behavior on color {
         ColorAnimation {
             duration: 200

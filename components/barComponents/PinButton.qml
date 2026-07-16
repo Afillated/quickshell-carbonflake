@@ -6,7 +6,7 @@ import qs.services
 
 Rectangle {
     id: pinButton
-    implicitWidth: name.width * 2.5
+    implicitWidth: height * 1.5
     radius: height / 3
     signal clicks
     property bool barPinned

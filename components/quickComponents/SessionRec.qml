@@ -25,7 +25,7 @@ ClippingRectangle {
             color: area.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
+                    duration: 200
                 }
             }
             MouseArea {
@@ -42,7 +42,7 @@ ClippingRectangle {
                 width: 2
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -54,7 +54,7 @@ ClippingRectangle {
                 font.pixelSize: sessionRec.fontSize
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -67,7 +67,7 @@ ClippingRectangle {
             color: area2.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
+                    duration: 200
                 }
             }
             MouseArea {
@@ -84,7 +84,7 @@ ClippingRectangle {
                 width: 2
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -95,7 +95,7 @@ ClippingRectangle {
                 font.pixelSize: sessionRec.fontSize
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -108,7 +108,7 @@ ClippingRectangle {
             color: area5.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
+                    duration: 200
                 }
             }
             MouseArea {
@@ -125,7 +125,7 @@ ClippingRectangle {
                 width: 2
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -136,7 +136,7 @@ ClippingRectangle {
                 font.pixelSize: sessionRec.fontSize
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -149,7 +149,7 @@ ClippingRectangle {
             color: area3.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
+                    duration: 200
                 }
             }
             MouseArea {
@@ -166,7 +166,7 @@ ClippingRectangle {
                 width: 2
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -178,7 +178,7 @@ ClippingRectangle {
                 font.pixelSize: sessionRec.fontSize
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -191,7 +191,7 @@ ClippingRectangle {
             color: area4.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
+                    duration: 200
                 }
             }
             MouseArea {
@@ -208,7 +208,7 @@ ClippingRectangle {
                 width: 2
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }
@@ -219,7 +219,7 @@ ClippingRectangle {
                 font.pixelSize: sessionRec.fontSize
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
+                        duration: 200
                     }
                 }
             }

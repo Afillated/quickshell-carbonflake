@@ -186,7 +186,7 @@ Rectangle {
     Text {
         id: username
         text: SessionInfo.user
-        color: Colors.color10
+        color: Colors.foreground
         font.family: "Comfortaa"
         font.pixelSize: Math.floor(lockRoot.fontSize * 1.5) | 0
         anchors {

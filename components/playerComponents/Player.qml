@@ -84,7 +84,6 @@ ClippingRectangle {
 
                 color: appButton.containsMouse && MprisPlayers.playerList.length > 1 ? Colors.color12 : Colors.color15
                 font {
-                    family: "Firacode Mono Nerd Font"
                     pixelSize: playRec.fontSize * 1.2
                     weight: 500
                 }

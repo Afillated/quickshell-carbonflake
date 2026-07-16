@@ -55,14 +55,14 @@ Singleton {
 
         if (hours > 0) {
             if (minutes > 0) {
-                return `${prefix}: ${hours}h ${minutes}m`;
+                return `${prefix} ${hours}h ${minutes}m`;
             }
-            return `${prefix}: ${hours}h`;
+            return `${prefix} ${hours}h`;
         }
 
         if (minutes > 0) {
             if (minutes >= 10 || remainingSeconds === 0) {
-                return `${prefix}: ${minutes}m`;
+                return `${prefix} ${minutes}m`;
             }
             return `${prefix}: ${minutes}m ${remainingSeconds}s`;
         }

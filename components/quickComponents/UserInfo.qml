@@ -19,7 +19,7 @@ Rectangle {
             leftMargin: 10
         }
         font {
-            pixelSize: userDetails.fontSize * 1.2
+            pixelSize: userDetails.fontSize * 1.1
             weight: 420
         }
     }

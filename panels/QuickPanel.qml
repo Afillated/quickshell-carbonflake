@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import qs.theme
+import qs.services
 import qs.components.quickComponents
 
 PopupWindow {
@@ -42,6 +43,8 @@ PopupWindow {
         ScriptAction {
             script: {
                 quickPanel.isOpen = false;
+                mixerSink.state = "";
+                mixerSource.state = "";
             }
         }
     }
@@ -131,6 +134,83 @@ PopupWindow {
                     implicitWidth: parent.width
                     radius: quickRec.radius
                     fontSize: quickPanel.fontSize
+                    onVolOpen: {
+                        mixerSource.state = "open";
+                    }
+                    onMicOpen: {
+                        mixerSink.state = "open";
+                    }
+                }
+            }
+            Mixer {
+                id: mixerSource
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.right
+                    right: undefined
+                }
+                implicitWidth: parent.width
+                fontSize: quickPanel.fontSize
+                butRadius: quickRec.radius
+                title: "Playback"
+                node: Audio.defaultOutput
+                nodeList: Audio.outputList
+                MouseArea {
+                    anchors.fill: parent
+                    z: -1
+                }
+                onClose: {
+                    state = "";
+                }
+                states: State {
+                    name: "open"
+                    AnchorChanges {
+                        target: mixerSource
+                        anchors.right: parent.right
+                        anchors.left: parent.left
+                    }
+                }
+                transitions: Transition {
+                    AnchorAnimation {
+                        duration: 200
+                        easing.type: Easing.OutQuad
+                    }
+                }
+            }
+            Mixer {
+                id: mixerSink
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.right
+                    right: undefined
+                }
+                implicitWidth: parent.width
+                fontSize: quickPanel.fontSize
+                butRadius: quickRec.radius
+                title: "Recording"
+                node: Audio.defaultInput
+                MouseArea {
+                    anchors.fill: parent
+                    z: -1
+                }
+                onClose: {
+                    state = "";
+                }
+                states: State {
+                    name: "open"
+                    AnchorChanges {
+                        target: mixerSink
+                        anchors.right: parent.right
+                        anchors.left: parent.left
+                    }
+                }
+                transitions: Transition {
+                    AnchorAnimation {
+                        duration: 200
+                        easing.type: Easing.OutQuad
+                    }
                 }
             }
         }
