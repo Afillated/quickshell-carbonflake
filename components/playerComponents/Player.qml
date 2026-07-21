@@ -64,9 +64,10 @@ ClippingRectangle {
         }
         Loader {
             active: true
+            Layout.alignment: Qt.AlignVCenter
             sourceComponent: Image {
                 anchors.centerIn: parent
-                sourceSize: Qt.size(playRec.fontSize * 0.7, playRec.fontSize * 0.7)
+                sourceSize: Qt.size(playRec.fontSize * 0.8, playRec.fontSize * 0.8)
                 source: playRec.getIcon()
             }
         }
@@ -76,6 +77,7 @@ ClippingRectangle {
             implicitWidth: appName.width + height / 2
             implicitHeight: appName.height
             radius: height / 3
+            Layout.alignment: Qt.AlignVCenter
             Text {
                 id: appName
                 text: MprisPlayers.playerName

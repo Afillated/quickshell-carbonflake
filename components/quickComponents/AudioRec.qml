@@ -55,7 +55,7 @@ ClippingRectangle {
                 Slider {
                     id: volSlider
                     Layout.fillWidth: true
-                    value: Audio.defaultOutput?.audio.volume
+                    value: parseFloat(Audio.defaultOutput?.audio.volume)
                     from: 0
                     to: 1
                     stepSize: 0.01
@@ -174,7 +174,7 @@ ClippingRectangle {
                 Slider {
                     id: micSlider
                     Layout.fillWidth: true
-                    value: Audio.defaultInput?.audio.volume
+                    value: parseFloat(Audio.defaultInput?.audio.volume)
                     from: 0
                     to: 1.52
                     stepSize: 0.01

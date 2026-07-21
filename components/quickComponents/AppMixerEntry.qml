@@ -7,19 +7,24 @@ import QtQuick.Controls
 
 import qs.theme
 import qs.components
-import qs.services
 
 ClippingRectangle {
     id: entry
     required property PwNode node
     property int fontSize
+    property bool clickable: false
+    signal clicked
     color: "transparent"
     PwObjectTracker {
         objects: [entry.node]
     }
-    readonly property bool isDefault: (node === Audio.defaultOutput || node === Audio.defaultInput)
+
     implicitHeight: content.implicitHeight
     function getIcon() {
+        if (entry.node?.properties["application.icon-name"])
+            return Quickshell.iconPath(entry.node.properties["application.icon-name"]);
+        if (DesktopEntries.byId(entry.node?.name))
+            return Quickshell.iconPath(DesktopEntries.byId(entry.node?.name).icon);
         if (entry.node.type === PwNodeType.AudioSource) {
             if (entry.node.audio?.muted)
                 return "image://icon/microphone-sensitivity-muted-symbolic";
@@ -55,13 +60,10 @@ ClippingRectangle {
                 id: area
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+                cursorShape: entry.clickable ? Qt.PointingHandCursor : Qt.ArrowCursor
+                enabled: entry.clickable
                 onClicked: {
-                    if (entry.node.isSink) {
-                        Audio.setDefaultOutput(entry.node);
-                    } else {
-                        Audio.setDefaultInput(entry.node);
-                    }
+                    entry.clicked();
                 }
             }
             RowLayout {
@@ -78,31 +80,18 @@ ClippingRectangle {
                     Layout.maximumWidth: content.width * 0.8
                     elide: Text.ElideRight
                     Layout.alignment: Qt.AlignVCenter
-                    text: entry.node?.description
+                    property string nodeName: entry.node?.properties["application.name"] ? entry.node?.properties["application.name"] : entry.node?.description
+                    text: {
+                        if (entry.clickable) {
+                            return nodeName + " ";
+                        } else {
+                            return nodeName;
+                        }
+                    }
+
                     color: area.containsMouse ? Colors.color10 : Colors.foreground
                     Behavior on color {
                         ColorAnimation {
-                            duration: 200
-                        }
-                    }
-                    font {
-                        pixelSize: entry.fontSize * 1.2
-                    }
-                }
-                Text {
-                    id: isDefault
-                    Layout.alignment: Qt.AlignVCenter
-                    text: entry.isDefault ? "" : ""
-                    color: entry.isDefault ? Colors.color10 : Colors.foreground
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 200
-                        }
-                    }
-                    opacity: entry.isDefault ? 1 : 0
-                    visible: opacity > 0
-                    Behavior on opacity {
-                        NumberAnimation {
                             duration: 200
                         }
                     }
