@@ -82,7 +82,6 @@ ClippingRectangle {
                     font {
                         family: "Comfortaa"
                         pixelSize: mediaRec.fontSize
-                        weight: 700
                     }
                 }
                 PlayerControls {

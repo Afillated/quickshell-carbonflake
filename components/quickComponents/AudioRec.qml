@@ -29,9 +29,11 @@ ClippingRectangle {
                 Layout.fillWidth: true
                 Text {
                     id: out
-                    text: `Output Volume`
+                    text: Audio.defaultOutput?.description
                     Layout.leftMargin: audioRec.fontSize / 2
                     Layout.alignment: Qt.AlignVCenter
+                    Layout.maximumWidth: volSlider.width * 0.6
+                    elide: Text.ElideRight
                     color: Colors.foreground
                     font.pixelSize: audioRec.fontSize
                     font.weight: 600
@@ -148,9 +150,11 @@ ClippingRectangle {
                 Layout.fillWidth: true
                 Text {
                     id: mic
-                    text: `Input Volume`
+                    text: Audio.defaultInput?.description
                     Layout.leftMargin: audioRec.fontSize / 2
+                    Layout.maximumWidth: volSlider.width * 0.6
                     Layout.alignment: Qt.AlignVCenter
+                    elide: Text.ElideRight
                     color: Colors.foreground
                     font.pixelSize: audioRec.fontSize
                     font.weight: 600

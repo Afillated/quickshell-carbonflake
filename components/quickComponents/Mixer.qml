@@ -27,8 +27,9 @@ ClippingRectangle {
         Label {
             id: title
             text: mixerRec.title
-            color: Colors.color14
+            color: Colors.color15
             font.pixelSize: mixerRec.fontSize * 3
+            font.family: "Comfortaa"
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: mixerRec.fontSize
             Layout.bottomMargin: mixerRec.fontSize

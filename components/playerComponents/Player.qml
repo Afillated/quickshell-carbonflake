@@ -158,10 +158,11 @@ ClippingRectangle {
             id: trackTitle
             text: MprisPlayers.activePlayer?.trackTitle ? MprisPlayers.activePlayer?.trackTitle : "No Title"
             color: Colors.color10
-            Layout.maximumWidth: playRec.width / 2
+            Layout.maximumWidth: imageRec.width * 1.6
             font {
                 pixelSize: playRec.fontSize * 1.2
                 weight: 600
+                // family: "Hack Mono"
             }
             elide: Text.ElideRight
         }
@@ -173,6 +174,7 @@ ClippingRectangle {
             font {
                 pixelSize: playRec.fontSize
                 weight: 500
+                // family: "Hack Mono"
             }
             elide: Text.ElideRight
         }
@@ -185,6 +187,7 @@ ClippingRectangle {
             font {
                 pixelSize: playRec.fontSize
                 weight: 500
+                // family: "Hack Mono"
             }
             elide: Text.ElideRight
         }
@@ -194,10 +197,9 @@ ClippingRectangle {
         id: progressBar
         anchors {
             left: imageRec.right
-            top: songDetails.bottom
+            bottom: controls.top
             right: parent.right
             margins: 10
-            topMargin: playRec.fontSize * 1.5
         }
         implicitHeight: playRec.fontSize / 3
     }

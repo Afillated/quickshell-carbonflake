@@ -47,6 +47,7 @@ PopupWindow {
                 mixerSource.state = "";
                 mixerOut.state = "";
                 mixerIn.state = "";
+                blueMenu.state = "";
             }
         }
     }
@@ -95,17 +96,16 @@ PopupWindow {
                     margins: 10
                     bottomMargin: anchors.margins / 4
                 }
-                ClippingRectangle {
+                ConnectionBar {
                     id: placeholder
-                    color: Colors.transground2
-                    border {
-                        width: 2
-                        color: Colors.color3
-                    }
-                    opacity: 0
                     radius: quickRec.radius
+                    fontSize: quickPanel.fontSize
+                    butRadius: radius / 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    onOpenBlue: {
+                        blueMenu.state = "open";
+                    }
                 }
                 PowerWidget {
                     id: powerRec
@@ -144,6 +144,51 @@ PopupWindow {
                     }
                 }
             }
+
+            BluetoothMenu {
+                id: blueMenu
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.right
+                    right: undefined
+                }
+                implicitWidth: parent.width
+                fontSize: quickPanel.fontSize
+                butRadius: quickRec.radius
+                opacity: 0
+                visible: opacity > 0
+                MouseArea {
+                    anchors.fill: parent
+                    z: -1
+                }
+                onClose: {
+                    state = "";
+                }
+                states: State {
+                    name: "open"
+                    AnchorChanges {
+                        target: blueMenu
+                        anchors.right: parent.right
+                        anchors.left: parent.left
+                    }
+                    PropertyChanges {
+                        blueMenu.opacity: 1
+                    }
+                }
+                transitions: Transition {
+                    AnchorAnimation {
+                        duration: 200
+                        easing.type: Easing.OutQuad
+                    }
+                    NumberAnimation {
+                        properties: "opacity"
+                        duration: 180
+                        easing.type: Easing.OutQuad
+                    }
+                }
+            }
+
             AppMixer {
                 id: mixerSource
                 anchors {
@@ -193,6 +238,7 @@ PopupWindow {
                     }
                 }
             }
+
             Mixer {
                 id: mixerOut
                 anchors {
@@ -204,7 +250,7 @@ PopupWindow {
                 implicitWidth: parent.width
                 fontSize: quickPanel.fontSize
                 butRadius: quickRec.radius
-                title: "Output Devices"
+                title: "Sinks"
                 nodeList: Audio.outputList
                 opacity: 0
                 visible: opacity > 0
@@ -242,6 +288,7 @@ PopupWindow {
                     }
                 }
             }
+
             AppMixer {
                 id: mixerSink
                 anchors {
@@ -292,6 +339,7 @@ PopupWindow {
                     }
                 }
             }
+
             Mixer {
                 id: mixerIn
                 anchors {
@@ -303,7 +351,7 @@ PopupWindow {
                 implicitWidth: parent.width
                 fontSize: quickPanel.fontSize
                 butRadius: quickRec.radius
-                title: "Input Devices"
+                title: "Sources"
                 nodeList: Audio.inputList
                 opacity: 0
                 visible: opacity > 0
