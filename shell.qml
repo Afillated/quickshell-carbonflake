@@ -3,8 +3,8 @@ import qs.widgets
 
 ShellRoot {
     Bar {}
-    LockRoot{}
-    SessionWindow {}
-    NotificationPopouts {}
     PolkitWindow {}
+    NotificationPopouts {}
+    LockRoot {}
+    SessionWidget {}
 }

@@ -1,19 +1,15 @@
 import Quickshell
-import QtQuick
+import Quickshell.Widgets
 import Quickshell.Hyprland
-import qs.components
+import QtQuick
+
+import qs.components.playerComponents
 
 PopupWindow {
     id: playerPanel
-    implicitHeight: 200
-    implicitWidth: 460
     color: "transparent"
-    Behavior on implicitWidth {
-        NumberAnimation {
-            duration: 250
-        }
-    }
     property bool isOpen: false
+    property real fontSize
     onIsOpenChanged: {
         if (isOpen === true) {
             visible = true;
@@ -28,83 +24,18 @@ PopupWindow {
             closeAnim.start();
         }
     }
-    Shortcut {
-        sequence: "Escape"
-        enabled: playerPanel.isOpen
-        onActivated: closeAnim.start()
-    }
     SequentialAnimation {
         id: closeAnim
-        ParallelAnimation {
-            NumberAnimation {
-                target: playRec
-                property: "implicitWidth"
-                duration: 250
-                easing.type: Easing.OutQuad
-                from: playerPanel.implicitWidth
-                to: 0
-            }
-            NumberAnimation {
-                target: playRec
-                property: "appOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "imageOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "songDetailsOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "songControlsOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "progressBarOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "progressOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: playRec
-                property: "lengthOpacity"
-                duration: 150
-                from: 1
-                to: 0
-                easing.type: Easing.OutQuad
-            }
+        NumberAnimation {
+            target: player
+            property: "x"
+            to: -player.width
+            duration: 200
+            easing.type: Easing.OutQuad
         }
         ScriptAction {
             script: {
                 playerPanel.isOpen = false;
-                playerPanel.visible = false;
             }
         }
     }
@@ -113,66 +44,24 @@ PopupWindow {
         edges: Edges.Left | Edges.Bottom
         gravity: Edges.Top | Edges.Right
     }
-
-    Playing {
-        id: playRec
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        implicitHeight: parent.height
-        implicitWidth: playerPanel.visible ? parent.width : 0
-        appOpacity: playerPanel.visible ? 1 : 0
-        imageOpacity: playerPanel.visible ? 1 : 0
-        songDetailsOpacity: playerPanel.visible ? 1 : 0
-        songControlsOpacity: playerPanel.visible ? 1 : 0
-        progressBarOpacity: playerPanel.visible ? 1 : 0
-        progressOpacity: playerPanel.visible ? 1 : 0
-        lengthOpacity: playerPanel.visible ? 1 : 0
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on appOpacity {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on imageOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on songDetailsOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on songControlsOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on progressBarOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on progressOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
-            }
-        }
-        Behavior on lengthOpacity {
-            NumberAnimation {
-                duration: 350
-                easing.type: Easing.OutQuad
+    ClippingRectangle {
+        id: radRec
+        color: "transparent"
+        radius: player.radius
+        anchors.fill: parent
+        Player {
+            id: player
+            anchors.verticalCenter: parent.verticalCenter
+            implicitHeight: parent.height
+            implicitWidth: parent.width
+            radius: 10
+            fontSize: playerPanel.fontSize
+            x: playerPanel.isOpen ? 0 : -width
+            Behavior on x {
+                NumberAnimation {
+                    duration: 200
+                    easing.type: Easing.OutQuad
+                }
             }
         }
     }

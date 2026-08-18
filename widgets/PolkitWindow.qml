@@ -3,14 +3,13 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import QtQuick.Effects
+
 import qs.services
+import qs.theme
 
 FloatingWindow {
     id: polWindow
     title: "Polkit"
-    implicitWidth: 300
-    implicitHeight: 200
     visible: PolkitService.active && PolkitService.registered
     color: "transparent"
     onVisibleChanged: {
@@ -36,7 +35,7 @@ FloatingWindow {
     Rectangle {
         id: polRec
         anchors.fill: parent
-        color: "#AA000000"
+        color: Colors.transground3
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 20
@@ -51,10 +50,9 @@ FloatingWindow {
                 Text {
                     id: message
                     Layout.maximumWidth: 350
-                    color: "#967373"
+                    color: Colors.color15
                     text: String(PolkitService.authFlow?.message)
                     wrapMode: Text.WordWrap
-                    font.family: "Firacode Mono Nerd Font"
                 }
             }
             Text {
@@ -68,8 +66,7 @@ FloatingWindow {
                         easing.type: Easing.OutQuad
                     }
                 }
-                color: "#967373"
-                font.family: "Firacode Mono Nerd Font"
+                color: Colors.color15
             }
             Text {
                 id: prompt
@@ -82,9 +79,8 @@ FloatingWindow {
                         easing.type: Easing.OutQuad
                     }
                 }
-                color: "#967373"
+                color: Colors.color15
                 Layout.bottomMargin: -20
-                font.family: "Firacode Mono Nerd Font"
             }
 
             ClippingRectangle {
@@ -95,7 +91,7 @@ FloatingWindow {
                 Layout.alignment: Qt.AlignHCenter
                 color: "transparent"
                 border {
-                    color: "#960000"
+                    color: Colors.color3
                     width: 2
                     Behavior on color {
                         ColorAnimation {
@@ -117,13 +113,13 @@ FloatingWindow {
                         failAnim.start();
                     }
                     focus: true
-                    color: "#967373"
+                    color: Colors.color15
                     horizontalAlignment: Text.AlignHCenter
                     cursorVisible: false
                     font.pixelSize: 16
                     font.family: "Firacode Mono Nerd Font"
                     selectionColor: "#88960000"
-                    selectedTextColor: "#967373"
+                    selectedTextColor: Colors.color15
                     renderType: Text.NativeRendering
                     cursorDelegate: Rectangle {
                         visible: false
@@ -137,8 +133,7 @@ FloatingWindow {
                     id: faile
                     text: "Incorrect Password"
                     anchors.centerIn: parent
-                    color: "#967373"
-                    font.family: "Firacode Mono Nerd Font"
+                    color: Colors.color15
                     opacity: 0
                     SequentialAnimation {
                         id: failAnim

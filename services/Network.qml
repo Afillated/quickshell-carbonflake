@@ -251,3 +251,4 @@ Singleton {
         availableNetworksProcess.running = true;
     }
 }
+

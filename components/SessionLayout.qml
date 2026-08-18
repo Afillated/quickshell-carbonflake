@@ -1,15 +1,19 @@
 import Quickshell
+import Quickshell.Widgets
+import Quickshell.Io
+import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import QtQuick
-import Quickshell.Io
+
+import qs.theme
 import qs.services
 
 RowLayout {
     id: sessionLayout
-    property real fontSize
-    property real butRadius
-    spacing: 8
+    property int fontSize
+    property int butRadius
+    property alias lfocus: lockButton.focus
+    signal close
     Rectangle {
         id: lockButton
         radius: sessionLayout.butRadius
@@ -26,11 +30,12 @@ RowLayout {
             anchors.fill: parent
             onClicked: {
                 LockContext.locked = true;
+                sessionLayout.close();
             }
         }
         focus: true
         border {
-            color: focus ? "#CC960000" : "#111111"
+            color: focus ? Colors.color4 : "#111111"
             width: 2
             Behavior on color {
                 ColorAnimation {
@@ -41,9 +46,9 @@ RowLayout {
 
         Text {
             text: ""
-            color: area.containsMouse || lockButton.focus ? "#960000" : "#967373"
+            color: area.containsMouse || lockButton.focus ? Colors.color14 : Colors.foreground
             anchors.centerIn: parent
-            font.pixelSize: sessionLayout.fontSize - 2
+            font.pixelSize: sessionLayout.fontSize
             Behavior on color {
                 ColorAnimation {
                     duration: 100
@@ -56,6 +61,7 @@ RowLayout {
         KeyNavigation.left: logButton
         Keys.onReturnPressed: {
             LockContext.locked = true;
+            sessionLayout.close();
         }
     }
     Rectangle {
@@ -72,10 +78,13 @@ RowLayout {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
-            onClicked: Quickshell.execDetached(["systemctl", "poweroff"])
+            onClicked: {
+                Quickshell.execDetached(["systemctl", "poweroff"]);
+                sessionLayout.close();
+            }
         }
         border {
-            color: focus ? "#CC960000" : "#111111"
+            color: focus ? Colors.color4 : "#111111"
             width: 2
             Behavior on color {
                 ColorAnimation {
@@ -85,7 +94,7 @@ RowLayout {
         }
         Text {
             text: "󰐥"
-            color: area2.containsMouse || shutButton.focus ? "#960000" : "#967373"
+            color: area2.containsMouse || shutButton.focus ? Colors.color14 : Colors.foreground
             anchors.centerIn: parent
             font.pixelSize: sessionLayout.fontSize
             Behavior on color {
@@ -94,12 +103,64 @@ RowLayout {
                 }
             }
         }
-        Keys.onReturnPressed: Quickshell.execDetached(["systemctl", "poweroff"])
+        Keys.onReturnPressed: {
+            Quickshell.execDetached(["systemctl", "poweroff"]);
+            sessionLayout.close();
+        }
+
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        KeyNavigation.right: susButton
+        KeyNavigation.left: lockButton
+    }
+    Rectangle {
+        id: susButton
+        radius: sessionLayout.butRadius
+        color: focus || area5.containsMouse ? "#CC111111" : "#55000000"
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
+        MouseArea {
+            id: area5
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            anchors.fill: parent
+            onClicked: {
+                Quickshell.execDetached(["systemctl", "suspend"]);
+                sessionLayout.close();
+            }
+        }
+        border {
+            color: focus ? Colors.color4 : "#111111"
+            width: 2
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
+        }
+        Text {
+            text: "󰤄"
+            color: area5.containsMouse || susButton.focus ? Colors.color14 : Colors.foreground
+            anchors.centerIn: parent
+            font.pixelSize: sessionLayout.fontSize
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
+        }
+        Keys.onReturnPressed: {
+            Quickshell.execDetached(["systemctl", "suspend"]);
+            sessionLayout.close();
+        }
 
         Layout.fillHeight: true
         Layout.fillWidth: true
         KeyNavigation.right: restartButton
-        KeyNavigation.left: lockButton
+        KeyNavigation.left: shutButton
     }
     Rectangle {
         id: restartButton
@@ -115,10 +176,13 @@ RowLayout {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
-            onClicked: Quickshell.execDetached(["systemctl", "reboot"])
+            onClicked: {
+                Quickshell.execDetached(["systemctl", "reboot"]);
+                sessionLayout.close();
+            }
         }
         border {
-            color: focus ? "#CC960000" : "#111111"
+            color: focus ? Colors.color4 : "#111111"
             width: 2
             Behavior on color {
                 ColorAnimation {
@@ -129,7 +193,7 @@ RowLayout {
 
         Text {
             text: "󰜉"
-            color: area3.containsMouse || restartButton.focus ? "#960000" : "#967373"
+            color: area3.containsMouse || restartButton.focus ? Colors.color14 : Colors.foreground
             anchors.centerIn: parent
             font.pixelSize: sessionLayout.fontSize
             Behavior on color {
@@ -141,8 +205,11 @@ RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
         KeyNavigation.right: logButton
-        KeyNavigation.left: shutButton
-        Keys.onReturnPressed: Quickshell.execDetached(["systemctl", "reboot"])
+        KeyNavigation.left: susButton
+        Keys.onReturnPressed: {
+            Quickshell.execDetached(["systemctl", "reboot"]);
+            sessionLayout.close();
+        }
     }
     Rectangle {
         id: logButton
@@ -158,10 +225,13 @@ RowLayout {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
-            onClicked: Quickshell.execDetached(["uwsm", "stop"])
+            onClicked: {
+                Quickshell.execDetached(["uwsm", "stop"]);
+                sessionLayout.close();
+            }
         }
         border {
-            color: focus ? "#CC960000" : "#111111"
+            color: focus ? Colors.color3 : "#111111"
             width: 2
             Behavior on color {
                 ColorAnimation {
@@ -171,7 +241,7 @@ RowLayout {
         }
         Text {
             text: "󰍃"
-            color: area4.containsMouse || logButton.focus ? "#960000" : "#967373"
+            color: area4.containsMouse || logButton.focus ? Colors.color14 : Colors.foreground
             anchors.centerIn: parent
             font.pixelSize: sessionLayout.fontSize
             Behavior on color {
@@ -183,6 +253,9 @@ RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
         KeyNavigation.left: restartButton
-        Keys.onReturnPressed: Quickshell.execDetached(["uwsm", "stop"])
+        Keys.onReturnPressed: {
+            Quickshell.execDetached(["uwsm", "stop"]);
+            sessionLayout.close();
+        }
     }
 }

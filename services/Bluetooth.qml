@@ -7,6 +7,7 @@ import "types" as Types
 
 Singleton {
     id: root
+    readonly property bool available : Bluetooth.defaultAdapter
     readonly property bool enabled: Bluetooth.defaultAdapter?.enabled
     readonly property Types.Bluetooth indicators: Types.Bluetooth {}
     readonly property bool isConnected: devices.some(device => device.connected)
@@ -38,3 +39,4 @@ Singleton {
         }
     }
 }
+

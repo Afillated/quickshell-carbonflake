@@ -1,10 +1,12 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Wayland
 
 import qs.services
-import qs.components
+import qs.components.notiComponents
 import qs.widgets
 
 Scope {
@@ -22,10 +24,10 @@ Scope {
             }
             margins {
                 left: 10
-                bottom: 51
+                bottom: notiPopups.screen?.height / 20
             }
-            implicitHeight: modelData.height / 2
-            implicitWidth: 400
+            implicitHeight: screen?.height / 2
+            implicitWidth: screen?.width / 3.5
             color: "transparent"
             exclusionMode: ExclusionMode.Ignore
             mask: Region {
@@ -34,7 +36,7 @@ Scope {
             ListView {
                 id: notiView
                 model: NotiServer.items
-                width: height > 0 ? notiPopups.modelData.height / 2 : 0.1
+                width: height > 0 ? notiPopups.screen?.width / 3.5 : 0.1
                 height: contentHeight
                 clip: true
                 interactive: false
@@ -52,7 +54,7 @@ Scope {
 
                 delegate: Item {
                     id: delegateRoot
-                    width: 400
+                    width: parent?.width
                     height: contentWrapper.height + 10
                     clip: true
 
@@ -70,7 +72,8 @@ Scope {
                         NotiCard {
                             id: inCard
                             noti: delegateRoot.model.notiItem
-                            color: "black"
+                            fontSize: notiPopups.screen?.height * 0.02
+                            width: notiPopups.screen?.width / 3.5
                             onClicked: {
                                 delegateRoot.state = "dismissed";
                             }
@@ -181,7 +184,7 @@ Scope {
                 add: Transition {
                     NumberAnimation {
                         properties: "x"
-                        from: -400
+                        from: -notiPopups.screen?.width / 3.5
                         duration: 300
                         easing.type: Easing.OutQuad
                     }
@@ -195,7 +198,7 @@ Scope {
                 remove: Transition {
                     NumberAnimation {
                         properties: "x"
-                        to: -400
+                        to: -notiPopups.screen?.width / 3.5
                         duration: 300
                         easing.type: Easing.OutQuad
                     }
@@ -210,7 +213,7 @@ Scope {
                     NumberAnimation {
                         properties: "y"
                         duration: 250
-                        easing.type: Easing.InOutQuad
+                        easing.type: Easing.OutQuad
                     }
                 }
             }

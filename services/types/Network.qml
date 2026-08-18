@@ -10,3 +10,4 @@ QtObject {
     readonly property string wifiStrength3: "󰤥"
     readonly property string wifiStrength4: "󰤨"
 }
+

@@ -1,19 +1,18 @@
-pragma ComponentBehavior: Bound
-
 import Quickshell
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+import Quickshell.Widgets
 import Quickshell.Hyprland
+import QtQuick
+import QtQuick.Layouts
+
 import qs.services
-import qs.components
+import qs.theme
+import qs.components.notiComponents
 
 PopupWindow {
-    id: notificationcenter
-    implicitHeight: 800
-    implicitWidth: 500
+    id: notiCenter
     color: "transparent"
     property bool isOpen: false
+    property real fontSize
     onIsOpenChanged: {
         if (isOpen === true) {
             visible = true;
@@ -21,68 +20,25 @@ PopupWindow {
             visible = false;
         }
     }
-    Behavior on implicitHeight {
-        NumberAnimation {
-            duration: 250
-            easing.type: Easing.OutQuad
-        }
-    }
-
     HyprlandFocusGrab {
-        active: notificationcenter.isOpen
-        windows: [notificationcenter]
+        active: notiCenter.isOpen
+        windows: [notiCenter]
         onCleared: {
             closeAnim.start();
         }
     }
-    Shortcut {
-        sequence: "Escape"
-        enabled: notificationcenter.isOpen
-        onActivated: closeAnim.start()
-    }
     SequentialAnimation {
         id: closeAnim
-        ParallelAnimation {
-            NumberAnimation {
-                target: notificationRec
-                property: "implicitHeight"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: notidate
-                property: "opacity"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: clearButton
-                property: "opacity"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: noNoti
-                property: "opacity"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: notiList
-                property: "opacity"
-                to: 0
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
+        NumberAnimation {
+            target: notiRec
+            property: "y"
+            to: notiRec.height
+            duration: 250
+            easing.type: Easing.OutQuad
         }
         ScriptAction {
             script: {
-                notificationcenter.visible = false;
-                notificationcenter.isOpen = false;
+                notiCenter.isOpen = false;
             }
         }
     }
@@ -91,196 +47,94 @@ PopupWindow {
         edges: Edges.Left | Edges.Bottom
         gravity: Edges.Top | Edges.Right
     }
-    Rectangle {
-        id: notificationRec
-        anchors.bottom: parent.bottom
-        color: "#E6000000"
-        radius: 15
-        clip: true
-        border {
-            width: 2
-            color: "#CC960000"
-        }
-        implicitHeight: notificationcenter.visible ? parent.height : 0
-        implicitWidth: parent.width
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        Text {
-            id: notidate
-            text: Time.date
-            color: "#967373"
-            opacity: notificationcenter.visible ? 1 : 0
-            anchors {
-                left: notificationRec.left
-                leftMargin: 10
-                bottom: parent.bottom
-                bottomMargin: 10
-            }
-            font {
-                family: "Firacode Mono Nerd Font"
-                pixelSize: 20
-            }
-            Behavior on opacity {
-                NumberAnimation {
-                    easing.type: Easing.OutQuad
-                    duration: 250
-                }
-            }
-        }
-
-        Rectangle {
-            id: clearButton
-            color: "transparent"
-            implicitHeight: 25
-            implicitWidth: clearAllText.width + 20
+    ClippingRectangle {
+        color: "transparent"
+        radius: notiRec.radius
+        anchors.fill: parent
+        ClippingRectangle {
+            id: notiRec
+            anchors.horizontalCenter: parent.horizontalCenter
+            implicitHeight: parent.height
+            implicitWidth: parent.width
             radius: 10
-            opacity: notificationcenter.visible ? 1 : 0
-            anchors {
-                right: parent.right
-                rightMargin: 10
-                bottom: parent.bottom
-                bottomMargin: 12
+            color: Colors.transground4
+            border {
+                width: 2
+                color: Colors.color3
             }
-
-            MouseArea {
-                id: clearall
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    NotiServer.clearNotifications();
-                }
-            }
-            Text {
-                id: clearAllText
-                text: "  Clear All (" + NotiServer.items.count + ")"
-                color: clearall.containsMouse ? "#960000" : "#967373"
-                anchors.centerIn: parent
-                font.family: "Firacode Mono Nerd Font"
-                font.pixelSize: 14
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 250
-                    }
-                }
-            }
-
-            Behavior on opacity {
+            y: notiCenter.isOpen ? 0 : height
+            Behavior on y {
                 NumberAnimation {
-                    easing.type: Easing.OutQuad
                     duration: 250
-                }
-            }
-        }
-        ColumnLayout {
-            id: noNoti
-            opacity: notificationcenter.visible ? 1 : 0
-            anchors.centerIn: parent
-            visible: NotiServer.items.count === 0
-            Text {
-                Layout.alignment: Qt.AlignHCenter
-                text: "No notifications"
-                color: "#967373"
-                font {
-                    pixelSize: 20
-                    family: "Firacode Mono Nerd Font"
-                }
-            }
-            Behavior on opacity {
-                NumberAnimation {
                     easing.type: Easing.OutQuad
-                    duration: 250
                 }
             }
-        }
-
-        ListView {
-            id: notiList
-            spacing: 10
-            model: NotiServer.items
-            orientation: ListView.Vertical
-            clip: true
-            opacity: notificationcenter.visible ? 1 : 0
-            anchors {
-                bottom: notidate.top
-                bottomMargin: 10
-                top: notificationRec.top
-                topMargin: 10
-                right: notificationRec.right
-                left: notificationRec.left
-                rightMargin: 10
-                leftMargin: 10
-            }
-
-            delegate: NotiCard {
-                required property var modelData
-                required property int index
-                width: notiList.width
-
-                noti: modelData
-                onClicked: {
-                    NotiServer.items.remove(index);
+            NotiList {
+                fontSize: notiCenter.fontSize
+                anchors.margins: 10
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    left: parent.left
+                    bottom: inter.top
                 }
             }
-
-            add: Transition {
-                ParallelAnimation {
-                    NumberAnimation {
-                        property: "height"
-                        from: 0
-                        duration: 250
-                        easing.type: Easing.OutBack
-                    }
-                    NumberAnimation {
-                        property: "opacity"
-                        from: 0
-                        to: 1
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
-                    NumberAnimation {
-                        property: "scale"
-                        from: 0.8
-                        to: 1
-                        duration: 250
-                        easing.type: Easing.OutBack
+            ClippingRectangle {
+                id: inter
+                anchors {
+                    bottom: parent.bottom
+                    right: parent.right
+                    left: parent.left
+                }
+                color: "transparent"
+                implicitHeight: notiCenter.fontSize * 2
+                radius: height / 3
+                Text {
+                    id: date
+                    text: Time.date
+                    color: Colors.color10
+                    font.pixelSize: notiCenter.fontSize * 1.1
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: notiCenter.fontSize / 2
                     }
                 }
-            }
-
-            remove: Transition {
-                ParallelAnimation {
-                    NumberAnimation {
-                        property: "height"
-                        to: 0
-                        duration: 200
-                        easing.type: Easing.InCubic
+                ClippingRectangle {
+                    id: clearRec
+                    color: area.containsMouse ? "#AA333333" : "transparent"
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
                     }
-                    NumberAnimation {
-                        property: "opacity"
-                        to: 0
-                        duration: 150
-                        easing.type: Easing.InCubic
+                    implicitHeight: parent.height * 0.7
+                    radius: height / 3
+                    implicitWidth: clear.width + height / 2
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        right: parent.right
+                        rightMargin: notiCenter.fontSize / 2
                     }
-                    NumberAnimation {
-                        property: "scale"
-                        to: 0.8
-                        duration: 200
-                        easing.type: Easing.InCubic
+                    MouseArea {
+                        id: area
+                        hoverEnabled: true
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: NotiServer.clearNotifications()
                     }
-                }
-            }
-
-            displaced: Transition {
-                NumberAnimation {
-                    properties: "x,y"
-                    duration: 200
-                    easing.type: Easing.OutCubic
+                    Text {
+                        id: clear
+                        text: "  Clear All (" + NotiServer.items.count + ")"
+                        color: area.containsMouse ? Colors.color12 : Colors.color10
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                        anchors.centerIn: parent
+                        font.pixelSize: notiCenter.fontSize*0.8
+                    }
                 }
             }
         }

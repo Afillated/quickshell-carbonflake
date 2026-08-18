@@ -5,3 +5,4 @@ QtObject {
     readonly property string powerOn: "󰂯"
     readonly property string connected: "󰂱"
 }
+

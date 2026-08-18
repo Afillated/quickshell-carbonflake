@@ -10,9 +10,20 @@ Singleton {
 
     property PwNode defaultOutput: Pipewire.defaultAudioSink
     property PwNode defaultInput: Pipewire.defaultAudioSource
-    property list<PwNode> outputList: Pipewire.nodes.values.filter(n => n.isSink)
-    property list<PwNode> inputList: Pipewire.nodes.values.filter(n => !n.isSink)
+    readonly property var outputList: Pipewire.nodes.values.filter(n => n.type === PwNodeType.AudioSink && !n.isStream)
+    readonly property var inputList: Pipewire.nodes.values.filter(n => n.type === PwNodeType.AudioSource && !n.isStream)
 
+    function setDefaultOutput(node: PwNode) {
+        if (node)
+            Pipewire.preferredDefaultAudioSink = node;
+    }
+
+    function setDefaultInput(node: PwNode) {
+        if (node)
+            Pipewire.preferredDefaultAudioSource = node;
+    }
+
+    // Might not need this
     function changeOutputVolume(volume: real) {
         if (defaultOutput?.ready && defaultOutput?.audio) {
             defaultOutput.audio.muted = false;
@@ -25,6 +36,7 @@ Singleton {
             defaultOutput.audio.muted = !defaultOutput.audio.muted;
     }
 
+    // This also might not be needed
     function changeInputVolume(volume: real) {
         if (defaultInput?.ready && defaultInput?.audio) {
             defaultInput.audio.muted = false;
@@ -38,6 +50,6 @@ Singleton {
     }
 
     PwObjectTracker {
-        objects: [audio.defaultOutput, audio.defaultInput]
+        objects: [audio.defaultOutput, audio.defaultInput, ...audio.outputList, ...audio.inputList]
     }
 }

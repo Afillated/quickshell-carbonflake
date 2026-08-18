@@ -1,123 +1,170 @@
 import Quickshell
-import QtQuick 2.0
-import qs.components
-import qs.panels
+import Quickshell.Widgets
+import Quickshell.Io
+import QtQuick
+
+import qs.theme
+import qs.components.barComponents
 
 Scope {
-
     Variants {
         model: Quickshell.screens
-
         PanelWindow {
             id: mainBar
             required property var modelData
             screen: modelData
-            color: "#33000000"
+            color: "transparent"
+            implicitHeight: Math.floor(screen.height / 20)
             anchors {
                 bottom: true
-                left: true
                 right: true
+                left: true
+            }
+            IpcHandler {
+                target: "mainBar"
+                function toggle(): void {
+                    mainBar.isPinned = !mainBar.isPinned;
+                }
+            }
+            property bool isPinned: true
+            exclusiveZone: isPinned ? barRec.height : height / 10
+            Rectangle {
+                id: hoverRec
+                visible: !mainBar.isPinned
+                color: "transparent"
+                anchors {
+                    bottom: parent.bottom
+                    left: barRec.left
+                    right: barRec.right
+                }
+                implicitHeight: mainBar.exclusiveZone * 2
+                MouseArea {
+                    id: hoverArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                }
+            }
+            mask: Region {
+                Region {
+                    item: hoverRec
+                }
+                Region {
+                    item: barRec
+                }
             }
 
-            implicitHeight: 50
-            exclusiveZone: implicitHeight - 10
-            HyprWS {
+            ClippingRectangle {
+                id: barRec
                 anchors {
                     horizontalCenter: parent.horizontalCenter
-                    bottom: parent.bottom
-                    bottomMargin: 10
                 }
-            }
-
-            NotificationCenter {
-                id: notificationPanel
-                anchor {
-                    window: mainBar
-                    rect.x: 10
-                    rect.y: -1
-                }
-            }
-
-            ClockWidget {
-                id: clock
-                anchors {
-                    left: parent.left
-                    leftMargin: 10
-                    bottom: parent.bottom
-                    bottomMargin: 10
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        notificationPanel.isOpen = !notificationPanel.isOpen;
+                implicitHeight: Math.floor(parent.height * 0.8)
+                implicitWidth: Math.floor(parent.width * 0.98)
+                radius: Math.floor(height / 3)
+                color: Colors.transground4
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 1000
                     }
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
                 }
-            }
-
-            NowPlaying {
-                id: nowBar
-                anchors {
-                    left: clock.right
-                    leftMargin: 10
-                    bottom: parent.bottom
-                    bottomMargin: 10
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        playerPopup.isOpen = !playerPopup.isOpen;
+                border {
+                    color: Colors.color3
+                    width: 2
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 1000
+                        }
                     }
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
                 }
-            }
-
-            PlayerPanel {
-                id: playerPopup
-                anchor {
+                HoverHandler {
+                    id: recHover
+                }
+                LeftRow {
+                    id: leftRow
+                    fontSize: Math.floor(parent.height * 0.48)
+                    barRecHeight: parent.height
+                    barRecWidth: parent.width
+                    barHeight: mainBar.height
+                    barWidth: mainBar.width
                     window: mainBar
-                    rect.x: 10
-                    rect.y: -1
-                }
-            }
-
-            ActiveWindow {
-                anchors {
-                    right: sysStats.left
-                    rightMargin: 10
-                    bottom: parent.bottom
-                    bottomMargin: 10
-                }
-            }
-
-            SysStatus {
-                id: sysStats
-                anchors {
-                    right: parent.right
-                    rightMargin: 10
-                    bottom: parent.bottom
-                    bottomMargin: 10
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        quickPanel1.isOpen = !quickPanel1.isOpen;
+                    anchors {
+                        left: parent.left
+                        leftMargin: mainBar.height / 5
+                        verticalCenter: parent.verticalCenter
                     }
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
                 }
-            }
-            QuickPanel {
-                id: quickPanel1
-                anchor {
+                CenterRow {
+                    id: centerRow
+                    fontSize: Math.floor(parent.height * 0.48)
+                    barRecHeight: parent.height
+                    barRecWidth: parent.width
+                    barHeight: mainBar.height
+                    barWidth: mainBar.width
+                    barPinned: mainBar.isPinned
+                    anchors.centerIn: parent
+                    onClicked: mainBar.isPinned = !mainBar.isPinned
+                }
+                RightRow {
+                    id: rightRow
+                    fontSize: Math.floor(parent.height * 0.48)
+                    barRecHeight: parent.height
+                    barRecWidth: parent.width
+                    barHeight: mainBar.height
+                    barWidth: mainBar.width
                     window: mainBar
-                    rect.x: mainBar.modelData.width - 10
-                    rect.y: -1
+                    anchors {
+                        right: parent.right
+                        rightMargin: mainBar.height / 5
+                        verticalCenter: parent.verticalCenter
+                    }
                 }
+                state: {
+                    if (mainBar.isPinned)
+                        return "Pinned";
+                    if (hoverArea.containsMouse || recHover.hovered || leftRow.stayOpen || rightRow.stayOpen)
+                        return "Peek";
+                    return "Hidden";
+                }
+                states: [
+                    State {
+                        name: "Pinned"
+                        AnchorChanges {
+                            target: barRec
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.top: undefined
+                        }
+                    },
+                    State {
+                        name: "Peek"
+                        AnchorChanges {
+                            target: barRec
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.top: undefined
+                        }
+                    },
+                    State {
+                        name: "Hidden"
+                        AnchorChanges {
+                            target: barRec
+                            anchors.top: parent.bottom
+                            anchors.verticalCenter: undefined
+                        }
+                    }
+                ]
+                transitions: [
+                    Transition {
+                        from: "*"
+                        to: "*"
+                        AnchorAnimation {
+                            duration: 250
+                            easing.type: Easing.OutCubic
+                        }
+                        NumberAnimation {
+                            properties: "opacity"
+                            duration: 250
+                        }
+                    }
+                ]
             }
         }
     }

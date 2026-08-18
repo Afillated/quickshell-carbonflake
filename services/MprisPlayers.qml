@@ -34,7 +34,7 @@ Singleton {
     }
 
     function selectPlayer(x: int) {
-        activeIndex = (activeIndex + x+playerList.length) % playerList.length
+        activeIndex = (activeIndex + x + playerList.length) % playerList.length;
     }
 
     FrameAnimation {
