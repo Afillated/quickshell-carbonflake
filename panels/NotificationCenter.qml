@@ -27,6 +27,15 @@ PopupWindow {
             closeAnim.start();
         }
     }
+    // for closing when polkit appears
+    Connections {
+        target: PolkitService
+        function onActiveChanged() {
+            if (PolkitService.active && notiCenter.isOpen) {
+                closeAnim.start();
+            }
+        }
+    }
     SequentialAnimation {
         id: closeAnim
         NumberAnimation {
@@ -133,7 +142,7 @@ PopupWindow {
                             }
                         }
                         anchors.centerIn: parent
-                        font.pixelSize: notiCenter.fontSize*0.8
+                        font.pixelSize: notiCenter.fontSize * 0.8
                     }
                 }
             }

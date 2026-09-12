@@ -2,12 +2,14 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Bluetooth
+import Quickshell.Io
 import QtQuick
 import "types" as Types
 
 Singleton {
     id: root
-    readonly property bool available : Bluetooth.defaultAdapter
+    readonly property bool available: Bluetooth.defaultAdapter
+    property int scanTimeout: 60 * 1000
     readonly property bool enabled: Bluetooth.defaultAdapter?.enabled
     readonly property Types.Bluetooth indicators: Types.Bluetooth {}
     readonly property bool isConnected: devices.some(device => device.connected)
@@ -30,7 +32,11 @@ Singleton {
     }
     function toggleDefault() {
         if (Bluetooth.defaultAdapter) {
-            Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+            if (Bluetooth.defaultAdapter.state === BluetoothAdapterState.Blocked) {
+                forceEnable();
+            } else {
+                Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+            }
         }
     }
     function toggleScaning() {
@@ -38,5 +44,22 @@ Singleton {
             Bluetooth.defaultAdapter.discovering = !Bluetooth.defaultAdapter.discovering;
         }
     }
-}
 
+    Timer {
+        id: scanTimer
+        interval: root.scanTimeout
+        running: Bluetooth.defaultAdapter?.discovering ?? false
+        repeat: false
+        onTriggered: {
+            if (Bluetooth.defaultAdapter) {
+                Bluetooth.defaultAdapter.discovering = false;
+            }
+        }
+    }
+
+    function forceEnable() {
+        if (Bluetooth.defaultAdapter) {
+            Quickshell.execDetached(["pkexec", "rfkill", "unblock", "bluetooth"]);
+        }
+    }
+}

@@ -81,14 +81,22 @@ ClippingRectangle {
                     elide: Text.ElideRight
                     Layout.alignment: Qt.AlignVCenter
                     property string nodeName: entry.node?.properties["application.name"] ? entry.node?.properties["application.name"] : entry.node?.description
-                    text: {
-                        if (entry.clickable) {
-                            return nodeName + " ";
-                        } else {
-                            return nodeName;
+                    text: nodeName
+                    color: area.containsMouse ? Colors.color10 : Colors.foreground
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
                         }
                     }
-
+                    font {
+                        pixelSize: entry.fontSize * 1.2
+                    }
+                }
+                Text {
+                    id: icon
+                    elide: Text.ElideRight
+                    Layout.alignment: Qt.AlignVCenter
+                    text: ""
                     color: area.containsMouse ? Colors.color10 : Colors.foreground
                     Behavior on color {
                         ColorAnimation {

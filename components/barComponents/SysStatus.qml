@@ -79,18 +79,18 @@ ClippingRectangle {
                 }
             }
         }
-        Text {
-            id: net
-            Layout.alignment: Qt.AlignVCenter
-            text: Network.status
-            color: area.containsMouse ? Colors.color12 : Colors.color15
-            font.pixelSize: sysRec.fontSize
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
-        }
+        // Text {
+        //     id: net
+        //     Layout.alignment: Qt.AlignVCenter
+        //     text: Network.status
+        //     color: area.containsMouse ? Colors.color12 : Colors.color15
+        //     font.pixelSize: sysRec.fontSize
+        //     Behavior on color {
+        //         ColorAnimation {
+        //             duration: 200
+        //         }
+        //     }
+        // }
     }
     MouseArea {
         id: area

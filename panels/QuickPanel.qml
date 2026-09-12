@@ -31,6 +31,15 @@ PopupWindow {
             closeAnim.start();
         }
     }
+    // for closing when polkit appears
+    Connections {
+        target: PolkitService
+        function onActiveChanged() {
+            if (PolkitService.active && quickPanel.isOpen) {
+                closeAnim.start();
+            }
+        }
+    }
     SequentialAnimation {
         id: closeAnim
         NumberAnimation {
