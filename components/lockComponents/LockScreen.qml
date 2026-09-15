@@ -11,6 +11,7 @@ import Qt5Compat.GraphicalEffects
 
 import qs.services
 import qs.theme
+import qs.components.barComponents
 
 Rectangle {
     id: lockRoot
@@ -90,6 +91,14 @@ Rectangle {
                 to: 1
                 easing.type: Easing.OutQuad
             }
+            NumberAnimation {
+                target: status
+                property: "opacity"
+                duration: 400
+                from: 0
+                to: 1
+                easing.type: Easing.OutQuad
+            }
         }
         SequentialAnimation {
             id: unlockAnim
@@ -151,6 +160,14 @@ Rectangle {
                     to: 0
                     easing.type: Easing.OutQuad
                 }
+                NumberAnimation {
+                    target: status
+                    property: "opacity"
+                    duration: 250
+                    from: 1
+                    to: 0
+                    easing.type: Easing.OutQuad
+                }
             }
             PauseAnimation {
                 duration: 200
@@ -181,6 +198,17 @@ Rectangle {
             top: parent.top
             topMargin: lockRoot.screen?.height / 4
         }
+    }
+
+    SysStatus {
+        id: status
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: clock.bottom
+        }
+        implicitHeight: date.height * 0.6
+        fontSize: lockRoot.fontSize
+        clickEnable: false
     }
 
     Text {

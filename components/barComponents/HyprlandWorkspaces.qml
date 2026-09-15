@@ -15,7 +15,7 @@ RowLayout {
     property int fontSize
     Repeater {
         model: ScriptModel {
-            values: Hyprland.workspaces.values.filter(workspace => workspace.id >= 0).sort((a, b) => a.id - b.id)
+            values: Hyprland.workspaces.values.filter(workspace => workspace.id > 0).sort((a, b) => a.id - b.id)
         }
         Rectangle {
             id: wsButton
