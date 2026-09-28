@@ -118,7 +118,7 @@ FloatingWindow {
                     cursorVisible: false
                     font.pixelSize: 16
                     font.family: "Firacode Mono Nerd Font"
-                    selectionColor: "#88960000"
+                    selectionColor: Colors.color2
                     selectedTextColor: Colors.color15
                     renderType: Text.NativeRendering
                     cursorDelegate: Rectangle {

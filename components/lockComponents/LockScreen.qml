@@ -17,7 +17,7 @@ Rectangle {
     id: lockRoot
     color: "#000000"
     required property ShellScreen screen
-    property real fontSize: Math.round(screen?.height * 0.02)
+    property real fontSize: Math.round(screen?.height * 0.02) | 0
 
     ScreencopyView {
         id: lockBG

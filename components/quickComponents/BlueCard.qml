@@ -38,7 +38,7 @@ ClippingRectangle {
         IconImage {
             id: icon
             anchors.centerIn: parent
-            visible: blueRec.device?.icon
+            visible: blueRec.device?.icon ?? false
             source: Quickshell.iconPath(blueRec.device?.icon)
             implicitSize: blueRec.fontSize * 2
         }
@@ -116,7 +116,7 @@ ClippingRectangle {
     }
     Rectangle {
         id: forRec
-        visible: blueRec.device?.paired
+        visible: blueRec.device?.paired ?? false
         anchors {
             verticalCenter: parent.verticalCenter
             right: parent.right

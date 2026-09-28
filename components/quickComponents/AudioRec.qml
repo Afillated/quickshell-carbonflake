@@ -29,7 +29,7 @@ ClippingRectangle {
                 Layout.fillWidth: true
                 Text {
                     id: out
-                    text: Audio.defaultOutput?.description
+                    text: Audio.defaultOutput?.description ?? ""
                     Layout.leftMargin: audioRec.fontSize / 2
                     Layout.alignment: Qt.AlignVCenter
                     Layout.maximumWidth: volSlider.width * 0.6
@@ -150,7 +150,7 @@ ClippingRectangle {
                 Layout.fillWidth: true
                 Text {
                     id: mic
-                    text: Audio.defaultInput?.description
+                    text: Audio.defaultInput?.description ?? ""
                     Layout.leftMargin: audioRec.fontSize / 2
                     Layout.maximumWidth: volSlider.width * 0.6
                     Layout.alignment: Qt.AlignVCenter

@@ -10,7 +10,7 @@ Singleton {
     id: root
     readonly property bool available: Bluetooth.defaultAdapter
     property int scanTimeout: 60 * 1000
-    readonly property bool enabled: Bluetooth.defaultAdapter?.enabled
+    readonly property bool enabled: Bluetooth.defaultAdapter?.enabled ?? false
     readonly property Types.Bluetooth indicators: Types.Bluetooth {}
     readonly property bool isConnected: devices.some(device => device.connected)
     readonly property var devices: {
@@ -22,7 +22,7 @@ Singleton {
         const available = all.filter(d => !d.paired);
         return [...paired, ...available];
     }
-    readonly property bool scanning: Bluetooth.defaultAdapter?.discovering
+    readonly property bool scanning: Bluetooth.defaultAdapter?.discovering ?? false
     readonly property string status: {
         if (!enabled)
             return indicators.powerOff;

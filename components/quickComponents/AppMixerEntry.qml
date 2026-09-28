@@ -21,6 +21,8 @@ ClippingRectangle {
 
     implicitHeight: content.implicitHeight
     function getIcon() {
+        if (!entry.node)
+            return "";
         if (entry.node?.properties["application.icon-name"])
             return Quickshell.iconPath(entry.node.properties["application.icon-name"]);
         if (DesktopEntries.byId(entry.node?.name))
@@ -80,7 +82,7 @@ ClippingRectangle {
                     Layout.maximumWidth: content.width * 0.8
                     elide: Text.ElideRight
                     Layout.alignment: Qt.AlignVCenter
-                    property string nodeName: entry.node?.properties["application.name"] ? entry.node?.properties["application.name"] : entry.node?.description
+                    property string nodeName: entry.node?.properties["application.name"] ?? entry.node?.description ?? ""
                     text: nodeName
                     color: area.containsMouse ? Colors.color10 : Colors.foreground
                     Behavior on color {
@@ -97,6 +99,7 @@ ClippingRectangle {
                     elide: Text.ElideRight
                     Layout.alignment: Qt.AlignVCenter
                     text: ""
+                    visible: entry.clickable
                     color: area.containsMouse ? Colors.color10 : Colors.foreground
                     Behavior on color {
                         ColorAnimation {
