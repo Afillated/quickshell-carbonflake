@@ -20,7 +20,7 @@ ClippingRectangle {
         anchors.fill: parent
         anchors.margins: sessionRec.fontSize / 3
         Rectangle {
-            id: lockButton
+            id: dndButton
             radius: sessionRec.butRadius
             color: area.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
@@ -34,7 +34,7 @@ ClippingRectangle {
                 cursorShape: Qt.PointingHandCursor
                 anchors.fill: parent
                 onClicked: {
-                    LockContext.locked = true;
+                    NotiServer.toggleDND();
                 }
             }
             border {
@@ -46,15 +46,31 @@ ClippingRectangle {
                     }
                 }
             }
-
-            Text {
-                text: ""
-                color: area.containsMouse ? Colors.color14 : Colors.foreground
+            Rectangle {
+                implicitHeight: parent.height * 0.76
+                implicitWidth: parent.width * 0.76
+                radius: parent.radius
                 anchors.centerIn: parent
-                font.pixelSize: sessionRec.fontSize
+                color: NotiServer.doNotDisturb ? Colors.color13 : "#55967373"
                 Behavior on color {
                     ColorAnimation {
                         duration: 200
+                    }
+                }
+                Text {
+                    text: {
+                        if (NotiServer.doNotDisturb)
+                            return " 󰍷 ";
+                        else
+                            return " 󱑚 ";
+                    }
+                    color: NotiServer.doNotDisturb ? Colors.background : Colors.color15
+                    anchors.centerIn: parent
+                    font.pixelSize: sessionRec.fontSize
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
                     }
                 }
             }
@@ -62,7 +78,7 @@ ClippingRectangle {
             Layout.fillWidth: true
         }
         Rectangle {
-            id: shutButton
+            id: protectButton
             radius: sessionRec.butRadius
             color: area2.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
@@ -76,7 +92,7 @@ ClippingRectangle {
                 cursorShape: Qt.PointingHandCursor
                 anchors.fill: parent
                 onClicked: {
-                    Quickshell.execDetached(["systemctl", "poweroff"]);
+                    BatteryProtection.toggleMode();
                 }
             }
             border {
@@ -88,14 +104,31 @@ ClippingRectangle {
                     }
                 }
             }
-            Text {
-                text: "󰐥"
-                color: area2.containsMouse ? Colors.color14 : Colors.foreground
+            Rectangle {
+                implicitHeight: parent.height * 0.76
+                implicitWidth: parent.width * 0.76
+                radius: parent.radius
                 anchors.centerIn: parent
-                font.pixelSize: sessionRec.fontSize
+                color: BatteryProtection.conservationEnabled ? Colors.color13 : "#55967373"
                 Behavior on color {
                     ColorAnimation {
                         duration: 200
+                    }
+                }
+                Text {
+                    text: {
+                        if (BatteryProtection.conservationEnabled)
+                            return "󱞜";
+                        else
+                            return "󱞝";
+                    }
+                    color: BatteryProtection.conservationEnabled ? Colors.background : Colors.color15
+                    anchors.centerIn: parent
+                    font.pixelSize: sessionRec.fontSize
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
                     }
                 }
             }
@@ -103,48 +136,7 @@ ClippingRectangle {
             Layout.fillWidth: true
         }
         Rectangle {
-            id: susButton
-            radius: sessionRec.butRadius
-            color: area5.containsMouse ? "#CC111111" : "#55000000"
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
-            MouseArea {
-                id: area5
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                anchors.fill: parent
-                onClicked: {
-                    Quickshell.execDetached(["systemctl", "suspend"]);
-                }
-            }
-            border {
-                color: area5.containsMouse ? Colors.color4 : "#212121"
-                width: 2
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 200
-                    }
-                }
-            }
-            Text {
-                text: "󰤄"
-                color: area5.containsMouse ? Colors.color14 : Colors.foreground
-                anchors.centerIn: parent
-                font.pixelSize: sessionRec.fontSize
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 200
-                    }
-                }
-            }
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
-        Rectangle {
-            id: restartButton
+            id: lockButton
             radius: sessionRec.butRadius
             color: area3.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
@@ -158,7 +150,7 @@ ClippingRectangle {
                 cursorShape: Qt.PointingHandCursor
                 anchors.fill: parent
                 onClicked: {
-                    Quickshell.execDetached(["systemctl", "reboot"]);
+                    LockContext.locked = true;
                 }
             }
             border {
@@ -172,7 +164,7 @@ ClippingRectangle {
             }
 
             Text {
-                text: "󰜉"
+                text: ""
                 color: area3.containsMouse ? Colors.color14 : Colors.foreground
                 anchors.centerIn: parent
                 font.pixelSize: sessionRec.fontSize
@@ -186,7 +178,7 @@ ClippingRectangle {
             Layout.fillWidth: true
         }
         Rectangle {
-            id: logButton
+            id: menuButton
             radius: sessionRec.butRadius
             color: area4.containsMouse ? "#CC111111" : "#55000000"
             Behavior on color {
@@ -200,7 +192,7 @@ ClippingRectangle {
                 cursorShape: Qt.PointingHandCursor
                 anchors.fill: parent
                 onClicked: {
-                    Quickshell.execDetached(["uwsm", "stop"]);
+                    Quickshell.execDetached(["qs", "ipc", "call", "sessionPanel", "open"]);
                 }
             }
             border {
@@ -213,7 +205,7 @@ ClippingRectangle {
                 }
             }
             Text {
-                text: "󰍃"
+                text: ""
                 color: area4.containsMouse ? Colors.color14 : Colors.foreground
                 anchors.centerIn: parent
                 font.pixelSize: sessionRec.fontSize

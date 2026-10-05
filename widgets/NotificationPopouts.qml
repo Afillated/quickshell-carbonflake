@@ -61,6 +61,7 @@ Scope {
                     required property var model
                     required property int index
                     readonly property bool isDismissed: model.notiItem ? model.notiItem.dismissed : false
+                    readonly property bool isPopout: model.notiItem ? model.notiItem.popout : false
 
                     Item {
                         id: contentWrapper
@@ -75,15 +76,30 @@ Scope {
                             fontSize: notiPopups.screen?.height * 0.02
                             width: notiPopups.screen?.width / 3.5
                             onClicked: {
-                                delegateRoot.state = "dismissed";
+                                // Hide the popup only; the item stays in the center.
+                                if (delegateRoot.model.notiItem)
+                                    delegateRoot.model.notiItem.dismissed = true;
                             }
                             onRClicked: {
+                                // Hide the popup and delete the item from the center.
                                 delegateRoot.state = "removed";
                             }
                         }
                     }
 
                     states: [
+                        State {
+                            // Notification arrived with popups suppressed (Do Not Disturb).
+                            // No transition is defined for this state, so it is hidden
+                            // instantly instead of animating in and back out.
+                            name: "suppressed"
+                            when: !delegateRoot.isPopout
+                            PropertyChanges {
+                                delegateRoot.visible: false
+                                delegateRoot.enabled: false
+                                delegateRoot.height: 0
+                            }
+                        },
                         State {
                             name: "dismissed"
                             when: delegateRoot.isDismissed
@@ -173,7 +189,9 @@ Scope {
 
                                 ScriptAction {
                                     script: {
-                                        NotiServer.items.remove(index);
+                                        // Removes the row AND destroys the item (no leak),
+                                        // and avoids a stale index if the list shifted.
+                                        NotiServer.remove(delegateRoot.model.notiItem);
                                     }
                                 }
                             }

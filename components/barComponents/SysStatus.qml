@@ -107,6 +107,31 @@ ClippingRectangle {
             }
         }
         Text {
+            id: dnd
+            Layout.alignment: Qt.AlignVCenter
+            text: {
+                if (NotiServer.doNotDisturb)
+                    return "󰍷";
+                else
+                    return "󱑚";
+            }
+            color: area.containsMouse ? Colors.color12 : Colors.color15
+            font.pixelSize: sysRec.fontSize
+            opacity: NotiServer.doNotDisturb ? 1 : 0
+            visible: opacity > 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 200
+                    easing.type: Easing.InCirc
+                }
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                }
+            }
+        }
+        Text {
             id: blue
             Layout.alignment: Qt.AlignVCenter
             text: Bluetooth.status
