@@ -101,6 +101,7 @@ Scope {
                     barHeight: mainBar.height
                     barWidth: mainBar.width
                     barPinned: mainBar.isPinned
+                    window: mainBar
                     anchors.centerIn: parent
                     onClicked: mainBar.isPinned = !mainBar.isPinned
                 }

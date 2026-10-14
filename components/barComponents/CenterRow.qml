@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import qs.components
+import qs.panels
 
 RowLayout {
     id: centerRow
@@ -14,6 +15,7 @@ RowLayout {
     property real barRecWidth
     property real barHeight
     property real barWidth
+    property var window
     property bool barPinned: true
 
     PinButton {
@@ -31,5 +33,17 @@ RowLayout {
         id: hyprWS
         butSize: Math.round(centerRow.barRecHeight * 0.6)
         fontSize: centerRow.fontSize
+    }
+    Launcher {
+        id: launcher
+        implicitHeight: centerRow.barHeight * 8
+        initialHeight: centerRow.barHeight
+        implicitWidth: centerRow.barWidth / 3
+        fontSize: centerRow.fontSize
+        anchor {
+            window: centerRow.window
+            rect.x: centerRow.barWidth / 2 - launcher.implicitWidth / 2
+            rect.y: -centerRow.barHeight * 12
+        }
     }
 }
